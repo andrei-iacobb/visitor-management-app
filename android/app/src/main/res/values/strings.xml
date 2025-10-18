@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Visitor Management</string>
+
+    <!-- Main Screen -->
+    <string name="main_title">Visitor Management System</string>
+    <string name="btn_sign_in_visitor">Sign In Visitor</string>
+    <string name="btn_sign_in_contractor">Sign In Contractor</string>
+    <string name="btn_view_active">View Active Sign-Ins</string>
+    <string name="visitor_icon">👤</string>
+    <string name="contractor_icon">🔧</string>
+    <string name="active_icon">📋</string>
+
+    <!-- Sign-In Form -->
+    <string name="sign_in_visitor_title">Visitor Sign-In</string>
+    <string name="sign_in_contractor_title">Contractor Sign-In</string>
+    <string name="personal_info_section">Personal Information</string>
+    <string name="visit_details_section">Visit Details &amp; Media</string>
+
+    <!-- Form Fields -->
+    <string name="label_full_name">Full Name</string>
+    <string name="label_phone_number">Phone Number</string>
+    <string name="label_email">Email Address</string>
+    <string name="label_company">Company Name</string>
+    <string name="label_visiting_person">Person Visiting</string>
+    <string name="label_purpose">Purpose of Visit</string>
+    <string name="label_car_registration">Car Registration</string>
+
+    <!-- Hints -->
+    <string name="hint_full_name">Enter full name</string>
+    <string name="hint_phone">Enter phone number</string>
+    <string name="hint_email">Enter email address</string>
+    <string name="hint_company">Enter company name</string>
+    <string name="hint_visiting_person">Who are you visiting?</string>
+    <string name="hint_purpose">Purpose of visit</string>
+    <string name="hint_car_registration">Enter car registration</string>
+
+    <!-- Required Field Marker -->
+    <string name="required_marker">*</string>
+    <string name="required_field">* Required</string>
+
+    <!-- Buttons -->
+    <string name="btn_capture_photo">📸 Capture Photo</string>
+    <string name="btn_add_signature">✍️ Add Signature</string>
+    <string name="btn_complete_sign_in">✓ COMPLETE SIGN-IN</string>
+    <string name="btn_sign_out">Sign Out</string>
+    <string name="btn_clear_signature">Clear</string>
+    <string name="btn_save_signature">✓ SAVE SIGNATURE</string>
+    <string name="btn_refresh">🔄 Refresh</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_retry">Retry</string>
+    <string name="btn_back">← Back</string>
+
+    <!-- Camera -->
+    <string name="camera_instructions">Align the person\'s face in the frame</string>
+    <string name="camera_capture">Capture</string>
+    <string name="camera_retake">Retake</string>
+
+    <!-- Signature -->
+    <string name="signature_instructions">Sign here with your finger</string>
+    <string name="signature_title">Add Signature</string>
+
+    <!-- Active Visitors -->
+    <string name="active_visitors_title">Active Sign-Ins</string>
+    <string name="currently_signed_in">Currently Signed In: %d</string>
+    <string name="no_active_visitors">No active sign-ins</string>
+    <string name="no_active_visitors_message">All visitors have signed out</string>
+    <string name="signed_in_at">In: %s</string>
+    <string name="visitor_type_visitor">Visitor</string>
+    <string name="visitor_type_contractor">Contractor</string>
+
+    <!-- Success Messages -->
+    <string name="sign_in_success">Sign-in Successful!</string>
+    <string name="sign_in_success_message">%s has been signed in</string>
+    <string name="sign_out_success">Sign-out Successful!</string>
+    <string name="sign_out_success_message">%s has been signed out</string>
+    <string name="photo_captured">Photo captured</string>
+    <string name="signature_saved">Signature saved</string>
+
+    <!-- Error Messages -->
+    <string name="error_required_field">This field is required</string>
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="error_invalid_phone">Invalid phone number</string>
+    <string name="error_photo_required">Photo is required</string>
+    <string name="error_signature_required">Signature is required</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_api">Unable to connect to server</string>
+    <string name="error_unknown">An unexpected error occurred</string>
+    <string name="error_timeout">Request timed out. Please try again.</string>
+    <string name="error_sign_out_failed">Failed to sign out. Please try again.</string>
+
+    <!-- Validation Messages -->
+    <string name="validation_name_length">Name must be at least 2 characters</string>
+    <string name="validation_phone_length">Phone number must be at least 10 digits</string>
+
+    <!-- Confirmation Dialogs -->
+    <string name="confirm_sign_out_title">Confirm Sign Out</string>
+    <string name="confirm_sign_out_message">Are you sure you want to sign out %s?</string>
+    <string name="confirm_yes">Yes</string>
+    <string name="confirm_no">No</string>
+
+    <!-- Loading -->
+    <string name="loading">Loading…</string>
+    <string name="submitting">Submitting…</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="signing_out">Signing out…</string>
+
+    <!-- Permissions -->
+    <string name="permission_camera_rationale">Camera permission is required to take photos</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="permission_settings">Open Settings</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="cd_photo_preview">Visitor photo preview</string>
+    <string name="cd_signature_preview">Signature preview</string>
+    <string name="cd_back_button">Back button</string>
+    <string name="cd_refresh_button">Refresh list</string>
+    <string name="cd_clear_signature">Clear signature</string>
+    <string name="cd_camera_capture">Capture photo</string>
+
+    <!-- Preview Labels -->
+    <string name="preview_photo">Photo Preview</string>
+    <string name="preview_signature">Signature Preview</string>
+
+    <!-- Empty States -->
+    <string name="empty_state_no_data">No data available</string>
+
+    <!-- Time Format -->
+    <string name="time_format_12h">h:mm a</string>
+    <string name="date_format">MMM dd, yyyy</string>
+</resources>

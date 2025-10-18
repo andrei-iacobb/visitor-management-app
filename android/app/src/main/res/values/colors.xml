@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors - Dark Blue -->
+    <color name="primary_dark_blue">#1A237E</color>
+    <color name="primary_dark_blue_dark">#0D47A1</color>
+    <color name="primary_dark_blue_light">#3949AB</color>
+
+    <!-- Accent Colors - Red -->
+    <color name="accent_red">#D32F2F</color>
+    <color name="accent_red_dark">#C62828</color>
+    <color name="accent_red_light">#E57373</color>
+
+    <!-- Background Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="background_light">#F5F5F5</color>
+    <color name="background_gray">#EEEEEE</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <!-- Status Colors -->
+    <color name="success_green">#4CAF50</color>
+    <color name="success_green_dark">#388E3C</color>
+    <color name="error_red">#F44336</color>
+    <color name="error_red_dark">#D32F2F</color>
+    <color name="warning_orange">#FF9800</color>
+
+    <!-- Card & Surface Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F5F5F5</color>
+
+    <!-- Border Colors -->
+    <color name="border_color">#E0E0E0</color>
+    <color name="border_focused">#1A237E</color>
+    <color name="border_error">#F44336</color>
+
+    <!-- Transparent Colors -->
+    <color name="overlay_dark">#80000000</color>
+    <color name="overlay_light">#4DFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Aliases for easier reference -->
+    <color name="primary">@color/primary_dark_blue</color>
+    <color name="accent">@color/accent_red</color>
+    <color name="background">@color/background_light</color>
+    <color name="divider">@color/border_color</color>
+</resources>

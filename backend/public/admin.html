@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Visitor Management</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <h1>🔐 Admin Dashboard</h1>
+            <p class="subtitle">Visitor Management System</p>
+            <div class="login-form">
+                <input type="password" id="passwordInput" placeholder="Enter admin password" autocomplete="off">
+                <button onclick="login()" class="btn-primary">Login</button>
+                <p id="loginError" class="error-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboardScreen" class="screen">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>📊 Admin Dashboard</h1>
+            <div class="header-actions">
+                <button onclick="refreshAll()" class="btn-refresh">🔄 Refresh</button>
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('active')">Active Visitors</button>
+            <button class="tab-btn" onclick="showTab('logs')">All Logs</button>
+            <button class="tab-btn" onclick="showTab('sharepoint')">SharePoint</button>
+        </div>
+
+        <!-- Active Visitors Tab -->
+        <div id="activeTab" class="tab-content active">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3 id="activeCount">0</h3>
+                    <p>Active Visitors</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="visitorCount">0</h3>
+                    <p>Visitors</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="contractorCount">0</h3>
+                    <p>Contractors</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="activeVisitorsTable">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Company</th>
+                            <th>Visiting</th>
+                            <th>Sign-In Time</th>
+                            <th>Duration</th>
+                            <th>Purpose</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activeVisitorsBody">
+                        <!-- Data loaded dynamically -->
+                    </tbody>
+                </table>
+                <p id="activeEmpty" class="empty-message" style="display:none;">No active visitors</p>
+            </div>
+        </div>
+
+        <!-- All Logs Tab -->
+        <div id="logsTab" class="tab-content">
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterLogs('all')">All</button>
+                <button class="filter-btn" onclick="filterLogs('signed_in')">Signed In</button>
+                <button class="filter-btn" onclick="filterLogs('signed_out')">Signed Out</button>
+                <button class="filter-btn" onclick="filterLogs('today')">Today</button>
+            </div>
+
+            <div class="table-container">
+                <table id="logsTable">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Company</th>
+                            <th>Phone</th>
+                            <th>Visiting</th>
+                            <th>Sign-In</th>
+                            <th>Sign-Out</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsBody">
+                        <!-- Data loaded dynamically -->
+                    </tbody>
+                </table>
+                <p id="logsEmpty" class="empty-message" style="display:none;">No records found</p>
+            </div>
+        </div>
+
+        <!-- SharePoint Tab -->
+        <div id="sharepointTab" class="tab-content">
+            <div class="sharepoint-container">
+                <div class="sp-status-card">
+                    <h2>SharePoint Status</h2>
+                    <div class="status-indicator">
+                        <span id="spStatusDot" class="status-dot offline"></span>
+                        <span id="spStatusText">Not configured</span>
+                    </div>
+                    <p id="spLastSync">Last sync: Never</p>
+                </div>
+
+                <div class="sp-controls-card">
+                    <h2>Sync Controls</h2>
+                    <button onclick="syncToSharePoint()" class="btn-primary btn-large">
+                        📤 Sync to SharePoint Now
+                    </button>
+                    <button onclick="readFromSharePoint()" class="btn-secondary btn-large">
+                        📥 Read from SharePoint
+                    </button>
+                    <div id="spProgress" class="progress-bar" style="display:none;">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p id="spMessage" class="sp-message"></p>
+                </div>
+
+                <div class="sp-stats-card">
+                    <h2>Statistics</h2>
+                    <div class="stats-grid">
+                        <div>
+                            <h3 id="spTotalRecords">0</h3>
+                            <p>Total Records</p>
+                        </div>
+                        <div>
+                            <h3 id="spSyncedRecords">0</h3>
+                            <p>Synced</p>
+                        </div>
+                        <div>
+                            <h3 id="spUnsyncedRecords">0</h3>
+                            <p>Unsynced</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photoModal" class="photo-modal">
+        <span class="modal-close" onclick="closePhotoModal()">&times;</span>
+        <img id="modalPhoto" class="modal-photo" alt="Visitor Photo">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

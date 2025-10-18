@@ -1,0 +1,412 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-67:12
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-67:12
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-67:12
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-67:12
+MERGED from [androidx.databinding:viewbinding:8.11.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b9037a9b5e854f4401ab7884ad4a710e/transformed/viewbinding-8.11.2/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5868068ef87ff85503b0762c655a4ed3/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.camera:camera-video:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/1d14195cecc9706b7a6ee8b195202ab6/transformed/camera-video-1.3.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-lifecycle:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/19ccf5f5882303578a53b60048a03de0/transformed/camera-lifecycle-1.3.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:17:1-36:12
+MERGED from [androidx.camera:camera-core:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b55894fe229a74bf250c4178287459a/transformed/camera-core-1.3.1/AndroidManifest.xml:17:1-36:12
+MERGED from [androidx.camera:camera-view:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/739f1f376dbad88e05d70e9232d3e580/transformed/camera-view-1.3.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/3392a6b5398c2a9ef1889deef8b733cf/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b57da93e9f1e3187af800c7c71e8e1da/transformed/appcompat-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/12ea12b50944409f08eed83febce532b/transformed/recyclerview-1.3.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/87afafed79dc7fe8e82fd18e8c3bb7e4/transformed/viewpager2-1.1.0-beta02/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment:1.6.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39b7b7071eaf4c3ee82d5e2ec9e82e6f/transformed/fragment-1.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/29fb1f8109a3bba321795b497543bfb2/transformed/fragment-ktx-1.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.8.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/13a3bbbfa82e3bff1398a1c03eab309b/transformed/activity-1.8.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.8.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/daa75cb206a0127d9eebb432eba06ae5/transformed/activity-ktx-1.8.2/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/27122e7214e778795fef5da38262fbb7/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3944293937340b34f013e49dff04ba3/transformed/emoji2-views-helper-1.2.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/4e084c22a1105f2d522f07c54bd61668/transformed/drawerlayout-1.1.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/55ae551f6b9830c8f0522e1bb5a3a0e3/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/fa3843413ef0050a2dbfa08bf1304b84/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b4193bede606bfb8ac026103e65a864/transformed/transition-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6bba5e4e93f49b32fd1dc1bea0a5557e/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/bc954ece21c3f8c188abbe108bf3e073/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/214fc0fe6658f45cc82f67ce744323af/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/8c5ff5b9bda1afeda2852f6b8e40f245/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d1b125ef416935bca5058040d1a11d6c/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/26bdeb2882737a0d60721c678bbe098f/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a38c5e7ca7e6980bbc764d5d146e456c/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/766f20e4143df25a806db384e9db1d22/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c0e084f9a9cb53eed8962b7b7d0747f1/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/255f17c1c26797014886726ba0ba2348/transformed/savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c0915a9f907de51311dbbd4cc75bbfe8/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/673ca8c36a67b520baa5b4185630b865/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/be950301e67608c72a9cc9e864873a6a/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a5eab18a01f088eccaeb061587b1a36a/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b2a9f6ca9bd0831aec55400c08b35975/transformed/lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/9cb98a45619771c0bec2ebd882965f59/transformed/lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d9c8d30adfe54b03400d6d5537a7dfc8/transformed/lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/7827192834fad844d7325311b45c6141/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a22d71d3fc9ba82880549eda88204881/transformed/core-ktx-1.12.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5ae486a28d0b808481211c46fd5df6a5/transformed/annotation-experimental-1.3.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6a2f69c50ba0c502bb852e2e8685e066/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f3dd57531e0449fd049a698c642bebe8/transformed/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d9a5fae94f7daecd896c239296908903/transformed/exifinterface-1.3.2/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/45fc8f3d401197cb17fe8e8109787ff9/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2dbd96f0bb5705ee206c52e0d929db10/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c54ff27411d85f1ed4061b78fc6abd05/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/35215caeb63e2aaa8e19bae4b533351c/transformed/tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2e6172d8c259ee5fc80ae4431bde2421/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d095d13e7d9b9e643d53f8dadbc3638f/transformed/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f8b7a61a21a2d5aaf1e7605db6a0c14f/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f4824ec621997210efa749b5f5a73601/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
+	package
+		INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:6:5-67
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:6:22-64
+uses-permission#android.permission.CAMERA
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:7:5-65
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:7:22-62
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:8:5-79
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:8:22-76
+uses-feature#android.hardware.camera
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:11:5-13:35
+	android:required
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:13:9-32
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:12:9-47
+uses-feature#android.hardware.camera.autofocus
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:14:5-16:36
+	android:required
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:16:9-33
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:15:9-57
+application
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:18:5-65:19
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:18:5-65:19
+MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5868068ef87ff85503b0762c655a4ed3/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5868068ef87ff85503b0762c655a4ed3/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
+MERGED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-core:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b55894fe229a74bf250c4178287459a/transformed/camera-core-1.3.1/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-core:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b55894fe229a74bf250c4178287459a/transformed/camera-core-1.3.1/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2dbd96f0bb5705ee206c52e0d929db10/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2dbd96f0bb5705ee206c52e0d929db10/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c54ff27411d85f1ed4061b78fc6abd05/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c54ff27411d85f1ed4061b78fc6abd05/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:21:9-35
+	android:label
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:20:9-41
+	tools:targetApi
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:24:9-29
+	android:allowBackup
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:19:9-35
+	android:theme
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:22:9-55
+	android:usesCleartextTraffic
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:23:9-44
+activity#com.visitormanagement.app.ui.main.MainActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:27:9-35:20
+	android:screenOrientation
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:30:13-50
+	android:exported
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:29:13-36
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:28:13-49
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:31:13-34:29
+action#android.intent.action.MAIN
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:32:17-69
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:32:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:33:17-77
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:33:27-74
+activity#com.visitormanagement.app.ui.signin.SignInActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:38:9-41:58
+	android:screenOrientation
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:40:13-50
+	android:windowSoftInputMode
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:41:13-55
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:39:13-53
+activity#com.visitormanagement.app.ui.signout.SignOutActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:44:9-46:53
+	android:screenOrientation
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:46:13-50
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:45:13-55
+activity#com.visitormanagement.app.ui.admin.AdminDashboardActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:49:9-51:53
+	android:screenOrientation
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:51:13-50
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:50:13-60
+activity#com.visitormanagement.app.ui.camera.CameraActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:54:9-56:53
+	android:screenOrientation
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:56:13-50
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:55:13-53
+uses-sdk
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+MERGED from [androidx.databinding:viewbinding:8.11.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b9037a9b5e854f4401ab7884ad4a710e/transformed/viewbinding-8.11.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.databinding:viewbinding:8.11.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b9037a9b5e854f4401ab7884ad4a710e/transformed/viewbinding-8.11.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5868068ef87ff85503b0762c655a4ed3/transformed/constraintlayout-2.1.4/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5868068ef87ff85503b0762c655a4ed3/transformed/constraintlayout-2.1.4/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.camera:camera-video:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/1d14195cecc9706b7a6ee8b195202ab6/transformed/camera-video-1.3.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-video:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/1d14195cecc9706b7a6ee8b195202ab6/transformed/camera-video-1.3.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-lifecycle:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/19ccf5f5882303578a53b60048a03de0/transformed/camera-lifecycle-1.3.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-lifecycle:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/19ccf5f5882303578a53b60048a03de0/transformed/camera-lifecycle-1.3.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-core:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b55894fe229a74bf250c4178287459a/transformed/camera-core-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-core:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b55894fe229a74bf250c4178287459a/transformed/camera-core-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-view:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/739f1f376dbad88e05d70e9232d3e580/transformed/camera-view-1.3.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-view:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/739f1f376dbad88e05d70e9232d3e580/transformed/camera-view-1.3.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/3392a6b5398c2a9ef1889deef8b733cf/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/3392a6b5398c2a9ef1889deef8b733cf/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b57da93e9f1e3187af800c7c71e8e1da/transformed/appcompat-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b57da93e9f1e3187af800c7c71e8e1da/transformed/appcompat-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/12ea12b50944409f08eed83febce532b/transformed/recyclerview-1.3.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/12ea12b50944409f08eed83febce532b/transformed/recyclerview-1.3.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/87afafed79dc7fe8e82fd18e8c3bb7e4/transformed/viewpager2-1.1.0-beta02/AndroidManifest.xml:5:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/87afafed79dc7fe8e82fd18e8c3bb7e4/transformed/viewpager2-1.1.0-beta02/AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.6.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39b7b7071eaf4c3ee82d5e2ec9e82e6f/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.6.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39b7b7071eaf4c3ee82d5e2ec9e82e6f/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/29fb1f8109a3bba321795b497543bfb2/transformed/fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/29fb1f8109a3bba321795b497543bfb2/transformed/fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/13a3bbbfa82e3bff1398a1c03eab309b/transformed/activity-1.8.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/13a3bbbfa82e3bff1398a1c03eab309b/transformed/activity-1.8.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/daa75cb206a0127d9eebb432eba06ae5/transformed/activity-ktx-1.8.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/daa75cb206a0127d9eebb432eba06ae5/transformed/activity-ktx-1.8.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/27122e7214e778795fef5da38262fbb7/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/27122e7214e778795fef5da38262fbb7/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3944293937340b34f013e49dff04ba3/transformed/emoji2-views-helper-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3944293937340b34f013e49dff04ba3/transformed/emoji2-views-helper-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/4e084c22a1105f2d522f07c54bd61668/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/4e084c22a1105f2d522f07c54bd61668/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/55ae551f6b9830c8f0522e1bb5a3a0e3/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/55ae551f6b9830c8f0522e1bb5a3a0e3/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/fa3843413ef0050a2dbfa08bf1304b84/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/fa3843413ef0050a2dbfa08bf1304b84/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b4193bede606bfb8ac026103e65a864/transformed/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b4193bede606bfb8ac026103e65a864/transformed/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6bba5e4e93f49b32fd1dc1bea0a5557e/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6bba5e4e93f49b32fd1dc1bea0a5557e/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/bc954ece21c3f8c188abbe108bf3e073/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/bc954ece21c3f8c188abbe108bf3e073/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/214fc0fe6658f45cc82f67ce744323af/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/214fc0fe6658f45cc82f67ce744323af/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/8c5ff5b9bda1afeda2852f6b8e40f245/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/8c5ff5b9bda1afeda2852f6b8e40f245/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d1b125ef416935bca5058040d1a11d6c/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d1b125ef416935bca5058040d1a11d6c/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/26bdeb2882737a0d60721c678bbe098f/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/26bdeb2882737a0d60721c678bbe098f/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a38c5e7ca7e6980bbc764d5d146e456c/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a38c5e7ca7e6980bbc764d5d146e456c/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/766f20e4143df25a806db384e9db1d22/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/766f20e4143df25a806db384e9db1d22/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c0e084f9a9cb53eed8962b7b7d0747f1/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c0e084f9a9cb53eed8962b7b7d0747f1/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/255f17c1c26797014886726ba0ba2348/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/255f17c1c26797014886726ba0ba2348/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c0915a9f907de51311dbbd4cc75bbfe8/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c0915a9f907de51311dbbd4cc75bbfe8/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/673ca8c36a67b520baa5b4185630b865/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/673ca8c36a67b520baa5b4185630b865/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/be950301e67608c72a9cc9e864873a6a/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/be950301e67608c72a9cc9e864873a6a/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a5eab18a01f088eccaeb061587b1a36a/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a5eab18a01f088eccaeb061587b1a36a/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b2a9f6ca9bd0831aec55400c08b35975/transformed/lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b2a9f6ca9bd0831aec55400c08b35975/transformed/lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/9cb98a45619771c0bec2ebd882965f59/transformed/lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/9cb98a45619771c0bec2ebd882965f59/transformed/lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d9c8d30adfe54b03400d6d5537a7dfc8/transformed/lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d9c8d30adfe54b03400d6d5537a7dfc8/transformed/lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/7827192834fad844d7325311b45c6141/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/7827192834fad844d7325311b45c6141/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a22d71d3fc9ba82880549eda88204881/transformed/core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a22d71d3fc9ba82880549eda88204881/transformed/core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5ae486a28d0b808481211c46fd5df6a5/transformed/annotation-experimental-1.3.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5ae486a28d0b808481211c46fd5df6a5/transformed/annotation-experimental-1.3.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6a2f69c50ba0c502bb852e2e8685e066/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6a2f69c50ba0c502bb852e2e8685e066/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f3dd57531e0449fd049a698c642bebe8/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f3dd57531e0449fd049a698c642bebe8/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d9a5fae94f7daecd896c239296908903/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d9a5fae94f7daecd896c239296908903/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/45fc8f3d401197cb17fe8e8109787ff9/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/45fc8f3d401197cb17fe8e8109787ff9/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2dbd96f0bb5705ee206c52e0d929db10/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2dbd96f0bb5705ee206c52e0d929db10/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c54ff27411d85f1ed4061b78fc6abd05/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c54ff27411d85f1ed4061b78fc6abd05/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/35215caeb63e2aaa8e19bae4b533351c/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/35215caeb63e2aaa8e19bae4b533351c/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2e6172d8c259ee5fc80ae4431bde2421/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2e6172d8c259ee5fc80ae4431bde2421/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d095d13e7d9b9e643d53f8dadbc3638f/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d095d13e7d9b9e643d53f8dadbc3638f/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f8b7a61a21a2d5aaf1e7605db6a0c14f/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f8b7a61a21a2d5aaf1e7605db6a0c14f/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f4824ec621997210efa749b5f5a73601/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f4824ec621997210efa749b5f5a73601/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
+	android:targetSdkVersion
+		INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
+service#androidx.camera.core.impl.MetadataHolderService
+ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:24:9-33:19
+MERGED from [androidx.camera:camera-core:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b55894fe229a74bf250c4178287459a/transformed/camera-core-1.3.1/AndroidManifest.xml:29:9-33:78
+MERGED from [androidx.camera:camera-core:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/2b55894fe229a74bf250c4178287459a/transformed/camera-core-1.3.1/AndroidManifest.xml:29:9-33:78
+	tools:node
+		ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:29:13-31
+	android:enabled
+		ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:26:13-36
+	android:exported
+		ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:28:13-75
+	android:name
+		ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:25:13-75
+meta-data#androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER
+ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:30:13-32:89
+	android:value
+		ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:32:17-86
+	android:name
+		ADDED from [androidx.camera:camera-camera2:1.3.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/252f247e6882c242d4c9f4dff81aac7c/transformed/camera-camera2-1.3.1/AndroidManifest.xml:31:17-103
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c54ff27411d85f1ed4061b78fc6abd05/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c54ff27411d85f1ed4061b78fc6abd05/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/406ae3dc3770b513b79e4e6eef578f9b/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+permission#com.visitormanagement.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+uses-permission#com.visitormanagement.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f7edf6d0ae4b48046693fc5b87e56b67/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/39e95b43a25e23608f3758bd2832277e/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92

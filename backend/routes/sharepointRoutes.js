@@ -1,0 +1,103 @@
+const express = require('express');
+const { param, validationResult } = require('express-validator');
+const sharepointService = require('../services/sharepointService');
+
+const router = express.Router();
+
+// Validation middleware
+const handleValidationErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: errors.array()
+    });
+  }
+  next();
+};
+
+// POST /api/sharepoint/sync - Sync all unsynced records to SharePoint
+router.post('/sync', async (req, res) => {
+  try {
+    const result = await sharepointService.syncAllUnsynced();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error syncing to SharePoint:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to sync to SharePoint',
+      error: error.message
+    });
+  }
+});
+
+// POST /api/sharepoint/sync/:id - Sync specific record to SharePoint
+router.post('/sync/:id', [
+  param('id').isInt().withMessage('ID must be a valid integer')
+], handleValidationErrors, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await sharepointService.syncRecord(parseInt(id));
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error syncing record to SharePoint:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to sync record to SharePoint',
+      error: error.message
+    });
+  }
+});
+
+// GET /api/sharepoint/read - Read data from SharePoint Excel
+router.get('/read', async (req, res) => {
+  try {
+    const result = await sharepointService.readFromSharePoint();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error reading from SharePoint:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to read from SharePoint',
+      error: error.message
+    });
+  }
+});
+
+// GET /api/sharepoint/status - Check SharePoint integration status
+router.get('/status', async (req, res) => {
+  try {
+    const isInitialized = await sharepointService.initialize();
+
+    res.json({
+      success: true,
+      enabled: sharepointService.enabled,
+      initialized: isInitialized,
+      configured: !!(sharepointService.tenantId && sharepointService.clientId && sharepointService.clientSecret)
+    });
+  } catch (error) {
+    console.error('Error checking SharePoint status:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to check SharePoint status',
+      error: error.message
+    });
+  }
+});
+
+module.exports = router;
