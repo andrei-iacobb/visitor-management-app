@@ -3,6 +3,10 @@ package com.visitormanagement.app.data.api
 import com.visitormanagement.app.data.model.ApiResponse
 import com.visitormanagement.app.data.model.SignIn
 import com.visitormanagement.app.data.model.SignInRequest
+import com.visitormanagement.app.data.model.ContractorVerificationRequest
+import com.visitormanagement.app.data.model.ContractorVerificationResponse
+import com.visitormanagement.app.data.model.VisitorDocument
+import com.visitormanagement.app.data.model.VisitorDocumentPDF
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -61,6 +65,23 @@ interface ApiService {
     ): Response<ApiResponse<SignIn>>
 
     /**
+     * Verify if a contractor is approved
+     */
+    @POST("contractors/verify")
+    suspend fun verifyContractor(
+        @Body request: ContractorVerificationRequest
+    ): Response<ContractorVerificationResponse>
+
+    /**
+     * Get all approved contractors
+     */
+    @GET("contractors/approved")
+    suspend fun getApprovedContractors(
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int? = null
+    ): Response<ApiResponse<Any>>
+
+    /**
      * Health check endpoint
      */
     @GET("/health")
@@ -77,4 +98,51 @@ interface ApiService {
      */
     @GET("sharepoint/read")
     suspend fun readFromSharePoint(): Response<ApiResponse<Any>>
+
+    /**
+     * Get visitor acknowledgment document (text version)
+     */
+    @GET("documents/visitor-acknowledgment")
+    suspend fun getVisitorDocument(): Response<ApiResponse<VisitorDocument>>
+
+    /**
+     * Get visitor acknowledgment document (PDF version with base64)
+     */
+    @GET("documents/visitor-acknowledgment/pdf/preview")
+    suspend fun getVisitorDocumentPDF(): Response<ApiResponse<VisitorDocumentPDF>>
+
+    /**
+     * Get safety requirements PDF (comprehensive safety document)
+     */
+    @GET("documents/visitor-safety-requirements/pdf/preview")
+    suspend fun getSafetyRequirementsPDF(): Response<ApiResponse<VisitorDocumentPDF>>
+
+    /**
+     * Log document acknowledgment
+     */
+    @POST("documents/acknowledge")
+    suspend fun acknowledgeDocument(
+        @Body request: Map<String, Any>? = null
+    ): Response<ApiResponse<Any>>
+
+    /**
+     * Get PDF document by file name
+     * @param fileName The PDF file name (e.g., "VISITOR_FORM.pdf")
+     */
+    @GET("documents/pdf/{fileName}")
+    suspend fun getPDF(
+        @Path("fileName") fileName: String
+    ): Response<ApiResponse<VisitorDocumentPDF>>
+
+    /**
+     * Get default PDF (first available PDF in public folder)
+     */
+    @GET("documents/default")
+    suspend fun getDefaultPDF(): Response<ApiResponse<VisitorDocumentPDF>>
+
+    /**
+     * List all available PDFs in public folder
+     */
+    @GET("documents/list")
+    suspend fun listAvailablePDFs(): Response<ApiResponse<Any>>
 }

@@ -441,73 +441,172 @@ tbody tr:hover {
     font-size: 0.9em;
 }
 
-/* Photo Thumbnails */
-.photo-thumbnail {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 2px solid #e0e0e0;
-}
 
-.photo-thumbnail:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.no-photo {
-    display: inline-block;
-    font-size: 11px;
-    color: #999;
-    font-style: italic;
-}
-
-/* Photo Modal */
-.photo-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    justify-content: center;
-    align-items: center;
+/* Contractors Tab */
+.contractors-container {
+    display: flex;
     flex-direction: column;
+    gap: 30px;
 }
 
-.modal-close {
-    position: absolute;
-    top: 20px;
-    right: 40px;
+.form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-card h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-message.success {
+    background: #E8F5E9;
+    color: #388E3C;
+}
+
+.form-message.error {
+    background: #FFEBEE;
+    color: #D32F2F;
+}
+
+.list-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.list-card h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.list-header h2 {
+    margin-bottom: 0;
+}
+
+.list-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    padding: 10px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    min-width: 250px;
+    transition: border-color 0.3s;
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.badge-approved {
+    background: #E8F5E9;
+    color: #388E3C;
+}
+
+.badge-pending {
+    background: #FFF3E0;
+    color: #F57C00;
+}
+
+.badge-denied {
+    background: #FFEBEE;
+    color: #D32F2F;
+}
+
+.btn-edit {
+    padding: 6px 12px;
+    background: #2196F3;
     color: white;
-    font-size: 40px;
-    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: background 0.3s;
+    margin-right: 5px;
 }
 
-.modal-close:hover {
-    color: #667eea;
+.btn-edit:hover {
+    background: #1976D2;
 }
 
-.modal-photo {
-    max-width: 90%;
-    max-height: 80%;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-.modal-caption {
+.btn-delete {
+    padding: 6px 12px;
+    background: #f44336;
     color: white;
-    font-size: 20px;
-    margin-top: 20px;
-    text-align: center;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
+
+.btn-delete:hover {
+    background: #da190b;
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -535,20 +634,5 @@ tbody tr:hover {
 
     .sharepoint-container {
         grid-template-columns: 1fr;
-    }
-
-    .photo-thumbnail {
-        width: 40px;
-        height: 40px;
-    }
-
-    .modal-close {
-        top: 10px;
-        right: 20px;
-        font-size: 30px;
-    }
-
-    .modal-caption {
-        font-size: 16px;
     }
 }

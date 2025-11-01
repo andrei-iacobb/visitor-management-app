@@ -1,6 +1,7 @@
 package com.visitormanagement.app.ui.admin
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -126,15 +127,19 @@ class AllLogsFragment : Fragment(), RefreshableFragment {
 
     private fun loadLogs() {
         showLoading(true)
+        Log.d("AllLogsFragment", "Starting to load logs...")
 
         lifecycleScope.launch {
             when (val result = repository.getSignIns(limit = 100)) {
                 is Result.Success -> {
+                    Log.d("AllLogsFragment", "Successfully loaded ${result.data.size} logs")
                     showLoading(false)
                     allLogs = result.data
                     applyFilter()
+                    Toast.makeText(context, "Loaded ${result.data.size} records", Toast.LENGTH_SHORT).show()
                 }
                 is Result.Error -> {
+                    Log.e("AllLogsFragment", "Error loading logs: ${result.message}", result.exception)
                     showLoading(false)
                     Toast.makeText(
                         context,
@@ -142,7 +147,9 @@ class AllLogsFragment : Fragment(), RefreshableFragment {
                         Toast.LENGTH_LONG
                     ).show()
                 }
-                else -> {}
+                else -> {
+                    Log.d("AllLogsFragment", "Unexpected result state")
+                }
             }
         }
     }

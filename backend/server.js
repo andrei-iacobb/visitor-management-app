@@ -8,6 +8,8 @@ const { testConnection } = require('./config/database');
 const signInRoutes = require('./routes/signInRoutes');
 const staffRoutes = require('./routes/staffRoutes');
 const sharepointRoutes = require('./routes/sharepointRoutes');
+const contractorValidationRoutes = require('./routes/contractorValidationRoutes');
+const documentRoutes = require('./routes/documentRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -51,6 +53,18 @@ app.use((req, res, next) => {
   next();
 });
 
+// Add cache control headers to prevent 304 caching issues
+app.use((req, res, next) => {
+  // Disable caching for API endpoints to ensure fresh data
+  if (req.url.startsWith('/api/')) {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.removeHeader('ETag');
+  }
+  next();
+});
+
 // ========================================
 // Routes
 // ========================================
@@ -69,6 +83,8 @@ app.get('/health', (req, res) => {
 app.use('/api/sign-ins', signInRoutes);
 app.use('/api/staff', staffRoutes);
 app.use('/api/sharepoint', sharepointRoutes);
+app.use('/api/contractors', contractorValidationRoutes);
+app.use('/api/documents', documentRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -80,6 +96,8 @@ app.get('/', (req, res) => {
       signIns: '/api/sign-ins',
       staff: '/api/staff',
       sharepoint: '/api/sharepoint',
+      contractors: '/api/contractors',
+      documents: '/api/documents',
       health: '/health'
     }
   });
@@ -152,7 +170,7 @@ const startServer = async () => {
     }
 
     // Start server
-    app.listen(PORT, () => {
+    global.server = app.listen(PORT, () => {
       console.log('========================================');
       console.log('=� Visitor Management API Server');
       console.log('========================================');
@@ -170,6 +188,10 @@ const startServer = async () => {
       console.log('   DELETE /api/sign-ins/:id          - Delete sign-in');
       console.log('   GET    /api/staff                 - Get all staff');
       console.log('   POST   /api/staff                 - Create staff member');
+      console.log('   POST   /api/contractors/verify    - Verify contractor approval');
+      console.log('   GET    /api/contractors/approved  - Get approved contractors');
+      console.log('   POST   /api/contractors           - Add contractor to whitelist');
+      console.log('   PUT    /api/contractors/:id       - Update contractor status');
       console.log('   POST   /api/sharepoint/sync       - Sync to SharePoint');
       console.log('   GET    /api/sharepoint/read       - Read from SharePoint');
       console.log('========================================');
@@ -182,11 +204,15 @@ const startServer = async () => {
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-  console.log('�  SIGTERM signal received: closing HTTP server');
-  server.close(() => {
-    console.log(' HTTP server closed');
+  console.log('✓ SIGTERM signal received: closing HTTP server');
+  if (global.server) {
+    global.server.close(() => {
+      console.log('✓ HTTP server closed');
+      process.exit(0);
+    });
+  } else {
     process.exit(0);
-  });
+  }
 });
 
 process.on('SIGINT', () => {

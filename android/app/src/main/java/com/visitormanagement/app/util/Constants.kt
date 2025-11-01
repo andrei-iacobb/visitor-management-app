@@ -8,7 +8,7 @@ object Constants {
     // IMPORTANT: Replace with your actual server IP address
     // For Android Emulator: use 10.0.2.2 to access host machine's localhost
     // For Physical Device: use your computer's IP address (e.g., 192.168.1.100)
-    const val BASE_URL = "http://192.168.1.153:3000/api/"
+    const val BASE_URL = "http://192.168.1.48:3000/api/"  // Physical device IP
 
     // Network timeouts
     const val TIMEOUT_SECONDS = 30L

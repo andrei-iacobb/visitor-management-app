@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.visitormanagement.app-mergeDebugResources-43:/values-zh-rHK/values-zh-rHK.xml",
+            "outputFile": "com.visitormanagement.app-mergeDebugResources-38:/values-zh-rHK/values-zh-rHK.xml",
             "map": [
                 {
                     "source": "/Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b57da93e9f1e3187af800c7c71e8e1da/transformed/appcompat-1.6.1/res/values-zh-rHK/values-zh-rHK.xml",

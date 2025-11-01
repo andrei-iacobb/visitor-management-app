@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.visitormanagement.app-mergeDebugResources-43:/values-en-rGB/values-en-rGB.xml",
+            "outputFile": "com.visitormanagement.app-mergeDebugResources-38:/values-en-rGB/values-en-rGB.xml",
             "map": [
                 {
                     "source": "/Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/res/values-en-rGB/values-en-rGB.xml",

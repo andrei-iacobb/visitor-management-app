@@ -1,26 +1,26 @@
 package com.visitormanagement.app.ui.signin
 
 import android.content.Intent
-import android.graphics.Bitmap
+import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.visitormanagement.app.R
+import com.visitormanagement.app.data.api.RetrofitClient
 import com.visitormanagement.app.data.model.*
 import com.visitormanagement.app.data.repository.VisitorRepository
-import com.visitormanagement.app.ui.camera.CameraActivity
+import com.visitormanagement.app.ui.document.DocumentAcknowledgmentDialog
 import com.visitormanagement.app.util.Constants
-import com.visitormanagement.app.util.ImageUtils
 import com.visitormanagement.app.util.ValidationUtils
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SignInActivity : AppCompatActivity() {
 
@@ -46,28 +46,13 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var progressBar: View
     private lateinit var btnSubmit: View
-    private lateinit var btnTakePhoto: MaterialButton
-    private lateinit var ivPhotoPreview: ImageView
-
-    // Photo data
-    private var photoBase64: String? = null
-
-    // Activity result launcher for camera
-    private val cameraLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val photoData = result.data?.getStringExtra(Constants.EXTRA_PHOTO_DATA)
-            if (photoData != null) {
-                photoBase64 = photoData
-                showPhotoPreview(photoData)
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        // Force landscape orientation and lock screen rotation
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         // Get visitor type from intent
         visitorType = intent.getStringExtra(Constants.EXTRA_VISITOR_TYPE) ?: VisitorType.VISITOR
@@ -89,10 +74,6 @@ class SignInActivity : AppCompatActivity() {
         // Setup listeners
         findViewById<View>(R.id.btnBack).setOnClickListener {
             finish()
-        }
-
-        btnTakePhoto.setOnClickListener {
-            launchCamera()
         }
 
         btnSubmit.setOnClickListener {
@@ -119,8 +100,6 @@ class SignInActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.progressBar)
         btnSubmit = findViewById(R.id.btnSubmit)
-        btnTakePhoto = findViewById(R.id.btnTakePhoto)
-        ivPhotoPreview = findViewById(R.id.ivPhotoPreview)
     }
 
     private fun submitSignIn() {
@@ -169,7 +148,107 @@ class SignInActivity : AppCompatActivity() {
             return
         }
 
-        // Create sign-in request
+        // If contractor, verify they're approved before proceeding
+        if (visitorType == VisitorType.CONTRACTOR) {
+            verifyContractorApproval(fullName, company)
+        } else {
+            // Visitor - proceed with sign-in
+            proceedWithSignIn(fullName, phone, email, company, purpose, visitingPerson, carReg)
+        }
+    }
+
+    /**
+     * Verify if contractor is approved before allowing sign-in
+     */
+    private fun verifyContractorApproval(contractorName: String, companyName: String?) {
+        showLoading(true)
+
+        lifecycleScope.launch {
+            try {
+                val verificationRequest = ContractorVerificationRequest(
+                    companyName = companyName ?: "",
+                    contractorName = contractorName
+                )
+
+                val response = RetrofitClient.apiService.verifyContractor(verificationRequest)
+
+                showLoading(false)
+
+                if (response.isSuccessful && response.body() != null) {
+                    val body = response.body()!!
+
+                    if (body.allowed) {
+                        // Contractor is approved - proceed with sign-in
+                        val fullName = etFullName.text?.toString()?.trim() ?: ""
+                        val phone = etPhone.text?.toString()?.trim() ?: ""
+                        val email = etEmail.text?.toString()?.trim()
+                        val company = etCompany.text?.toString()?.trim()
+                        val purpose = etPurpose.text?.toString()?.trim() ?: ""
+                        val visitingPerson = etVisitingPerson.text?.toString()?.trim() ?: ""
+                        val carReg = etCarReg.text?.toString()?.trim()
+
+                        proceedWithSignIn(fullName, phone, email, company, purpose, visitingPerson, carReg)
+                    } else {
+                        // Contractor is NOT approved - show rejection dialog
+                        showContractorRejectionDialog(body.message, body.reason)
+                    }
+                } else {
+                    // Handle API error
+                    val errorMessage = response.errorBody()?.string() ?: "Failed to verify contractor"
+                    handleContractorVerificationError(errorMessage)
+                }
+            } catch (e: Exception) {
+                showLoading(false)
+                Log.e("SignInActivity", "Error verifying contractor", e)
+                Toast.makeText(this@SignInActivity, "Error verifying contractor: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    /**
+     * Proceed with the actual sign-in after validation
+     */
+    private fun proceedWithSignIn(
+        fullName: String,
+        phone: String,
+        email: String?,
+        company: String?,
+        purpose: String,
+        visitingPerson: String,
+        carReg: String?
+    ) {
+        // Show document acknowledgment dialog first
+        // Note: No PDF file name specified - will auto-load the first available PDF from the public folder
+        val documentDialog = DocumentAcknowledgmentDialog(this, lifecycleScope)
+        documentDialog.show(
+            onAcknowledged = {
+                // Document was acknowledged - proceed with sign-in
+                submitSignInWithAcknowledgment(
+                    fullName, phone, email, company, purpose, visitingPerson, carReg,
+                    documentDialog.getAcknowledgmentTimestamp()
+                )
+            },
+            onCancelled = {
+                // User cancelled document - don't proceed
+                Toast.makeText(this, "Document acknowledgment is required to sign in", Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    /**
+     * Submit sign-in with document acknowledgment
+     */
+    private fun submitSignInWithAcknowledgment(
+        fullName: String,
+        phone: String,
+        email: String?,
+        company: String?,
+        purpose: String,
+        visitingPerson: String,
+        carReg: String?,
+        acknowledgedAt: String
+    ) {
+        // Create sign-in request with document acknowledgment
         val request = SignInRequest(
             visitorType = visitorType,
             fullName = fullName,
@@ -179,8 +258,10 @@ class SignInActivity : AppCompatActivity() {
             purposeOfVisit = purpose,
             carRegistration = if (carReg.isNullOrBlank()) null else carReg,
             visitingPerson = visitingPerson,
-            photo = photoBase64,
-            signature = null // TODO: Implement signature
+            photo = null,
+            signature = null,
+            documentAcknowledged = true,
+            documentAcknowledgmentTime = acknowledgedAt
         )
 
         // Submit to API
@@ -235,6 +316,49 @@ class SignInActivity : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Show rejection dialog when contractor is not approved
+     */
+    private fun showContractorRejectionDialog(message: String, reason: String?) {
+        val titleText = "Access Denied"
+        val detailedMessage = when (reason) {
+            "NOT_ON_APPROVED_LIST" -> {
+                "$message\n\nPlease contact your supervisor or administration to be added to the approved contractors list."
+            }
+            "PENDING_APPROVAL" -> {
+                "$message\n\nYour company is currently pending approval. Please check back later or contact administration."
+            }
+            "APPROVAL_EXPIRED" -> {
+                "$message\n\nPlease contact administration to renew your approval."
+            }
+            else -> {
+                "$message\n\nPlease contact administration for more information."
+            }
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle(titleText)
+            .setMessage(detailedMessage)
+            .setPositiveButton("OK") { _, _ ->
+                // Do nothing - stay on sign-in screen
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    /**
+     * Handle contractor verification errors
+     */
+    private fun handleContractorVerificationError(errorMessage: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Verification Error")
+            .setMessage("Unable to verify contractor status. Please try again.\n\nError: $errorMessage")
+            .setPositiveButton("OK") { _, _ ->
+                // User can retry
+            }
+            .show()
+    }
+
     private fun showLoading(show: Boolean) {
         progressBar.visibility = if (show) View.VISIBLE else View.GONE
         btnSubmit.isEnabled = !show
@@ -246,21 +370,5 @@ class SignInActivity : AppCompatActivity() {
         tilEmail.error = null
         tilPurpose.error = null
         tilVisitingPerson.error = null
-    }
-
-    private fun launchCamera() {
-        val intent = Intent(this, CameraActivity::class.java)
-        cameraLauncher.launch(intent)
-    }
-
-    private fun showPhotoPreview(photoBase64: String) {
-        val bitmap: Bitmap? = ImageUtils.base64ToBitmap(photoBase64)
-        if (bitmap != null) {
-            ivPhotoPreview.setImageBitmap(bitmap)
-            ivPhotoPreview.visibility = View.VISIBLE
-            btnTakePhoto.text = "✓ Photo Taken - Retake?"
-        } else {
-            Toast.makeText(this, "Error loading photo", Toast.LENGTH_SHORT).show()
-        }
     }
 }

@@ -1,5 +1,6 @@
 package com.visitormanagement.app.ui.signout
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,9 @@ class SignOutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_out)
+
+        // Force landscape orientation and lock screen rotation
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         repository = VisitorRepository()
 

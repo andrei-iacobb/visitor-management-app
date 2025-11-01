@@ -23,6 +23,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
+        <!-- FileProvider for secure file sharing -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <!-- Main Activity - LANDSCAPE ONLY -->
         <activity
             android:name=".ui.main.MainActivity"
@@ -48,11 +59,6 @@
         <!-- Admin Dashboard - LANDSCAPE ONLY -->
         <activity
             android:name=".ui.admin.AdminDashboardActivity"
-            android:screenOrientation="landscape" />
-
-        <!-- Camera Activity - LANDSCAPE ONLY -->
-        <activity
-            android:name=".ui.camera.CameraActivity"
             android:screenOrientation="landscape" />
 
         <!-- Signature Activity - LANDSCAPE -->

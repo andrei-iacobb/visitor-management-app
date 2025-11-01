@@ -73,7 +73,13 @@ data class SignInRequest(
 
     val photo: String? = null,
 
-    val signature: String? = null
+    val signature: String? = null,
+
+    @SerializedName("document_acknowledged")
+    val documentAcknowledged: Boolean = false,
+
+    @SerializedName("document_acknowledgment_time")
+    val documentAcknowledgmentTime: String? = null
 )
 
 /**

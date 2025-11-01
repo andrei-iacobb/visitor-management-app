@@ -37,6 +37,16 @@
         android:theme="@style/Theme.VisitorManagement"
         android:usesCleartextTraffic="true" >
 
+        <!-- FileProvider for secure file sharing -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.visitormanagement.app.fileprovider"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <!-- Main Activity - LANDSCAPE ONLY -->
         <activity
             android:name="com.visitormanagement.app.ui.main.MainActivity"
@@ -65,26 +75,12 @@
             android:name="com.visitormanagement.app.ui.admin.AdminDashboardActivity"
             android:screenOrientation="landscape" />
 
-        <!-- Camera Activity - LANDSCAPE ONLY -->
-        <activity
-            android:name="com.visitormanagement.app.ui.camera.CameraActivity"
-            android:screenOrientation="landscape" />
-
         <!-- Signature Activity - LANDSCAPE -->
         <!--
         <activity
             android:name=".ui.signature.SignatureActivity"
             android:screenOrientation="landscape" />
         -->
-
-        <service
-            android:name="androidx.camera.core.impl.MetadataHolderService"
-            android:enabled="false"
-            android:exported="false" >
-            <meta-data
-                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
-                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
-        </service>
 
         <provider
             android:name="androidx.startup.InitializationProvider"

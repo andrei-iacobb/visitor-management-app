@@ -50,13 +50,7 @@ const createSignInValidation = [
   body('visiting_person')
     .trim()
     .isLength({ min: 2, max: 255 })
-    .withMessage('Visiting person is required'),
-  body('photo')
-    .optional({ checkFalsy: true })
-    .isString(),
-  body('signature')
-    .optional({ checkFalsy: true })
-    .isString(),
+    .withMessage('Visiting person is required')
 ];
 
 // POST /api/sign-ins - Create new sign-in
@@ -71,14 +65,15 @@ router.post('/', createSignInValidation, handleValidationErrors, async (req, res
       purpose_of_visit,
       car_registration,
       visiting_person,
-      photo,
-      signature
+      document_acknowledged,
+      document_acknowledgment_time
     } = req.body;
 
     const query = `
       INSERT INTO sign_ins (
         visitor_type, full_name, phone_number, email, company_name,
-        purpose_of_visit, car_registration, visiting_person, photo, signature
+        purpose_of_visit, car_registration, visiting_person,
+        document_acknowledged, document_acknowledgment_time
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING *
     `;
@@ -92,8 +87,8 @@ router.post('/', createSignInValidation, handleValidationErrors, async (req, res
       purpose_of_visit,
       car_registration || null,
       visiting_person,
-      photo || null,
-      signature || null
+      document_acknowledged || false,
+      document_acknowledgment_time || null
     ];
 
     const result = await pool.query(query, values);

@@ -1,0 +1,1066 @@
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:13: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+        targetSdk = 34
+        ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "OldTargetApi":
+   When your application or sdk runs on a version of Android that is more
+   recent than your targetSdkVersion specifies that it has been tested with,
+   various compatibility modes kick in. This ensures that your application
+   continues to work, but it may look out of place. For example, if the
+   targetSdkVersion is less than 14, your app may get an option button in the
+   UI.
+
+   To fix this issue, set the targetSdkVersion to the highest available value.
+   Then test your app to make sure everything works correctly. You may want to
+   consult the compatibility notes to see what changes apply to each version
+   you are adding support for:
+   https://developer.android.com/reference/android/os/Build.VERSION_CODES.html
+   as well as follow this guide:
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.
+   html
+
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.html
+
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:8: Warning: A newer version of compileSdkVersion than 34 is available: 36 [GradleDependency]
+    compileSdk = 34
+    ~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:46: Warning: A newer version of androidx.core:core-ktx than 1.12.0 is available: 1.17.0 [GradleDependency]
+    implementation("androidx.core:core-ktx:1.12.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:47: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.1 [GradleDependency]
+    implementation("androidx.appcompat:appcompat:1.6.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:48: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:49: Warning: A newer version of androidx.activity:activity-ktx than 1.8.2 is available: 1.11.0 [GradleDependency]
+    implementation("androidx.activity:activity-ktx:1.8.2")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:50: Warning: A newer version of androidx.fragment:fragment-ktx than 1.6.2 is available: 1.8.9 [GradleDependency]
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:53: Warning: A newer version of com.google.android.material:material than 1.11.0 is available: 1.13.0 [GradleDependency]
+    implementation("com.google.android.material:material:1.11.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:69: Warning: A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.7.0 is available: 2.9.4 [GradleDependency]
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:70: Warning: A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.7.0 is available: 2.9.4 [GradleDependency]
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:71: Warning: A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.7.0 is available: 2.9.4 [GradleDependency]
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:77: Warning: A newer version of androidx.recyclerview:recyclerview than 1.3.2 is available: 1.4.0 [GradleDependency]
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:80: Warning: A newer version of androidx.viewpager2:viewpager2 than 1.0.0 is available: 1.1.0 [GradleDependency]
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:84: Warning: A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.3.0 [GradleDependency]
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:85: Warning: A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.7.0 [GradleDependency]
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:56: Warning: A newer version of com.squareup.retrofit2:retrofit than 2.9.0 is available: 3.0.0 [NewerVersionAvailable]
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:57: Warning: A newer version of com.squareup.retrofit2:converter-gson than 2.9.0 is available: 3.0.0 [NewerVersionAvailable]
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:58: Warning: A newer version of com.squareup.okhttp3:okhttp than 4.12.0 is available: 5.3.0 [NewerVersionAvailable]
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:59: Warning: A newer version of com.squareup.okhttp3:logging-interceptor than 4.12.0 is available: 5.3.0 [NewerVersionAvailable]
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:62: Warning: A newer version of com.google.code.gson:gson than 2.10.1 is available: 2.13.2 [NewerVersionAvailable]
+    implementation("com.google.code.gson:gson:2.10.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:65: Warning: A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-android than 1.7.3 is available: 1.10.2 [NewerVersionAvailable]
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/build.gradle.kts:66: Warning: A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-core than 1.7.3 is available: 1.10.2 [NewerVersionAvailable]
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NewerVersionAvailable":
+   This detector checks with a central repository to see if there are newer
+   versions available for the dependencies used by this project. This is
+   similar to the GradleDependency check, which checks for newer versions
+   available in the Android SDK tools and libraries, but this works with any
+   MavenCentral dependency, and connects to the library every time, which
+   makes it more flexible but also much slower.
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:40: Warning: Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios. [DiscouragedApi]
+            android:screenOrientation="landscape">
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:50: Warning: Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios. [DiscouragedApi]
+            android:screenOrientation="landscape"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:56: Warning: Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios. [DiscouragedApi]
+            android:screenOrientation="landscape" />
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:61: Warning: Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios. [DiscouragedApi]
+            android:screenOrientation="landscape" />
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "DiscouragedApi":
+   Discouraged APIs are allowed and are not deprecated, but they may be unfit
+   for common use (e.g. due to slow performance or subtle behavior).
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/document/DocumentAcknowledgmentDialog.kt:119: Warning: Using setJavaScriptEnabled can introduce XSS vulnerabilities into your application, review carefully [SetJavaScriptEnabled]
+                    javaScriptEnabled = true
+                    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SetJavaScriptEnabled":
+   Your code should not invoke setJavaScriptEnabled if you are not sure that
+   your app really requires JavaScript support.
+
+   https://goo.gle/SetJavaScriptEnabled
+   https://developer.android.com/training/articles/security-tips
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/ActiveVisitorsFragment.kt:181: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged()
+        ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/AllLogsFragment.kt:196: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged()
+        ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/signout/SignOutActivity.kt:184: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged()
+        ~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NotifyDataSetChanged":
+   The RecyclerView adapter's onNotifyDataSetChanged method does not specify
+   what about the data set has changed, forcing any observers to assume that
+   all existing items and structure may no longer be valid. `LayoutManager`s
+   will be forced to fully rebind and relayout all visible views.
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:39: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+        <LinearLayout
+         ~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:154: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+                <LinearLayout
+                 ~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:80: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+            <LinearLayout
+             ~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:60: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+        <LinearLayout
+         ~~~~~~~~~~~~
+
+   Explanation for issues of type "DisableBaselineAlignment":
+   When a LinearLayout is used to distribute the space proportionally between
+   nested layouts, the baseline alignment property should be turned off to
+   make the layout computation faster.
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_admin_dashboard.xml:7: Warning: Possible overdraw: Root element paints background @color/background with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/background">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:8: Warning: Possible overdraw: Root element paints background @color/background_light with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/background_light"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:7: Warning: Possible overdraw: Root element paints background @color/background_light with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/background_light"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:7: Warning: Possible overdraw: Root element paints background @color/background_light with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/background_light"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/dialog_document_acknowledgment.xml:6: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/white"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:7: Warning: Possible overdraw: Root element paints background @color/background with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/background">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_all_logs.xml:7: Warning: Possible overdraw: Root element paints background @color/background with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/background">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:6: Warning: Possible overdraw: Root element paints background @color/background with a theme that also paints a background (inferred theme is @style/Theme.VisitorManagement) [Overdraw]
+    android:background="@color/background">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "Overdraw":
+   If you set a background drawable on a root view, then you should use a
+   custom theme where the theme background is null. Otherwise, the theme
+   background will be painted first, only to have your custom background
+   completely cover it; this is called "overdraw".
+
+   NOTE: This detector relies on figuring out which layouts are associated
+   with which activities based on scanning the Java code, and it's currently
+   doing that using an inexact pattern matching algorithm. Therefore, it can
+   incorrectly conclude which activity the layout is associated with and then
+   wrongly complain that a background-theme is hidden.
+
+   If you want your custom background on multiple pages, then you should
+   consider making a custom theme with your custom background and just using
+   that theme instead of a root element background.
+
+   Of course it's possible that your custom drawable is translucent and you
+   want it to be mixed with the background. However, you will get better
+   performance if you pre-mix the background with your drawable and use that
+   resulting image or color as a custom theme background instead.
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/xml/backup_rules.xml:2: Warning: The resource R.xml.backup_rules appears to be unused [UnusedResources]
+<full-backup-content>
+^
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/drawable/button_background_gray.xml:2: Warning: The resource R.drawable.button_background_gray appears to be unused [UnusedResources]
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/drawable/button_background_primary.xml:2: Warning: The resource R.drawable.button_background_primary appears to be unused [UnusedResources]
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:6: Warning: The resource R.color.primary_dark_blue_light appears to be unused [UnusedResources]
+    <color name="primary_dark_blue_light">#3949AB</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:10: Warning: The resource R.color.accent_red_dark appears to be unused [UnusedResources]
+    <color name="accent_red_dark">#C62828</color>
+           ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:11: Warning: The resource R.color.accent_red_light appears to be unused [UnusedResources]
+    <color name="accent_red_light">#E57373</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:22: Warning: The resource R.color.text_on_primary appears to be unused [UnusedResources]
+    <color name="text_on_primary">#FFFFFF</color>
+           ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:25: Warning: The resource R.color.success_green appears to be unused [UnusedResources]
+    <color name="success_green">#4CAF50</color>
+           ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:26: Warning: The resource R.color.success_green_dark appears to be unused [UnusedResources]
+    <color name="success_green_dark">#388E3C</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:28: Warning: The resource R.color.error_red_dark appears to be unused [UnusedResources]
+    <color name="error_red_dark">#D32F2F</color>
+           ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:29: Warning: The resource R.color.warning_orange appears to be unused [UnusedResources]
+    <color name="warning_orange">#FF9800</color>
+           ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:32: Warning: The resource R.color.card_background appears to be unused [UnusedResources]
+    <color name="card_background">#FFFFFF</color>
+           ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:33: Warning: The resource R.color.surface appears to be unused [UnusedResources]
+    <color name="surface">#FFFFFF</color>
+           ~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:34: Warning: The resource R.color.surface_variant appears to be unused [UnusedResources]
+    <color name="surface_variant">#F5F5F5</color>
+           ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:38: Warning: The resource R.color.border_focused appears to be unused [UnusedResources]
+    <color name="border_focused">#1A237E</color>
+           ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:39: Warning: The resource R.color.border_error appears to be unused [UnusedResources]
+    <color name="border_error">#F44336</color>
+           ~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:42: Warning: The resource R.color.overlay_dark appears to be unused [UnusedResources]
+    <color name="overlay_dark">#80000000</color>
+           ~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/colors.xml:44: Warning: The resource R.color.transparent appears to be unused [UnusedResources]
+    <color name="transparent">#00000000</color>
+           ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/xml/data_extraction_rules.xml:2: Warning: The resource R.xml.data_extraction_rules appears to be unused [UnusedResources]
+<data-extraction-rules>
+^
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:7: Warning: The resource R.string.btn_sign_in_visitor appears to be unused [UnusedResources]
+    <string name="btn_sign_in_visitor">Sign In Visitor</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:8: Warning: The resource R.string.btn_sign_in_contractor appears to be unused [UnusedResources]
+    <string name="btn_sign_in_contractor">Sign In Contractor</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:9: Warning: The resource R.string.btn_view_active appears to be unused [UnusedResources]
+    <string name="btn_view_active">View Active Sign-Ins</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:16: Warning: The resource R.string.sign_in_contractor_title appears to be unused [UnusedResources]
+    <string name="sign_in_contractor_title">Contractor Sign-In</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:17: Warning: The resource R.string.personal_info_section appears to be unused [UnusedResources]
+    <string name="personal_info_section">Personal Information</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:18: Warning: The resource R.string.visit_details_section appears to be unused [UnusedResources]
+    <string name="visit_details_section">Visit Details &amp; Media</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:21: Warning: The resource R.string.label_full_name appears to be unused [UnusedResources]
+    <string name="label_full_name">Full Name</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:22: Warning: The resource R.string.label_phone_number appears to be unused [UnusedResources]
+    <string name="label_phone_number">Phone Number</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:23: Warning: The resource R.string.label_email appears to be unused [UnusedResources]
+    <string name="label_email">Email Address</string>
+            ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:24: Warning: The resource R.string.label_company appears to be unused [UnusedResources]
+    <string name="label_company">Company Name</string>
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:25: Warning: The resource R.string.label_visiting_person appears to be unused [UnusedResources]
+    <string name="label_visiting_person">Person Visiting</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:26: Warning: The resource R.string.label_purpose appears to be unused [UnusedResources]
+    <string name="label_purpose">Purpose of Visit</string>
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:27: Warning: The resource R.string.label_car_registration appears to be unused [UnusedResources]
+    <string name="label_car_registration">Car Registration</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:30: Warning: The resource R.string.hint_full_name appears to be unused [UnusedResources]
+    <string name="hint_full_name">Enter full name</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:31: Warning: The resource R.string.hint_phone appears to be unused [UnusedResources]
+    <string name="hint_phone">Enter phone number</string>
+            ~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:32: Warning: The resource R.string.hint_email appears to be unused [UnusedResources]
+    <string name="hint_email">Enter email address</string>
+            ~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:33: Warning: The resource R.string.hint_company appears to be unused [UnusedResources]
+    <string name="hint_company">Enter company name</string>
+            ~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:34: Warning: The resource R.string.hint_visiting_person appears to be unused [UnusedResources]
+    <string name="hint_visiting_person">Who are you visiting?</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:35: Warning: The resource R.string.hint_purpose appears to be unused [UnusedResources]
+    <string name="hint_purpose">Purpose of visit</string>
+            ~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:36: Warning: The resource R.string.hint_car_registration appears to be unused [UnusedResources]
+    <string name="hint_car_registration">Enter car registration</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:39: Warning: The resource R.string.required_marker appears to be unused [UnusedResources]
+    <string name="required_marker">*</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:40: Warning: The resource R.string.required_field appears to be unused [UnusedResources]
+    <string name="required_field">* Required</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:43: Warning: The resource R.string.btn_capture_photo appears to be unused [UnusedResources]
+    <string name="btn_capture_photo">📸 Capture Photo</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:44: Warning: The resource R.string.btn_add_signature appears to be unused [UnusedResources]
+    <string name="btn_add_signature">✍️ Add Signature</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:45: Warning: The resource R.string.btn_complete_sign_in appears to be unused [UnusedResources]
+    <string name="btn_complete_sign_in">✓ COMPLETE SIGN-IN</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:46: Warning: The resource R.string.btn_sign_out appears to be unused [UnusedResources]
+    <string name="btn_sign_out">Sign Out</string>
+            ~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:47: Warning: The resource R.string.btn_clear_signature appears to be unused [UnusedResources]
+    <string name="btn_clear_signature">Clear</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:48: Warning: The resource R.string.btn_save_signature appears to be unused [UnusedResources]
+    <string name="btn_save_signature">✓ SAVE SIGNATURE</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:49: Warning: The resource R.string.btn_refresh appears to be unused [UnusedResources]
+    <string name="btn_refresh">🔄 Refresh</string>
+            ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:50: Warning: The resource R.string.btn_ok appears to be unused [UnusedResources]
+    <string name="btn_ok">OK</string>
+            ~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:51: Warning: The resource R.string.btn_cancel appears to be unused [UnusedResources]
+    <string name="btn_cancel">Cancel</string>
+            ~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:52: Warning: The resource R.string.btn_retry appears to be unused [UnusedResources]
+    <string name="btn_retry">Retry</string>
+            ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:53: Warning: The resource R.string.btn_back appears to be unused [UnusedResources]
+    <string name="btn_back">← Back</string>
+            ~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:56: Warning: The resource R.string.camera_instructions appears to be unused [UnusedResources]
+    <string name="camera_instructions">Align the person\'s face in the frame</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:57: Warning: The resource R.string.camera_capture appears to be unused [UnusedResources]
+    <string name="camera_capture">Capture</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:58: Warning: The resource R.string.camera_retake appears to be unused [UnusedResources]
+    <string name="camera_retake">Retake</string>
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:61: Warning: The resource R.string.signature_instructions appears to be unused [UnusedResources]
+    <string name="signature_instructions">Sign here with your finger</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:62: Warning: The resource R.string.signature_title appears to be unused [UnusedResources]
+    <string name="signature_title">Add Signature</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:65: Warning: The resource R.string.active_visitors_title appears to be unused [UnusedResources]
+    <string name="active_visitors_title">Active Sign-Ins</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:66: Warning: The resource R.string.currently_signed_in appears to be unused [UnusedResources]
+    <string name="currently_signed_in">Currently Signed In: %d</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:67: Warning: The resource R.string.no_active_visitors appears to be unused [UnusedResources]
+    <string name="no_active_visitors">No active sign-ins</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:68: Warning: The resource R.string.no_active_visitors_message appears to be unused [UnusedResources]
+    <string name="no_active_visitors_message">All visitors have signed out</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:69: Warning: The resource R.string.signed_in_at appears to be unused [UnusedResources]
+    <string name="signed_in_at">In: %s</string>
+            ~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:70: Warning: The resource R.string.visitor_type_visitor appears to be unused [UnusedResources]
+    <string name="visitor_type_visitor">Visitor</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:71: Warning: The resource R.string.visitor_type_contractor appears to be unused [UnusedResources]
+    <string name="visitor_type_contractor">Contractor</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:74: Warning: The resource R.string.sign_in_success appears to be unused [UnusedResources]
+    <string name="sign_in_success">Sign-in Successful!</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:75: Warning: The resource R.string.sign_in_success_message appears to be unused [UnusedResources]
+    <string name="sign_in_success_message">%s has been signed in</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:76: Warning: The resource R.string.sign_out_success appears to be unused [UnusedResources]
+    <string name="sign_out_success">Sign-out Successful!</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:77: Warning: The resource R.string.sign_out_success_message appears to be unused [UnusedResources]
+    <string name="sign_out_success_message">%s has been signed out</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:78: Warning: The resource R.string.photo_captured appears to be unused [UnusedResources]
+    <string name="photo_captured">Photo captured</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:79: Warning: The resource R.string.signature_saved appears to be unused [UnusedResources]
+    <string name="signature_saved">Signature saved</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:82: Warning: The resource R.string.error_required_field appears to be unused [UnusedResources]
+    <string name="error_required_field">This field is required</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:83: Warning: The resource R.string.error_invalid_email appears to be unused [UnusedResources]
+    <string name="error_invalid_email">Invalid email address</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:84: Warning: The resource R.string.error_invalid_phone appears to be unused [UnusedResources]
+    <string name="error_invalid_phone">Invalid phone number</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:85: Warning: The resource R.string.error_photo_required appears to be unused [UnusedResources]
+    <string name="error_photo_required">Photo is required</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:86: Warning: The resource R.string.error_signature_required appears to be unused [UnusedResources]
+    <string name="error_signature_required">Signature is required</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:87: Warning: The resource R.string.error_network appears to be unused [UnusedResources]
+    <string name="error_network">Network error. Please check your connection.</string>
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:88: Warning: The resource R.string.error_api appears to be unused [UnusedResources]
+    <string name="error_api">Unable to connect to server</string>
+            ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:89: Warning: The resource R.string.error_unknown appears to be unused [UnusedResources]
+    <string name="error_unknown">An unexpected error occurred</string>
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:90: Warning: The resource R.string.error_timeout appears to be unused [UnusedResources]
+    <string name="error_timeout">Request timed out. Please try again.</string>
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:91: Warning: The resource R.string.error_sign_out_failed appears to be unused [UnusedResources]
+    <string name="error_sign_out_failed">Failed to sign out. Please try again.</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:94: Warning: The resource R.string.validation_name_length appears to be unused [UnusedResources]
+    <string name="validation_name_length">Name must be at least 2 characters</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:95: Warning: The resource R.string.validation_phone_length appears to be unused [UnusedResources]
+    <string name="validation_phone_length">Phone number must be at least 10 digits</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:98: Warning: The resource R.string.confirm_sign_out_title appears to be unused [UnusedResources]
+    <string name="confirm_sign_out_title">Confirm Sign Out</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:99: Warning: The resource R.string.confirm_sign_out_message appears to be unused [UnusedResources]
+    <string name="confirm_sign_out_message">Are you sure you want to sign out %s?</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:100: Warning: The resource R.string.confirm_yes appears to be unused [UnusedResources]
+    <string name="confirm_yes">Yes</string>
+            ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:101: Warning: The resource R.string.confirm_no appears to be unused [UnusedResources]
+    <string name="confirm_no">No</string>
+            ~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:104: Warning: The resource R.string.loading appears to be unused [UnusedResources]
+    <string name="loading">Loading…</string>
+            ~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:105: Warning: The resource R.string.submitting appears to be unused [UnusedResources]
+    <string name="submitting">Submitting…</string>
+            ~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:106: Warning: The resource R.string.please_wait appears to be unused [UnusedResources]
+    <string name="please_wait">Please wait…</string>
+            ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:107: Warning: The resource R.string.signing_out appears to be unused [UnusedResources]
+    <string name="signing_out">Signing out…</string>
+            ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:110: Warning: The resource R.string.permission_camera_rationale appears to be unused [UnusedResources]
+    <string name="permission_camera_rationale">Camera permission is required to take photos</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:111: Warning: The resource R.string.permission_denied appears to be unused [UnusedResources]
+    <string name="permission_denied">Permission denied</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:112: Warning: The resource R.string.permission_settings appears to be unused [UnusedResources]
+    <string name="permission_settings">Open Settings</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:115: Warning: The resource R.string.cd_photo_preview appears to be unused [UnusedResources]
+    <string name="cd_photo_preview">Visitor photo preview</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:116: Warning: The resource R.string.cd_signature_preview appears to be unused [UnusedResources]
+    <string name="cd_signature_preview">Signature preview</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:117: Warning: The resource R.string.cd_back_button appears to be unused [UnusedResources]
+    <string name="cd_back_button">Back button</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:118: Warning: The resource R.string.cd_refresh_button appears to be unused [UnusedResources]
+    <string name="cd_refresh_button">Refresh list</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:119: Warning: The resource R.string.cd_clear_signature appears to be unused [UnusedResources]
+    <string name="cd_clear_signature">Clear signature</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:120: Warning: The resource R.string.cd_camera_capture appears to be unused [UnusedResources]
+    <string name="cd_camera_capture">Capture photo</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:123: Warning: The resource R.string.preview_photo appears to be unused [UnusedResources]
+    <string name="preview_photo">Photo Preview</string>
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:124: Warning: The resource R.string.preview_signature appears to be unused [UnusedResources]
+    <string name="preview_signature">Signature Preview</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:127: Warning: The resource R.string.empty_state_no_data appears to be unused [UnusedResources]
+    <string name="empty_state_no_data">No data available</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:130: Warning: The resource R.string.time_format_12h appears to be unused [UnusedResources]
+    <string name="time_format_12h">h:mm a</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/strings.xml:131: Warning: The resource R.string.date_format appears to be unused [UnusedResources]
+    <string name="date_format">MMM dd, yyyy</string>
+            ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:30: Warning: The resource R.style.TextAppearance_App appears to be unused [UnusedResources]
+    <style name="TextAppearance.App" parent="TextAppearance.Material3.BodyMedium" />
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:33: Warning: The resource R.style.TextAppearance_App_Headline1 appears to be unused [UnusedResources]
+    <style name="TextAppearance.App.Headline1" parent="TextAppearance.Material3.HeadlineLarge">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:39: Warning: The resource R.style.TextAppearance_App_Headline2 appears to be unused [UnusedResources]
+    <style name="TextAppearance.App.Headline2" parent="TextAppearance.Material3.HeadlineMedium">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:45: Warning: The resource R.style.TextAppearance_App_Body1 appears to be unused [UnusedResources]
+    <style name="TextAppearance.App.Body1" parent="TextAppearance.Material3.BodyLarge">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:50: Warning: The resource R.style.TextAppearance_App_Body2 appears to be unused [UnusedResources]
+    <style name="TextAppearance.App.Body2" parent="TextAppearance.Material3.BodyMedium">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:56: Warning: The resource R.style.Widget_App appears to be unused [UnusedResources]
+    <style name="Widget.App" parent="android:Widget" />
+           ~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:59: Warning: The resource R.style.Widget_App_Button appears to be unused [UnusedResources]
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+           ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:68: Warning: The resource R.style.Widget_App_Button_Primary appears to be unused [UnusedResources]
+    <style name="Widget.App.Button.Primary" parent="Widget.App.Button">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:73: Warning: The resource R.style.Widget_App_Button_Accent appears to be unused [UnusedResources]
+    <style name="Widget.App.Button.Accent" parent="Widget.App.Button">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:78: Warning: The resource R.style.Widget_App_Button_Outlined appears to be unused [UnusedResources]
+    <style name="Widget.App.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:87: Warning: The resource R.style.Widget_App_CardView appears to be unused [UnusedResources]
+    <style name="Widget.App.CardView" parent="Widget.Material3.CardView.Elevated">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:95: Warning: The resource R.style.Widget_App_TextInputLayout appears to be unused [UnusedResources]
+    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:108: Warning: The resource R.style.Widget_App_CardButton appears to be unused [UnusedResources]
+    <style name="Widget.App.CardButton">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:119: Warning: The resource R.style.TextAppearance_App_SectionHeader appears to be unused [UnusedResources]
+    <style name="TextAppearance.App.SectionHeader">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:127: Warning: The resource R.style.ThemeOverlay_App_Dialog appears to be unused [UnusedResources]
+    <style name="ThemeOverlay.App.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:132: Warning: The resource R.style.MaterialAlertDialog_Title appears to be unused [UnusedResources]
+    <style name="MaterialAlertDialog.Title" parent="MaterialAlertDialog.Material3.Title.Text">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/values/themes.xml:138: Warning: The resource R.style.SignatureViewStyle appears to be unused [UnusedResources]
+    <style name="SignatureViewStyle">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+   Available options:
+
+   **skip-libraries** (default is true):
+   Whether the unused resource check should skip reporting unused resources in libraries.
+
+   Many libraries will declare resources that are part of the library surface; other modules depending on the library will also reference the resources. To avoid reporting all these resources as unused (in the context of a library), the unused resource check normally skips reporting unused resources in libraries. Instead, run the unused resource check on the consuming app module (along with `checkDependencies=true`).
+
+   However, there are cases where you want to check that all the resources declared in a library are used; in that case, you can disable the skip option.
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UnusedResources">
+           <option name="skip-libraries" value="true" />
+       </issue>
+   </lint>
+   ```
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:18: Warning: Should explicitly set android:icon, there is no default [MissingApplicationIcon]
+    <application
+     ~~~~~~~~~~~
+
+   Explanation for issues of type "MissingApplicationIcon":
+   You should set an icon for the application as whole because there is no
+   default. This attribute must be set as a reference to a drawable resource
+   containing the image (for example @drawable/icon).
+
+   https://developer.android.com/studio/publish/preparing#publishing-configure
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/dialog_document_acknowledgment.xml:47: Warning: Buttons in button bars should be borderless; use style="?android:attr/buttonBarButtonStyle" (and ?android:attr/buttonBarStyle on the parent) [ButtonStyle]
+        <Button
+         ~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/dialog_document_acknowledgment.xml:58: Warning: Buttons in button bars should be borderless; use style="?android:attr/buttonBarButtonStyle" (and ?android:attr/buttonBarStyle on the parent) [ButtonStyle]
+        <Button
+         ~~~~~~
+
+   Explanation for issues of type "ButtonStyle":
+   Button bars typically use a borderless style for the buttons. Set the
+   style="?android:attr/buttonBarButtonStyle" attribute on each of the
+   buttons, and set style="?android:attr/buttonBarStyle" on the parent layout
+
+   https://d.android.com/r/studio-ui/designer/material/dialogs
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:78: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+                    android:textSize="10sp"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:94: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+                    android:textSize="10sp"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:121: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+                    android:textSize="10sp"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:137: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+                    android:textSize="10sp"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:166: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+                    android:textSize="10sp"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:182: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+                    android:textSize="10sp"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SmallSp":
+   Avoid using sizes smaller than 11sp.
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/util/ImageUtils.kt:63: Warning: Use the KTX extension function Bitmap.scale instead? [UseKtx]
+        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/util/ImageUtils.kt:140: Warning: Use the KTX function createBitmap instead? [UseKtx]
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UseKtx":
+   The Android KTX libraries decorates the Android platform SDK as well as
+   various libraries with more convenient extension functions available from
+   Kotlin, allowing you to use default parameters, named parameters, and
+   more.
+
+   Available options:
+
+   **remove-defaults** (default is true):
+   Whether to skip arguments that match the defaults provided by the extension.
+
+   Extensions often provide default values for some of the parameters. For example:
+   ```kotlin
+   fun Path.readLines(charset: Charset = Charsets.UTF_8): List<String> { return Files.readAllLines(this, charset) }
+   ```
+   This lint check will by default automatically omit parameters that match the default, so if your code was calling
+
+   ```kotlin
+   Files.readAllLines(file, Charset.UTF_8)
+   ```
+   lint would replace this with
+   ```kotlin
+   file.readLines()
+   ```
+   rather than
+
+   ```kotlin
+   file.readLines(Charset.UTF_8
+   ```
+   You can turn this behavior off using this option.
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UseKtx">
+           <option name="remove-defaults" value="true" />
+       </issue>
+   </lint>
+   ```
+
+   **require-present** (default is true):
+   Whether to only offer extensions already available.
+
+   This option lets you only have lint suggest extension replacements if those extensions are already available on the class path (in other words, you're already depending on the library containing the extension method.)
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UseKtx">
+           <option name="require-present" value="true" />
+       </issue>
+   </lint>
+   ```
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/document/DocumentAcknowledgmentDialog.kt:165: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        btnAgree.text = "I Acknowledge"
+                         ~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/SharePointFragment.kt:66: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        tvStatus.text = "Not configured"
+                         ~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/SharePointFragment.kt:67: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        tvLastSync.text = "Last sync: Never"
+                           ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/SharePointFragment.kt:123: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                    tvStatus.text = "Sync successful"
+                                     ~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/SharePointFragment.kt:124: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+                    tvLastSync.text = "Last sync: ${getCurrentTime()}"
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/SharePointFragment.kt:124: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                    tvLastSync.text = "Last sync: ${getCurrentTime()}"
+                                       ~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/SharePointFragment.kt:138: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                    tvStatus.text = "Sync failed"
+                                     ~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/admin/SharePointFragment.kt:149: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                tvStatus.text = "Connection error"
+                                 ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/signout/SignOutActivity.kt:217: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            tvDetails.text = "Visiting: ${signIn.visitingPerson} • Signed in: $signInTime"
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/signout/SignOutActivity.kt:217: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            tvDetails.text = "Visiting: ${signIn.visitingPerson} • Signed in: $signInTime"
+                              ~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/java/com/visitormanagement/app/ui/signout/SignOutActivity.kt:217: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            tvDetails.text = "Visiting: ${signIn.visitingPerson} • Signed in: $signInTime"
+                                                                ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SetTextI18n":
+   When calling TextView#setText
+   * Never call Number#toString() to format numbers; it will not handle
+   fraction separators and locale-specific digits properly. Consider using
+   String#format with proper format specifications (%d or %f) instead.
+   * Do not pass a string literal (e.g. "Hello") to display text. Hardcoded
+   text can not be properly translated to other languages. Consider using
+   Android resource strings instead.
+   * Do not build messages by concatenating text chunks. Such messages can not
+   be properly translated.
+
+   https://developer.android.com/guide/topics/resources/localization.html
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_admin_dashboard.xml:25: Warning: Hardcoded string "Back", should use @string resource [HardcodedText]
+            android:contentDescription="Back"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_admin_dashboard.xml:32: Warning: Hardcoded string "Admin Dashboard", should use @string resource [HardcodedText]
+            android:text="Admin Dashboard"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_admin_dashboard.xml:42: Warning: Hardcoded string "Refresh", should use @string resource [HardcodedText]
+            android:text="Refresh"
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:17: Warning: Hardcoded string "Admin Dashboard", should use @string resource [HardcodedText]
+        android:contentDescription="Admin Dashboard"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:83: Warning: Hardcoded string "VISITOR", should use @string resource [HardcodedText]
+                    android:text="VISITOR"
+                    ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:92: Warning: Hardcoded string "Sign in as a visitor", should use @string resource [HardcodedText]
+                    android:text="Sign in as a visitor"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:130: Warning: Hardcoded string "CONTRACTOR", should use @string resource [HardcodedText]
+                    android:text="CONTRACTOR"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:139: Warning: Hardcoded string "Sign in as a contractor", should use @string resource [HardcodedText]
+                    android:text="Sign in as a contractor"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:177: Warning: Hardcoded string "VIEW ACTIVE", should use @string resource [HardcodedText]
+                    android:text="VIEW ACTIVE"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_main.xml:186: Warning: Hardcoded string "View active sign-ins", should use @string resource [HardcodedText]
+                    android:text="View active sign-ins"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:33: Warning: Hardcoded string "← Back", should use @string resource [HardcodedText]
+            android:text="← Back"
+            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:60: Warning: Hardcoded string "Personal Information", should use @string resource [HardcodedText]
+                    android:text="Personal Information"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:73: Warning: Hardcoded string "Full Name *", should use @string resource [HardcodedText]
+                    android:hint="Full Name *"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:92: Warning: Hardcoded string "Phone Number *", should use @string resource [HardcodedText]
+                    android:hint="Phone Number *"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:111: Warning: Hardcoded string "Email Address", should use @string resource [HardcodedText]
+                    android:hint="Email Address"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:130: Warning: Hardcoded string "Company Name", should use @string resource [HardcodedText]
+                    android:hint="Company Name"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:154: Warning: Hardcoded string "Visit Details", should use @string resource [HardcodedText]
+                    android:text="Visit Details"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:167: Warning: Hardcoded string "Purpose of Visit *", should use @string resource [HardcodedText]
+                    android:hint="Purpose of Visit *"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:186: Warning: Hardcoded string "Person Visiting *", should use @string resource [HardcodedText]
+                    android:hint="Person Visiting *"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:205: Warning: Hardcoded string "Car Registration", should use @string resource [HardcodedText]
+                    android:hint="Car Registration"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:221: Warning: Hardcoded string "✓ COMPLETE SIGN-IN", should use @string resource [HardcodedText]
+                    android:text="✓ COMPLETE SIGN-IN"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:237: Warning: Hardcoded string "* Required fields", should use @string resource [HardcodedText]
+            android:text="* Required fields"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:15: Warning: Hardcoded string "Sign Out Visitor", should use @string resource [HardcodedText]
+        android:text="Sign Out Visitor"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:28: Warning: Hardcoded string "← Back", should use @string resource [HardcodedText]
+        android:text="← Back"
+        ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:38: Warning: Hardcoded string "Enter the visitor's full name to sign them out", should use @string resource [HardcodedText]
+        android:text="Enter the visitor's full name to sign them out"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:71: Warning: Hardcoded string "Full Name", should use @string resource [HardcodedText]
+                android:hint="Full Name"
+                ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:89: Warning: Hardcoded string "Search Visitor", should use @string resource [HardcodedText]
+                android:text="Search Visitor"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:117: Warning: Hardcoded string "Active Sign-Ins Found:", should use @string resource [HardcodedText]
+            android:text="Active Sign-Ins Found:"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:147: Warning: Hardcoded string "No active sign-ins found", should use @string resource [HardcodedText]
+            android:text="No active sign-ins found"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_out.xml:154: Warning: Hardcoded string "Try searching for a different name", should use @string resource [HardcodedText]
+            android:text="Try searching for a different name"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/dialog_document_acknowledgment.xml:14: Warning: Hardcoded string "Document Title", should use @string resource [HardcodedText]
+        android:text="Document Title"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/dialog_document_acknowledgment.xml:33: Warning: Hardcoded string "I have read and understand the above document", should use @string resource [HardcodedText]
+        android:text="I have read and understand the above document"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/dialog_document_acknowledgment.xml:51: Warning: Hardcoded string "Cancel", should use @string resource [HardcodedText]
+            android:text="Cancel"
+            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/dialog_document_acknowledgment.xml:62: Warning: Hardcoded string "I Agree", should use @string resource [HardcodedText]
+            android:text="I Agree"
+            ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:29: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                android:text="0"
+                ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:37: Warning: Hardcoded string "Active Visitors", should use @string resource [HardcodedText]
+                android:text="Active Visitors"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:60: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                android:text="0"
+                ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:68: Warning: Hardcoded string "Visitors", should use @string resource [HardcodedText]
+                android:text="Visitors"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:85: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                android:text="0"
+                ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:93: Warning: Hardcoded string "Contractors", should use @string resource [HardcodedText]
+                android:text="Contractors"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_active_visitors.xml:123: Warning: Hardcoded string "No active visitors", should use @string resource [HardcodedText]
+            android:text="No active visitors"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_all_logs.xml:25: Warning: Hardcoded string "All", should use @string resource [HardcodedText]
+            android:text="All"
+            ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_all_logs.xml:35: Warning: Hardcoded string "Signed In", should use @string resource [HardcodedText]
+            android:text="Signed In"
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_all_logs.xml:45: Warning: Hardcoded string "Signed Out", should use @string resource [HardcodedText]
+            android:text="Signed Out"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_all_logs.xml:55: Warning: Hardcoded string "Today", should use @string resource [HardcodedText]
+            android:text="Today"
+            ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_all_logs.xml:82: Warning: Hardcoded string "No records found", should use @string resource [HardcodedText]
+            android:text="No records found"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:31: Warning: Hardcoded string "SharePoint Status", should use @string resource [HardcodedText]
+                    android:text="SharePoint Status"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:55: Warning: Hardcoded string "Not configured", should use @string resource [HardcodedText]
+                        android:text="Not configured"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:65: Warning: Hardcoded string "Last sync: Never", should use @string resource [HardcodedText]
+                    android:text="Last sync: Never"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:91: Warning: Hardcoded string "Sync Controls", should use @string resource [HardcodedText]
+                    android:text="Sync Controls"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:101: Warning: Hardcoded string "Sync to SharePoint Now", should use @string resource [HardcodedText]
+                    android:text="Sync to SharePoint Now"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:113: Warning: Hardcoded string "Sync Unsynced Records Only", should use @string resource [HardcodedText]
+                    android:text="Sync Unsynced Records Only"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:123: Warning: Hardcoded string "Read from SharePoint", should use @string resource [HardcodedText]
+                    android:text="Read from SharePoint"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:148: Warning: Hardcoded string "Sync Statistics", should use @string resource [HardcodedText]
+                    android:text="Sync Statistics"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:170: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                            android:text="0"
+                            ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:178: Warning: Hardcoded string "Total Records", should use @string resource [HardcodedText]
+                            android:text="Total Records"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:195: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                            android:text="0"
+                            ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:203: Warning: Hardcoded string "Synced", should use @string resource [HardcodedText]
+                            android:text="Synced"
+                            ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:220: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                            android:text="0"
+                            ~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/fragment_sharepoint.xml:228: Warning: Hardcoded string "Unsynced", should use @string resource [HardcodedText]
+                            android:text="Unsynced"
+                            ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:30: Warning: Hardcoded string "Visitor photo", should use @string resource [HardcodedText]
+                android:contentDescription="Visitor photo" />
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:52: Warning: Hardcoded string "Visitor Name", should use @string resource [HardcodedText]
+                    android:text="Visitor Name"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:61: Warning: Hardcoded string "VISITOR", should use @string resource [HardcodedText]
+                    android:text="VISITOR"
+                    ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:75: Warning: Hardcoded string "Company Name", should use @string resource [HardcodedText]
+                android:text="Company Name"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:95: Warning: Hardcoded string "Visiting", should use @string resource [HardcodedText]
+                        android:text="Visiting"
+                        ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:103: Warning: Hardcoded string "Staff Member", should use @string resource [HardcodedText]
+                        android:text="Staff Member"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:119: Warning: Hardcoded string "Sign-in Time", should use @string resource [HardcodedText]
+                        android:text="Sign-in Time"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:127: Warning: Hardcoded string "10:30 AM", should use @string resource [HardcodedText]
+                        android:text="10:30 AM"
+                        ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:143: Warning: Hardcoded string "Duration", should use @string resource [HardcodedText]
+                        android:text="Duration"
+                        ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:151: Warning: Hardcoded string "2h 15m", should use @string resource [HardcodedText]
+                        android:text="2h 15m"
+                        ~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:164: Warning: Hardcoded string "Purpose of visit", should use @string resource [HardcodedText]
+                android:text="Purpose of visit"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_active_visitor.xml:178: Warning: Hardcoded string "Sign Out", should use @string resource [HardcodedText]
+            android:text="Sign Out"
+            ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:28: Warning: Hardcoded string "Visitor Name", should use @string resource [HardcodedText]
+                android:text="Visitor Name"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:37: Warning: Hardcoded string "VISITOR", should use @string resource [HardcodedText]
+                android:text="VISITOR"
+                ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:49: Warning: Hardcoded string "SIGNED IN", should use @string resource [HardcodedText]
+                android:text="SIGNED IN"
+                ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:77: Warning: Hardcoded string "Company", should use @string resource [HardcodedText]
+                    android:text="Company"
+                    ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:85: Warning: Hardcoded string "Company Name", should use @string resource [HardcodedText]
+                    android:text="Company Name"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:93: Warning: Hardcoded string "Phone", should use @string resource [HardcodedText]
+                    android:text="Phone"
+                    ~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:102: Warning: Hardcoded string "Phone Number", should use @string resource [HardcodedText]
+                    android:text="Phone Number"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:120: Warning: Hardcoded string "Visiting", should use @string resource [HardcodedText]
+                    android:text="Visiting"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:128: Warning: Hardcoded string "Staff Member", should use @string resource [HardcodedText]
+                    android:text="Staff Member"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:136: Warning: Hardcoded string "Purpose", should use @string resource [HardcodedText]
+                    android:text="Purpose"
+                    ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:145: Warning: Hardcoded string "Purpose of visit", should use @string resource [HardcodedText]
+                    android:text="Purpose of visit"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:165: Warning: Hardcoded string "Sign In", should use @string resource [HardcodedText]
+                    android:text="Sign In"
+                    ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:173: Warning: Hardcoded string "10:30 AM", should use @string resource [HardcodedText]
+                    android:text="10:30 AM"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:181: Warning: Hardcoded string "Sign Out", should use @string resource [HardcodedText]
+                    android:text="Sign Out"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_log_entry.xml:190: Warning: Hardcoded string "12:45 PM", should use @string resource [HardcodedText]
+                    android:text="12:45 PM"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_sign_out_result.xml:28: Warning: Hardcoded string "John Doe", should use @string resource [HardcodedText]
+                android:text="John Doe"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_sign_out_result.xml:37: Warning: Hardcoded string "Visiting: Jane Smith • Signed in: 10:30 AM", should use @string resource [HardcodedText]
+                android:text="Visiting: Jane Smith • Signed in: 10:30 AM"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_sign_out_result.xml:46: Warning: Hardcoded string "Visitor", should use @string resource [HardcodedText]
+                android:text="Visitor"
+                ~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/item_sign_out_result.xml:59: Warning: Hardcoded string "Sign Out", should use @string resource [HardcodedText]
+            android:text="Sign Out"
+            ~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:55: Warning: When you define paddingEnd you should probably also define paddingStart for right-to-left symmetry [RtlSymmetry]
+                android:paddingEnd="12dp">
+                ~~~~~~~~~~~~~~~~~~
+/Users/andreiiacob/visitor-management-app/android/app/src/main/res/layout/activity_sign_in.xml:149: Warning: When you define paddingStart you should probably also define paddingEnd for right-to-left symmetry [RtlSymmetry]
+                android:paddingStart="12dp">
+                ~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RtlSymmetry":
+   If you specify padding or margin on the left side of a layout, you should
+   probably also specify padding on the right side (and vice versa) for
+   right-to-left layout symmetry.
+
+0 errors, 278 warnings

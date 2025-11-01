@@ -213,29 +213,6 @@
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Photo Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTakePhoto"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:text="📷 Take Photo"
-                    android:textSize="16sp"
-                    app:strokeColor="@color/primary_dark_blue"
-                    app:cornerRadius="8dp"
-                    android:layout_marginTop="8dp" />
-
-                <!-- Photo Preview (hidden by default) -->
-                <ImageView
-                    android:id="@+id/ivPhotoPreview"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/border_color"
-                    android:contentDescription="Visitor photo" />
-
                 <!-- Submit Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmit"

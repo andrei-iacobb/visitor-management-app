@@ -26,16 +26,17 @@
         <header class="dashboard-header">
             <h1>📊 Admin Dashboard</h1>
             <div class="header-actions">
-                <button onclick="refreshAll()" class="btn-refresh">🔄 Refresh</button>
-                <button onclick="logout()" class="btn-logout">Logout</button>
+                <button class="btn-refresh" id="btnRefresh">🔄 Refresh</button>
+                <button class="btn-logout" id="btnLogout">Logout</button>
             </div>
         </header>
 
         <!-- Tabs -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('active')">Active Visitors</button>
-            <button class="tab-btn" onclick="showTab('logs')">All Logs</button>
-            <button class="tab-btn" onclick="showTab('sharepoint')">SharePoint</button>
+            <button class="tab-btn active" data-tab="active">Active Visitors</button>
+            <button class="tab-btn" data-tab="logs">All Logs</button>
+            <button class="tab-btn" data-tab="contractors">Contractors</button>
+            <button class="tab-btn" data-tab="sharepoint">SharePoint</button>
         </div>
 
         <!-- Active Visitors Tab -->
@@ -59,7 +60,6 @@
                 <table id="activeVisitorsTable">
                     <thead>
                         <tr>
-                            <th>Photo</th>
                             <th>Name</th>
                             <th>Type</th>
                             <th>Company</th>
@@ -81,17 +81,16 @@
         <!-- All Logs Tab -->
         <div id="logsTab" class="tab-content">
             <div class="filters">
-                <button class="filter-btn active" onclick="filterLogs('all')">All</button>
-                <button class="filter-btn" onclick="filterLogs('signed_in')">Signed In</button>
-                <button class="filter-btn" onclick="filterLogs('signed_out')">Signed Out</button>
-                <button class="filter-btn" onclick="filterLogs('today')">Today</button>
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="signed_in">Signed In</button>
+                <button class="filter-btn" data-filter="signed_out">Signed Out</button>
+                <button class="filter-btn" data-filter="today">Today</button>
             </div>
 
             <div class="table-container">
                 <table id="logsTable">
                     <thead>
                         <tr>
-                            <th>Photo</th>
                             <th>Name</th>
                             <th>Type</th>
                             <th>Status</th>
@@ -107,6 +106,103 @@
                     </tbody>
                 </table>
                 <p id="logsEmpty" class="empty-message" style="display:none;">No records found</p>
+            </div>
+        </div>
+
+        <!-- Contractors Tab -->
+        <div id="contractorsTab" class="tab-content">
+            <div class="contractors-container">
+                <!-- Add Contractor Form -->
+                <div class="form-card">
+                    <h2>➕ Add New Contractor</h2>
+                    <form id="addContractorForm" onsubmit="submitAddContractor(event)">
+                        <div class="form-group">
+                            <label for="companyName">Company Name *</label>
+                            <input type="text" id="companyName" required placeholder="e.g., ABC Electrical">
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorName">Contractor Name</label>
+                            <input type="text" id="contractorName" placeholder="e.g., John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorEmail">Email</label>
+                            <input type="email" id="contractorEmail" placeholder="john@abcelectrical.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorPhone">Phone Number</label>
+                            <input type="tel" id="contractorPhone" placeholder="555-0101">
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorStatus">Status *</label>
+                            <select id="contractorStatus" required>
+                                <option value="approved">Approved</option>
+                                <option value="pending">Pending</option>
+                                <option value="denied">Denied</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorNotes">Notes</label>
+                            <textarea id="contractorNotes" placeholder="e.g., Regular HVAC contractor" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary btn-large">Add Contractor</button>
+                        <p id="formMessage" class="form-message"></p>
+                    </form>
+                </div>
+
+                <!-- Contractors List -->
+                <div class="list-card">
+                    <div class="list-header">
+                        <h2>Approved Contractors</h2>
+                        <div class="list-controls">
+                            <input type="text" id="contractorSearchInput" placeholder="Search contractors..." class="search-box">
+                            <button onclick="loadContractors()" class="btn-secondary">🔄 Refresh</button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="contractorsTable">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Contractor</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Approval Date</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contractorsBody">
+                                <!-- Data loaded dynamically -->
+                            </tbody>
+                        </table>
+                        <p id="contractorsEmpty" class="empty-message" style="display:none;">No contractors found</p>
+                    </div>
+                </div>
+
+                <!-- Unauthorized Attempts Log -->
+                <div class="list-card">
+                    <h2>🚫 Unauthorized Sign-In Attempts</h2>
+                    <div class="table-container">
+                        <table id="unauthorizedAttemptsTable">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Contractor</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Reason</th>
+                                    <th>Attempt Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="unauthorizedAttemptsBody">
+                                <!-- Data loaded dynamically -->
+                            </tbody>
+                        </table>
+                        <p id="unauthorizedEmpty" class="empty-message" style="display:none;">No unauthorized attempts</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -155,13 +251,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Photo Modal -->
-    <div id="photoModal" class="photo-modal">
-        <span class="modal-close" onclick="closePhotoModal()">&times;</span>
-        <img id="modalPhoto" class="modal-photo" alt="Visitor Photo">
-        <div id="modalCaption" class="modal-caption"></div>
     </div>
 
     <script src="/js/admin.js"></script>
