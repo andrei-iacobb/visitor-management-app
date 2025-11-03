@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Management - Admin Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Visitor Management</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-page="contractors">
+                    <i class="fas fa-users"></i> Contractors
+                </a>
+                <a href="#" class="nav-item" data-page="vehicles">
+                    <i class="fas fa-car"></i> Vehicles
+                </a>
+                <a href="#" class="nav-item" data-page="visitors">
+                    <i class="fas fa-clipboard-list"></i> Visitors
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-bar">
+                <h1 class="page-title">Dashboard</h1>
+                <div class="user-menu">
+                    <span class="username">Admin</span>
+                    <button class="btn-logout" id="logoutBtn">Logout</button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-area">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page active">
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Total Contractors</h3>
+                            <p class="stat-number" id="totalContractors">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Approved Contractors</h3>
+                            <p class="stat-number" id="approvedContractors">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-car"></i>
+                            <h3>Total Vehicles</h3>
+                            <p class="stat-number" id="totalVehicles">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-tools"></i>
+                            <h3>Vehicles in Use</h3>
+                            <p class="stat-number" id="vehiclesInUse">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contractors Page -->
+                <div id="contractors-page" class="page">
+                    <div class="page-header">
+                        <h2>Contractors Management</h2>
+                        <button class="btn btn-primary" id="addContractorBtn">
+                            <i class="fas fa-plus"></i> Add Contractor
+                        </button>
+                    </div>
+
+                    <div class="filters">
+                        <input type="text" id="contractorSearch" placeholder="Search contractors..." class="search-input">
+                        <select id="contractorFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="approved">Approved</option>
+                            <option value="pending">Pending</option>
+                            <option value="denied">Denied</option>
+                        </select>
+                    </div>
+
+                    <table class="data-table" id="contractorsTable">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Contractor Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Approval Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contractorsList">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Vehicles Page -->
+                <div id="vehicles-page" class="page">
+                    <div class="page-header">
+                        <h2>Vehicles Management</h2>
+                        <button class="btn btn-primary" id="addVehicleBtn">
+                            <i class="fas fa-plus"></i> Add Vehicle
+                        </button>
+                    </div>
+
+                    <div class="filters">
+                        <input type="text" id="vehicleSearch" placeholder="Search by registration..." class="search-input">
+                        <select id="vehicleFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="available">Available</option>
+                            <option value="in_use">In Use</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+
+                    <table class="data-table" id="vehiclesTable">
+                        <thead>
+                            <tr>
+                                <th>Registration</th>
+                                <th>Status</th>
+                                <th>Current Mileage</th>
+                                <th>Last Checkout</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vehiclesList">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Visitors Page -->
+                <div id="visitors-page" class="page">
+                    <div class="page-header">
+                        <h2>Visitors Log</h2>
+                    </div>
+
+                    <div class="filters">
+                        <input type="text" id="visitorSearch" placeholder="Search visitors..." class="search-input">
+                        <select id="visitorFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="signed_in">Signed In</option>
+                            <option value="signed_out">Signed Out</option>
+                        </select>
+                    </div>
+
+                    <table class="data-table" id="visitorsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Company</th>
+                                <th>Sign In Time</th>
+                                <th>Sign Out Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="visitorsList">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Contractor Modal -->
+    <div id="contractorModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="contractorModalTitle">Add Contractor</h2>
+            <form id="contractorForm">
+                <div class="form-group">
+                    <label>Company Name *</label>
+                    <input type="text" id="companyName" required>
+                </div>
+                <div class="form-group">
+                    <label>Contractor Name</label>
+                    <input type="text" id="contractorName">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="contractorEmail">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="contractorPhone">
+                </div>
+                <div class="form-group">
+                    <label>Status *</label>
+                    <select id="contractorStatus" required>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="denied">Denied</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="contractorNotes" rows="4"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" id="contractorModalClose">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Vehicle Modal -->
+    <div id="vehicleModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="vehicleModalTitle">Add Vehicle</h2>
+            <form id="vehicleForm">
+                <div class="form-group">
+                    <label>Registration *</label>
+                    <input type="text" id="vehicleReg" required>
+                </div>
+                <div class="form-group">
+                    <label>Status *</label>
+                    <select id="vehicleStatus" required>
+                        <option value="available">Available</option>
+                        <option value="in_use">In Use</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Current Mileage</label>
+                    <input type="number" id="vehicleMileage" value="0">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" id="vehicleModalClose">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Alert Toast -->
+    <div id="alert" class="alert"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

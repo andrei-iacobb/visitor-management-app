@@ -4,6 +4,7 @@ package com.visitormanagement.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -11,8 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitormanagement.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -23,34 +24,56 @@ public final class ActivityMainBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final LinearLayout buttonsContainer;
-
-  @NonNull
-  public final MaterialCardView cardActive;
+  public final MaterialButton btnAdmin;
 
   @NonNull
   public final MaterialCardView cardContractor;
 
   @NonNull
+  public final MaterialCardView cardKeys;
+
+  @NonNull
+  public final MaterialCardView cardSignOut;
+
+  @NonNull
   public final MaterialCardView cardVisitor;
 
   @NonNull
-  public final FloatingActionButton fabAdmin;
+  public final LinearLayout contentContainer;
 
   @NonNull
-  public final TextView tvTitle;
+  public final LinearLayout footerContainer;
 
-  private ActivityMainBinding(@NonNull ConstraintLayout rootView,
-      @NonNull LinearLayout buttonsContainer, @NonNull MaterialCardView cardActive,
-      @NonNull MaterialCardView cardContractor, @NonNull MaterialCardView cardVisitor,
-      @NonNull FloatingActionButton fabAdmin, @NonNull TextView tvTitle) {
+  @NonNull
+  public final LinearLayout headerContainer;
+
+  @NonNull
+  public final ImageView ivLogo;
+
+  @NonNull
+  public final TextView tvClock;
+
+  @NonNull
+  public final TextView tvDate;
+
+  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull MaterialButton btnAdmin,
+      @NonNull MaterialCardView cardContractor, @NonNull MaterialCardView cardKeys,
+      @NonNull MaterialCardView cardSignOut, @NonNull MaterialCardView cardVisitor,
+      @NonNull LinearLayout contentContainer, @NonNull LinearLayout footerContainer,
+      @NonNull LinearLayout headerContainer, @NonNull ImageView ivLogo, @NonNull TextView tvClock,
+      @NonNull TextView tvDate) {
     this.rootView = rootView;
-    this.buttonsContainer = buttonsContainer;
-    this.cardActive = cardActive;
+    this.btnAdmin = btnAdmin;
     this.cardContractor = cardContractor;
+    this.cardKeys = cardKeys;
+    this.cardSignOut = cardSignOut;
     this.cardVisitor = cardVisitor;
-    this.fabAdmin = fabAdmin;
-    this.tvTitle = tvTitle;
+    this.contentContainer = contentContainer;
+    this.footerContainer = footerContainer;
+    this.headerContainer = headerContainer;
+    this.ivLogo = ivLogo;
+    this.tvClock = tvClock;
+    this.tvDate = tvDate;
   }
 
   @Override
@@ -80,15 +103,9 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.buttonsContainer;
-      LinearLayout buttonsContainer = ViewBindings.findChildViewById(rootView, id);
-      if (buttonsContainer == null) {
-        break missingId;
-      }
-
-      id = R.id.cardActive;
-      MaterialCardView cardActive = ViewBindings.findChildViewById(rootView, id);
-      if (cardActive == null) {
+      id = R.id.btnAdmin;
+      MaterialButton btnAdmin = ViewBindings.findChildViewById(rootView, id);
+      if (btnAdmin == null) {
         break missingId;
       }
 
@@ -98,26 +115,63 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.cardKeys;
+      MaterialCardView cardKeys = ViewBindings.findChildViewById(rootView, id);
+      if (cardKeys == null) {
+        break missingId;
+      }
+
+      id = R.id.cardSignOut;
+      MaterialCardView cardSignOut = ViewBindings.findChildViewById(rootView, id);
+      if (cardSignOut == null) {
+        break missingId;
+      }
+
       id = R.id.cardVisitor;
       MaterialCardView cardVisitor = ViewBindings.findChildViewById(rootView, id);
       if (cardVisitor == null) {
         break missingId;
       }
 
-      id = R.id.fabAdmin;
-      FloatingActionButton fabAdmin = ViewBindings.findChildViewById(rootView, id);
-      if (fabAdmin == null) {
+      id = R.id.contentContainer;
+      LinearLayout contentContainer = ViewBindings.findChildViewById(rootView, id);
+      if (contentContainer == null) {
         break missingId;
       }
 
-      id = R.id.tvTitle;
-      TextView tvTitle = ViewBindings.findChildViewById(rootView, id);
-      if (tvTitle == null) {
+      id = R.id.footerContainer;
+      LinearLayout footerContainer = ViewBindings.findChildViewById(rootView, id);
+      if (footerContainer == null) {
         break missingId;
       }
 
-      return new ActivityMainBinding((ConstraintLayout) rootView, buttonsContainer, cardActive,
-          cardContractor, cardVisitor, fabAdmin, tvTitle);
+      id = R.id.headerContainer;
+      LinearLayout headerContainer = ViewBindings.findChildViewById(rootView, id);
+      if (headerContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.ivLogo;
+      ImageView ivLogo = ViewBindings.findChildViewById(rootView, id);
+      if (ivLogo == null) {
+        break missingId;
+      }
+
+      id = R.id.tvClock;
+      TextView tvClock = ViewBindings.findChildViewById(rootView, id);
+      if (tvClock == null) {
+        break missingId;
+      }
+
+      id = R.id.tvDate;
+      TextView tvDate = ViewBindings.findChildViewById(rootView, id);
+      if (tvDate == null) {
+        break missingId;
+      }
+
+      return new ActivityMainBinding((ConstraintLayout) rootView, btnAdmin, cardContractor,
+          cardKeys, cardSignOut, cardVisitor, contentContainer, footerContainer, headerContainer,
+          ivLogo, tvClock, tvDate);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

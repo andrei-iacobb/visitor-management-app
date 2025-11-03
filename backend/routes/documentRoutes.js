@@ -3,9 +3,11 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-// Cache for available PDFs - updated whenever files change
+// Cache for available PDFs and images - updated whenever files change
 let availablePDFs = [];
+let availableFiles = [];
 const publicFolder = path.join(__dirname, '../public');
+const SUPPORTED_EXTENSIONS = ['.pdf', '.png', '.jpg', '.jpeg', '.gif', '.bmp'];
 
 /**
  * Scan public folder for PDF files
@@ -28,19 +30,51 @@ function scanForPDFs() {
 }
 
 /**
+ * Scan public folder for all supported files (PDFs and images)
+ * Returns array of file names
+ */
+function scanForAllFiles() {
+    try {
+        if (!fs.existsSync(publicFolder)) {
+            return [];
+        }
+
+        const files = fs.readdirSync(publicFolder);
+        return files
+            .filter(file => {
+                const ext = path.extname(file).toLowerCase();
+                return SUPPORTED_EXTENSIONS.includes(ext);
+            })
+            .sort();
+    } catch (error) {
+        console.error('Error scanning file folder:', error);
+        return [];
+    }
+}
+
+/**
  * Initialize and watch for PDF changes
  */
 function initializePDFWatcher() {
     // Initial scan
     availablePDFs = scanForPDFs();
+    availableFiles = scanForAllFiles();
     console.log(`✓ Found ${availablePDFs.length} PDF(s) in public folder:`, availablePDFs);
+    console.log(`✓ Found ${availableFiles.length} total file(s) (PDFs and images):`, availableFiles);
 
     // Watch for file changes
     try {
         fs.watch(publicFolder, (eventType, filename) => {
-            if (filename && filename.toLowerCase().endsWith('.pdf')) {
-                availablePDFs = scanForPDFs();
-                console.log(`✓ PDFs updated (${eventType}):`, availablePDFs);
+            if (filename) {
+                const ext = path.extname(filename).toLowerCase();
+                if (ext === '.pdf') {
+                    availablePDFs = scanForPDFs();
+                    console.log(`✓ PDFs updated (${eventType}):`, availablePDFs);
+                }
+                if (SUPPORTED_EXTENSIONS.includes(ext)) {
+                    availableFiles = scanForAllFiles();
+                    console.log(`✓ Files updated (${eventType}):`, availableFiles);
+                }
             }
         });
     } catch (error) {
@@ -147,7 +181,7 @@ router.get('/pdf/:fileName', (req, res) => {
  * GET /api/documents/pdf/default
  * Get the first available PDF (for auto-loading)
  */
-router.get('/default', (req, res) => {
+router.get('/pdf/default', (req, res) => {
     try {
         if (availablePDFs.length === 0) {
             return res.status(404).json({
@@ -186,6 +220,85 @@ router.get('/default', (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error retrieving document',
+            error: error.message
+        });
+    }
+});
+
+/**
+ * GET /api/documents/:fileName
+ * Get any file (image or PDF) by filename - serves raw file for Android app
+ * Used by Android app to load images/PDFs for signature dialogs
+ */
+router.get('/:fileName', (req, res) => {
+    try {
+        const fileName = req.params.fileName;
+
+        // Security: prevent directory traversal
+        if (fileName.includes('..') || fileName.includes('/')) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid file name'
+            });
+        }
+
+        // Check if file has a supported extension
+        const ext = path.extname(fileName).toLowerCase();
+        if (!SUPPORTED_EXTENSIONS.includes(ext)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Unsupported file type'
+            });
+        }
+
+        // Check if file is in available files list
+        if (!availableFiles.includes(fileName)) {
+            console.warn(`File not found in availableFiles: ${fileName}. Available: ${availableFiles.join(', ')}`);
+            return res.status(404).json({
+                success: false,
+                message: 'File not found',
+                availableFiles: availableFiles
+            });
+        }
+
+        const filePath = path.join(publicFolder, fileName);
+
+        // Double-check file exists (in case of race condition)
+        if (!fs.existsSync(filePath)) {
+            console.warn(`File does not exist on disk: ${filePath}`);
+            availableFiles = scanForAllFiles(); // Re-scan
+            return res.status(404).json({
+                success: false,
+                message: 'File not found'
+            });
+        }
+
+        // Read file and send as binary
+        const fileBuffer = fs.readFileSync(filePath);
+
+        // Set appropriate content type
+        let contentType = 'application/octet-stream';
+        if (ext === '.pdf') {
+            contentType = 'application/pdf';
+        } else if (['.png'].includes(ext)) {
+            contentType = 'image/png';
+        } else if (['.jpg', '.jpeg'].includes(ext)) {
+            contentType = 'image/jpeg';
+        } else if (ext === '.gif') {
+            contentType = 'image/gif';
+        } else if (ext === '.bmp') {
+            contentType = 'image/bmp';
+        }
+
+        res.set('Content-Type', contentType);
+        res.set('Content-Length', fileBuffer.length);
+        res.send(fileBuffer);
+
+    } catch (error) {
+        console.error('Error retrieving file:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error retrieving file',
             error: error.message
         });
     }

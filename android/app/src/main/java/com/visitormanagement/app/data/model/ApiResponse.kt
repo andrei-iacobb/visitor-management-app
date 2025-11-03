@@ -67,33 +67,6 @@ data class ContractorVerificationRequest(
 )
 
 /**
- * Visitor document acknowledgment (text version)
- */
-data class VisitorDocument(
-    val title: String,
-    val content: String,
-    val version: String,
-    @SerializedName("lastUpdated")
-    val lastUpdated: String
-)
-
-/**
- * Visitor document acknowledgment (PDF version)
- */
-data class VisitorDocumentPDF(
-    val title: String,
-    @SerializedName("pdfBase64")
-    val pdfBase64: String,
-    @SerializedName("fileName")
-    val fileName: String,
-    @SerializedName("mimeType")
-    val mimeType: String,
-    val version: String,
-    @SerializedName("lastUpdated")
-    val lastUpdated: String
-)
-
-/**
  * Network exceptions
  */
 class NetworkException(message: String) : Exception(message)

@@ -15,9 +15,9 @@ import com.visitormanagement.app.R
 import com.visitormanagement.app.data.api.RetrofitClient
 import com.visitormanagement.app.data.model.*
 import com.visitormanagement.app.data.repository.VisitorRepository
-import com.visitormanagement.app.ui.document.DocumentAcknowledgmentDialog
 import com.visitormanagement.app.util.Constants
 import com.visitormanagement.app.util.ValidationUtils
+import com.visitormanagement.app.ui.signature.PdfSignatureDialog
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -217,28 +217,27 @@ class SignInActivity : AppCompatActivity() {
         visitingPerson: String,
         carReg: String?
     ) {
-        // Show document acknowledgment dialog first
-        // Note: No PDF file name specified - will auto-load the first available PDF from the public folder
-        val documentDialog = DocumentAcknowledgmentDialog(this, lifecycleScope)
-        documentDialog.show(
-            onAcknowledged = {
-                // Document was acknowledged - proceed with sign-in
-                submitSignInWithAcknowledgment(
+        // Show document signature dialog
+        val pdfSignatureDialog = PdfSignatureDialog(this, lifecycleScope, "CCN22a Notice to Contractors Ipswich-1.png")
+        pdfSignatureDialog.show(
+            onSignatureConfirmed = { signatureBase64 ->
+                // Signature captured - proceed with sign-in
+                submitSignInWithSignature(
                     fullName, phone, email, company, purpose, visitingPerson, carReg,
-                    documentDialog.getAcknowledgmentTimestamp()
+                    signatureBase64
                 )
             },
             onCancelled = {
-                // User cancelled document - don't proceed
-                Toast.makeText(this, "Document acknowledgment is required to sign in", Toast.LENGTH_SHORT).show()
+                // User cancelled - stay on form
+                Toast.makeText(this, "Signature is required to sign in", Toast.LENGTH_SHORT).show()
             }
         )
     }
 
     /**
-     * Submit sign-in with document acknowledgment
+     * Submit sign-in with signature
      */
-    private fun submitSignInWithAcknowledgment(
+    private fun submitSignInWithSignature(
         fullName: String,
         phone: String,
         email: String?,
@@ -246,9 +245,9 @@ class SignInActivity : AppCompatActivity() {
         purpose: String,
         visitingPerson: String,
         carReg: String?,
-        acknowledgedAt: String
+        signatureBase64: String
     ) {
-        // Create sign-in request with document acknowledgment
+        // Create sign-in request with signature
         val request = SignInRequest(
             visitorType = visitorType,
             fullName = fullName,
@@ -259,9 +258,9 @@ class SignInActivity : AppCompatActivity() {
             carRegistration = if (carReg.isNullOrBlank()) null else carReg,
             visitingPerson = visitingPerson,
             photo = null,
-            signature = null,
+            signature = signatureBase64,
             documentAcknowledged = true,
-            documentAcknowledgmentTime = acknowledgedAt
+            documentAcknowledgmentTime = getAcknowledgmentTimestamp()
         )
 
         // Submit to API
@@ -370,5 +369,14 @@ class SignInActivity : AppCompatActivity() {
         tilEmail.error = null
         tilPurpose.error = null
         tilVisitingPerson.error = null
+    }
+
+    private fun getAcknowledgmentTimestamp(): String {
+        return SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            Locale.US
+        ).apply {
+            timeZone = TimeZone.getTimeZone("UTC")
+        }.format(Date())
     }
 }

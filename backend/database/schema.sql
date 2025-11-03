@@ -1,6 +1,10 @@
 -- Visitor Management System Database Schema
 
 -- Drop existing tables if they exist
+DROP TABLE IF EXISTS vehicle_damages CASCADE;
+DROP TABLE IF EXISTS vehicle_checkins CASCADE;
+DROP TABLE IF EXISTS vehicle_checkouts CASCADE;
+DROP TABLE IF EXISTS vehicles CASCADE;
 DROP TABLE IF EXISTS unauthorized_attempts CASCADE;
 DROP TABLE IF EXISTS allowed_contractors CASCADE;
 DROP TABLE IF EXISTS sign_ins CASCADE;
@@ -8,11 +12,13 @@ DROP TABLE IF EXISTS staff CASCADE;
 DROP TYPE IF EXISTS visitor_type_enum CASCADE;
 DROP TYPE IF EXISTS sign_in_status_enum CASCADE;
 DROP TYPE IF EXISTS contractor_status_enum CASCADE;
+DROP TYPE IF EXISTS vehicle_status_enum CASCADE;
 
 -- Create ENUM types
 CREATE TYPE visitor_type_enum AS ENUM ('visitor', 'contractor');
 CREATE TYPE sign_in_status_enum AS ENUM ('signed_in', 'signed_out');
 CREATE TYPE contractor_status_enum AS ENUM ('approved', 'pending', 'denied');
+CREATE TYPE vehicle_status_enum AS ENUM ('available', 'in_use', 'maintenance');
 
 -- Staff table
 CREATE TABLE staff (
@@ -127,6 +133,93 @@ INSERT INTO allowed_contractors (company_name, contractor_name, email, phone_num
     ('BuildRight Construction', 'Mike Johnson', 'mike@buildright.com', '555-0102', 'approved', CURRENT_TIMESTAMP, 1, 'Foundation repair specialist'),
     ('Tech Solutions Inc', 'Sarah Chen', 'sarah@techsolutions.com', '555-0103', 'pending', NULL, NULL, 'Awaiting approval'),
     ('SecureGuard Services', 'Robert Wilson', 'robert@secureguard.com', '555-0104', 'approved', CURRENT_TIMESTAMP, 2, 'Security system installer');
+
+-- Vehicles table
+CREATE TABLE vehicles (
+    id SERIAL PRIMARY KEY,
+    registration VARCHAR(50) UNIQUE NOT NULL,
+    status vehicle_status_enum DEFAULT 'available',
+    current_mileage INTEGER DEFAULT 0,
+    last_checkout_id INTEGER,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Vehicle checkouts table
+CREATE TABLE vehicle_checkouts (
+    id SERIAL PRIMARY KEY,
+    vehicle_id INTEGER NOT NULL REFERENCES vehicles(id),
+    registration VARCHAR(50) NOT NULL,
+    checkout_date DATE NOT NULL,
+    checkout_time TIME NOT NULL,
+    company_name VARCHAR(255) NOT NULL,
+    driver_name VARCHAR(255) NOT NULL,
+    starting_mileage INTEGER NOT NULL,
+    signature TEXT,
+    acknowledged_terms BOOLEAN DEFAULT FALSE,
+    acknowledgment_time TIMESTAMP WITH TIME ZONE,
+    status VARCHAR(50) DEFAULT 'checked_out',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Vehicle checkins table
+CREATE TABLE vehicle_checkins (
+    id SERIAL PRIMARY KEY,
+    vehicle_id INTEGER NOT NULL REFERENCES vehicles(id),
+    checkout_id INTEGER NOT NULL REFERENCES vehicle_checkouts(id),
+    registration VARCHAR(50) NOT NULL,
+    checkin_date DATE NOT NULL,
+    checkin_time TIME NOT NULL,
+    return_mileage INTEGER NOT NULL,
+    driver_name VARCHAR(255) NOT NULL,
+    status VARCHAR(50) DEFAULT 'checked_in',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Vehicle damages table
+CREATE TABLE vehicle_damages (
+    id SERIAL PRIMARY KEY,
+    checkin_id INTEGER NOT NULL REFERENCES vehicle_checkins(id),
+    damage_description TEXT,
+    damage_photos TEXT,
+    reported_by_name VARCHAR(255),
+    report_date DATE NOT NULL,
+    report_time TIME NOT NULL,
+    status VARCHAR(50) DEFAULT 'reported',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Vehicle-related indexes
+CREATE INDEX idx_vehicles_registration ON vehicles(registration);
+CREATE INDEX idx_vehicles_status ON vehicles(status);
+CREATE INDEX idx_vehicle_checkouts_vehicle_id ON vehicle_checkouts(vehicle_id);
+CREATE INDEX idx_vehicle_checkouts_status ON vehicle_checkouts(status);
+CREATE INDEX idx_vehicle_checkins_vehicle_id ON vehicle_checkins(vehicle_id);
+CREATE INDEX idx_vehicle_checkins_checkout_id ON vehicle_checkins(checkout_id);
+CREATE INDEX idx_vehicle_damages_checkin_id ON vehicle_damages(checkin_id);
+
+-- Create triggers for vehicle updated_at
+CREATE TRIGGER update_vehicles_updated_at BEFORE UPDATE ON vehicles
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_vehicle_checkouts_updated_at BEFORE UPDATE ON vehicle_checkouts
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_vehicle_checkins_updated_at BEFORE UPDATE ON vehicle_checkins
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_vehicle_damages_updated_at BEFORE UPDATE ON vehicle_damages
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Insert sample vehicles
+INSERT INTO vehicles (registration, status, current_mileage) VALUES
+    ('AY63BSO', 'available', 15000),
+    ('BY63BSO', 'available', 12500),
+    ('CY63BSO', 'available', 18000),
+    ('DY63BSO', 'maintenance', 20000);
 
 -- Create a view for active visitors
 CREATE OR REPLACE VIEW active_visitors AS

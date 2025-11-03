@@ -10,6 +10,7 @@ const staffRoutes = require('./routes/staffRoutes');
 const sharepointRoutes = require('./routes/sharepointRoutes');
 const contractorValidationRoutes = require('./routes/contractorValidationRoutes');
 const documentRoutes = require('./routes/documentRoutes');
+const vehicleRoutes = require('./routes/vehicleRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,8 +45,9 @@ app.use(morgan('dev'));
 app.use(express.json({ limit: '10mb' })); // Increased limit for photo/signature base64
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Serve static files (admin dashboard)
+// Serve static files (public and web UI)
 app.use(express.static('public'));
+app.use(express.static('../web'));
 
 // Request timestamp middleware
 app.use((req, res, next) => {
@@ -85,6 +87,7 @@ app.use('/api/staff', staffRoutes);
 app.use('/api/sharepoint', sharepointRoutes);
 app.use('/api/contractors', contractorValidationRoutes);
 app.use('/api/documents', documentRoutes);
+app.use('/api/vehicles', vehicleRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {

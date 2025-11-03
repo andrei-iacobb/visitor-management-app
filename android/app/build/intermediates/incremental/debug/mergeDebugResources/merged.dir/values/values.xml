@@ -1996,7 +1996,6 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with <ns2:g example="Mail" id="application_name">%s</ns2:g></string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <string name="active_icon">📋</string>
     <string name="active_visitors_title">Active Sign-Ins</string>
     <string name="androidx_startup" translatable="false">androidx.startup</string>
     <string name="app_name">Visitor Management</string>
@@ -2007,19 +2006,28 @@
     <string description="A description of an action that a user of an accessibility service can perform to expand a bottomsheet halfway to its full height. [CHAR LIMIT=25]" name="bottomsheet_action_expand_halfway">Expand halfway</string>
     <string description="An accessibility feedback when the bottom sheet drag handle is clicked [CHAR LIMIT=NONE]" name="bottomsheet_drag_handle_clicked">Drag handle double-tapped</string>
     <string description="The content description of bottom sheet drag handles [CHAR LIMIT=NONE]" name="bottomsheet_drag_handle_content_description">Drag handle</string>
+    <string name="btn_acknowledge_terms">Acknowledge &amp; Sign</string>
     <string name="btn_add_signature">✍️ Add Signature</string>
     <string name="btn_back">← Back</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_capture_photo">📸 Capture Photo</string>
+    <string name="btn_checkin_vehicle">✓ RETURN VEHICLE</string>
+    <string name="btn_checkout_vehicle">✓ CHECKOUT VEHICLE</string>
     <string name="btn_clear_signature">Clear</string>
     <string name="btn_complete_sign_in">✓ COMPLETE SIGN-IN</string>
+    <string name="btn_lookup_vehicle">🔍 Look Up Vehicle</string>
     <string name="btn_ok">OK</string>
     <string name="btn_refresh">🔄 Refresh</string>
+    <string name="btn_report_damage">📸 Report Damage</string>
     <string name="btn_retry">Retry</string>
+    <string name="btn_return_home">← Return to Home</string>
     <string name="btn_save_signature">✓ SAVE SIGNATURE</string>
     <string name="btn_sign_in_contractor">Sign In Contractor</string>
     <string name="btn_sign_in_visitor">Sign In Visitor</string>
     <string name="btn_sign_out">Sign Out</string>
+    <string name="btn_skip_damage_report">Skip for Now</string>
+    <string name="btn_submit_damage_report">📋 Submit Damage Report</string>
+    <string name="btn_vehicle_keys">🔑 Vehicle Keys</string>
     <string name="btn_view_active">View Active Sign-Ins</string>
     <string name="call_notification_answer_action">Answer</string>
     <string name="call_notification_answer_video_action">Video</string>
@@ -2040,12 +2048,13 @@
     <string name="character_counter_content_description">Characters entered %1$d of %2$d</string>
     <string name="character_counter_overflowed_content_description">Character limit exceeded %1$d of %2$d</string>
     <string name="character_counter_pattern" translatable="false">%1$d/%2$d</string>
+    <string name="checking_vehicle_status">Checking vehicle status…</string>
     <string name="clear_text_end_icon_content_description">Clear text</string>
     <string name="confirm_no">No</string>
     <string name="confirm_sign_out_message">Are you sure you want to sign out %s?</string>
     <string name="confirm_sign_out_title">Confirm Sign Out</string>
     <string name="confirm_yes">Yes</string>
-    <string name="contractor_icon">🔧</string>
+    <string name="copyright_text">© 2025 Andrei Iacob | https://andrei.iacob.co.uk/</string>
     <string name="currently_signed_in">Currently Signed In: %d</string>
     <string name="date_format">MMM dd, yyyy</string>
     <string name="empty_state_no_data">No data available</string>
@@ -2053,9 +2062,14 @@
     Error: invalid
   </string>
     <string name="error_api">Unable to connect to server</string>
+    <string name="error_checkin_failed">Failed to return vehicle. Please try again.</string>
+    <string name="error_checkout_failed">Failed to checkout vehicle. Please try again.</string>
+    <string name="error_damage_report_failed">Failed to submit damage report. Please try again.</string>
     <string name="error_icon_content_description">Error</string>
     <string name="error_invalid_email">Invalid email address</string>
+    <string name="error_invalid_mileage">Mileage must be a valid number</string>
     <string name="error_invalid_phone">Invalid phone number</string>
+    <string name="error_mileage_decrease">Return mileage cannot be less than starting mileage</string>
     <string name="error_network">Network error. Please check your connection.</string>
     <string name="error_photo_required">Photo is required</string>
     <string name="error_required_field">This field is required</string>
@@ -2063,25 +2077,41 @@
     <string name="error_signature_required">Signature is required</string>
     <string name="error_timeout">Request timed out. Please try again.</string>
     <string name="error_unknown">An unexpected error occurred</string>
+    <string name="error_vehicle_not_found">Vehicle registration not found. Please try again.</string>
+    <string name="error_vehicle_unavailable">This vehicle is not available for checkout</string>
     <string name="exposed_dropdown_menu_content_description">Show dropdown menu</string>
     <string name="fab_transformation_scrim_behavior" translatable="false">com.google.android.material.transformation.FabTransformationScrimBehavior</string>
     <string name="fab_transformation_sheet_behavior" translatable="false">com.google.android.material.transformation.FabTransformationSheetBehavior</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string name="hint_car_registration">Enter car registration</string>
     <string name="hint_company">Enter company name</string>
+    <string name="hint_damage_description">Describe damage in detail (if any)</string>
     <string name="hint_email">Enter email address</string>
     <string name="hint_full_name">Enter full name</string>
     <string name="hint_phone">Enter phone number</string>
     <string name="hint_purpose">Purpose of visit</string>
+    <string name="hint_reported_by">Enter your name</string>
+    <string name="hint_return_mileage">Enter return mileage</string>
+    <string name="hint_vehicle_company">Enter company name</string>
+    <string name="hint_vehicle_driver">Enter driver name</string>
+    <string name="hint_vehicle_mileage">Enter current mileage</string>
+    <string name="hint_vehicle_reg">e.g., AY63BSO</string>
     <string name="hint_visiting_person">Who are you visiting?</string>
     <string description="Content description for an icon that appears in the title area of a dialog" name="icon_content_description">Dialog Icon</string>
     <string name="item_view_role_description">Tab</string>
     <string name="label_car_registration">Car Registration</string>
     <string name="label_company">Company Name</string>
+    <string name="label_company_name">Company Name</string>
+    <string name="label_damage_description">Describe any damage</string>
+    <string name="label_driver_name">Driver Name</string>
     <string name="label_email">Email Address</string>
     <string name="label_full_name">Full Name</string>
     <string name="label_phone_number">Phone Number</string>
     <string name="label_purpose">Purpose of Visit</string>
+    <string name="label_reported_by">Reported By (Staff Name)</string>
+    <string name="label_return_mileage">Return Mileage</string>
+    <string name="label_starting_mileage">Starting Mileage</string>
+    <string name="label_vehicle_registration">Vehicle Registration</string>
     <string name="label_visiting_person">Person Visiting</string>
     <string name="loading">Loading…</string>
     <string name="m3_exceed_max_badge_text_suffix" translatable="false"><ns2:g example="Some te" id="part of a long text">%1$s</ns2:g><ns2:g example="…" id="suffix">%2$s</ns2:g></string>
@@ -2100,7 +2130,7 @@
     <string name="m3_sys_motion_easing_standard" translatable="false">cubic-bezier(0.2, 0, 0, 1)</string>
     <string name="m3_sys_motion_easing_standard_accelerate" translatable="false">cubic-bezier(0.3, 0, 1, 1)</string>
     <string name="m3_sys_motion_easing_standard_decelerate" translatable="false">cubic-bezier(0, 0, 0, 1)</string>
-    <string name="main_title">Visitor Management System</string>
+    <string name="main_title">Chassis Cab - Visitor Management System</string>
     <string name="material_clock_display_divider" translatable="false">:</string>
     <string description="Description for the toggle to choose between AM and PM [CHAR_LIMIT=NONE]" name="material_clock_toggle_content_description">Select AM or PM</string>
     <string description="Spoken suffix for an hour in the 24-hour clock [CHAR_LIMIT=10]" name="material_hour_24h_suffix"><ns2:g id="number">%1$s</ns2:g> hours</string>
@@ -2229,11 +2259,33 @@
     <string name="signing_out">Signing out…</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <string name="submitting">Submitting…</string>
+    <string name="submitting_checkin">Submitting return…</string>
+    <string name="submitting_checkout">Submitting checkout…</string>
+    <string name="submitting_damage">Submitting damage report…</string>
     <string name="time_format_12h">h:mm a</string>
     <string name="validation_name_length">Name must be at least 2 characters</string>
     <string name="validation_phone_length">Phone number must be at least 10 digits</string>
+    <string name="vehicle_available">Vehicle is available for checkout</string>
+    <string name="vehicle_checkin_success">Vehicle returned successfully!</string>
+    <string formatted="false" name="vehicle_checkin_success_message">Vehicle %s has been returned. Miles driven: %d</string>
+    <string name="vehicle_checkin_thank_you">Vehicle return recorded. Thank you for using our service.</string>
+    <string name="vehicle_checkin_title">Vehicle Return</string>
+    <string name="vehicle_checkout_success">Vehicle checked out successfully!</string>
+    <string formatted="false" name="vehicle_checkout_success_message">Vehicle %s is now checked out by %s</string>
+    <string name="vehicle_checkout_thank_you">Vehicle checkout completed. Please drive safely.</string>
+    <string name="vehicle_checkout_title">Vehicle Checkout</string>
+    <string name="vehicle_damage_reported">Damage report submitted</string>
+    <string name="vehicle_damage_reported_message">Thank you for reporting damage</string>
+    <string name="vehicle_damage_title">Damage Report</string>
+    <string name="vehicle_in_use">Vehicle is currently in use</string>
+    <string name="vehicle_keys_title">Vehicle Key Checkout/Return</string>
+    <string name="vehicle_not_found">Vehicle not found</string>
+    <string name="vehicle_reg_prompt">Enter Vehicle Registration</string>
+    <string name="vehicle_terms_confirm">I acknowledge the above terms and conditions</string>
+    <string name="vehicle_terms_text">This vehicle is to be used solely for the purpose of conveying the lendee between Chassis Cab Ltd and their place of residence or the customers depot.\n\nMileage is limited to 50 miles per loan. Any excess miles will be charged. Chassis Cab Ltd does not take any responsibility for any driving or parking infringements under current legislation.\n\nIn the event of an accident please follow the accident procedure pack in the vehicles glovebox and complete as necessary. This vehicle is fitted with a GPS tracking device.</string>
+    <string name="vehicle_terms_title">Terms &amp; Conditions</string>
+    <string name="vehicle_thank_you_title">Thank You!</string>
     <string name="visit_details_section">Visit Details &amp; Media</string>
-    <string name="visitor_icon">👤</string>
     <string name="visitor_type_contractor">Contractor</string>
     <string name="visitor_type_visitor">Visitor</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

@@ -3,13 +3,12 @@
     <string name="app_name">Visitor Management</string>
 
     <!-- Main Screen -->
-    <string name="main_title">Visitor Management System</string>
+    <string name="main_title">Chassis Cab - Visitor Management System</string>
     <string name="btn_sign_in_visitor">Sign In Visitor</string>
     <string name="btn_sign_in_contractor">Sign In Contractor</string>
+    <string name="btn_vehicle_keys">🔑 Vehicle Keys</string>
     <string name="btn_view_active">View Active Sign-Ins</string>
-    <string name="visitor_icon">👤</string>
-    <string name="contractor_icon">🔧</string>
-    <string name="active_icon">📋</string>
+    <string name="copyright_text">© 2025 Andrei Iacob | https://andrei.iacob.co.uk/</string>
 
     <!-- Sign-In Form -->
     <string name="sign_in_visitor_title">Visitor Sign-In</string>
@@ -129,4 +128,76 @@
     <!-- Time Format -->
     <string name="time_format_12h">h:mm a</string>
     <string name="date_format">MMM dd, yyyy</string>
+
+    <!-- Vehicle Management -->
+    <string name="vehicle_keys_title">Vehicle Key Checkout/Return</string>
+    <string name="vehicle_reg_prompt">Enter Vehicle Registration</string>
+    <string name="label_vehicle_registration">Vehicle Registration</string>
+    <string name="hint_vehicle_reg">e.g., AY63BSO</string>
+    <string name="btn_lookup_vehicle">🔍 Look Up Vehicle</string>
+
+    <!-- Vehicle Checkout Form -->
+    <string name="vehicle_checkout_title">Vehicle Checkout</string>
+    <string name="label_company_name">Company Name</string>
+    <string name="label_driver_name">Driver Name</string>
+    <string name="label_starting_mileage">Starting Mileage</string>
+    <string name="hint_vehicle_company">Enter company name</string>
+    <string name="hint_vehicle_driver">Enter driver name</string>
+    <string name="hint_vehicle_mileage">Enter current mileage</string>
+    <string name="btn_checkout_vehicle">✓ CHECKOUT VEHICLE</string>
+
+    <!-- Vehicle Checkin Form -->
+    <string name="vehicle_checkin_title">Vehicle Return</string>
+    <string name="label_return_mileage">Return Mileage</string>
+    <string name="hint_return_mileage">Enter return mileage</string>
+    <string name="btn_checkin_vehicle">✓ RETURN VEHICLE</string>
+
+    <!-- Vehicle Damage Report -->
+    <string name="vehicle_damage_title">Damage Report</string>
+    <string name="label_damage_description">Describe any damage</string>
+    <string name="label_reported_by">Reported By (Staff Name)</string>
+    <string name="hint_damage_description">Describe damage in detail (if any)</string>
+    <string name="hint_reported_by">Enter your name</string>
+    <string name="btn_submit_damage_report">📋 Submit Damage Report</string>
+    <string name="btn_skip_damage_report">Skip for Now</string>
+
+    <!-- Vehicle Terms &amp; Conditions -->
+    <string name="vehicle_terms_title">Terms &amp; Conditions</string>
+    <string name="vehicle_terms_text">This vehicle is to be used solely for the purpose of conveying the lendee between Chassis Cab Ltd and their place of residence or the customers depot.\n\nMileage is limited to 50 miles per loan. Any excess miles will be charged. Chassis Cab Ltd does not take any responsibility for any driving or parking infringements under current legislation.\n\nIn the event of an accident please follow the accident procedure pack in the vehicles glovebox and complete as necessary. This vehicle is fitted with a GPS tracking device.</string>
+    <string name="vehicle_terms_confirm">I acknowledge the above terms and conditions</string>
+    <string name="btn_acknowledge_terms">Acknowledge &amp; Sign</string>
+
+    <!-- Vehicle Status Messages -->
+    <string name="vehicle_available">Vehicle is available for checkout</string>
+    <string name="vehicle_in_use">Vehicle is currently in use</string>
+    <string name="vehicle_not_found">Vehicle not found</string>
+    <string name="vehicle_checkout_success">Vehicle checked out successfully!</string>
+    <string name="vehicle_checkout_success_message" formatted="false">Vehicle %s is now checked out by %s</string>
+    <string name="vehicle_checkin_success">Vehicle returned successfully!</string>
+    <string name="vehicle_checkin_success_message" formatted="false">Vehicle %s has been returned. Miles driven: %d</string>
+    <string name="vehicle_damage_reported">Damage report submitted</string>
+    <string name="vehicle_damage_reported_message">Thank you for reporting damage</string>
+
+    <!-- Vehicle Thank You -->
+    <string name="vehicle_thank_you_title">Thank You!</string>
+    <string name="vehicle_checkout_thank_you">Vehicle checkout completed. Please drive safely.</string>
+    <string name="vehicle_checkin_thank_you">Vehicle return recorded. Thank you for using our service.</string>
+    <string name="btn_report_damage">📸 Report Damage</string>
+    <string name="btn_return_home">← Return to Home</string>
+
+    <!-- Vehicle Error Messages -->
+    <string name="error_vehicle_not_found">Vehicle registration not found. Please try again.</string>
+    <string name="error_vehicle_unavailable">This vehicle is not available for checkout</string>
+    <string name="error_invalid_mileage">Mileage must be a valid number</string>
+    <string name="error_mileage_decrease">Return mileage cannot be less than starting mileage</string>
+    <string name="error_checkout_failed">Failed to checkout vehicle. Please try again.</string>
+    <string name="error_checkin_failed">Failed to return vehicle. Please try again.</string>
+    <string name="error_damage_report_failed">Failed to submit damage report. Please try again.</string>
+
+    <!-- Vehicle Loading/Status -->
+    <string name="checking_vehicle_status">Checking vehicle status…</string>
+    <string name="submitting_checkout">Submitting checkout…</string>
+    <string name="submitting_checkin">Submitting return…</string>
+    <string name="submitting_damage">Submitting damage report…</string>
+
 </resources>

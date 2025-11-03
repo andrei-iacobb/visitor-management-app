@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<full-backup-content>
-    <!-- Exclude specific files from backup -->
-    <exclude domain="sharedpref" path="visitor_management_prefs.xml"/>
-</full-backup-content>

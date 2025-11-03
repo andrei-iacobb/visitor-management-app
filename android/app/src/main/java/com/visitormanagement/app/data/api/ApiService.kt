@@ -5,10 +5,17 @@ import com.visitormanagement.app.data.model.SignIn
 import com.visitormanagement.app.data.model.SignInRequest
 import com.visitormanagement.app.data.model.ContractorVerificationRequest
 import com.visitormanagement.app.data.model.ContractorVerificationResponse
-import com.visitormanagement.app.data.model.VisitorDocument
-import com.visitormanagement.app.data.model.VisitorDocumentPDF
+import com.visitormanagement.app.data.model.Vehicle
+import com.visitormanagement.app.data.model.VehicleStatusResponse
+import com.visitormanagement.app.data.model.VehicleCheckOut
+import com.visitormanagement.app.data.model.VehicleCheckOutRequest
+import com.visitormanagement.app.data.model.VehicleCheckIn
+import com.visitormanagement.app.data.model.VehicleCheckInRequest
+import com.visitormanagement.app.data.model.VehicleDamage
+import com.visitormanagement.app.data.model.VehicleDamageRequest
 import retrofit2.Response
 import retrofit2.http.*
+import okhttp3.ResponseBody
 
 /**
  * Retrofit API service interface
@@ -100,49 +107,49 @@ interface ApiService {
     suspend fun readFromSharePoint(): Response<ApiResponse<Any>>
 
     /**
-     * Get visitor acknowledgment document (text version)
-     */
-    @GET("documents/visitor-acknowledgment")
-    suspend fun getVisitorDocument(): Response<ApiResponse<VisitorDocument>>
-
-    /**
-     * Get visitor acknowledgment document (PDF version with base64)
-     */
-    @GET("documents/visitor-acknowledgment/pdf/preview")
-    suspend fun getVisitorDocumentPDF(): Response<ApiResponse<VisitorDocumentPDF>>
-
-    /**
-     * Get safety requirements PDF (comprehensive safety document)
-     */
-    @GET("documents/visitor-safety-requirements/pdf/preview")
-    suspend fun getSafetyRequirementsPDF(): Response<ApiResponse<VisitorDocumentPDF>>
-
-    /**
-     * Log document acknowledgment
-     */
-    @POST("documents/acknowledge")
-    suspend fun acknowledgeDocument(
-        @Body request: Map<String, Any>? = null
-    ): Response<ApiResponse<Any>>
-
-    /**
-     * Get PDF document by file name
-     * @param fileName The PDF file name (e.g., "VISITOR_FORM.pdf")
-     */
-    @GET("documents/pdf/{fileName}")
-    suspend fun getPDF(
-        @Path("fileName") fileName: String
-    ): Response<ApiResponse<VisitorDocumentPDF>>
-
-    /**
-     * Get default PDF (first available PDF in public folder)
-     */
-    @GET("documents/default")
-    suspend fun getDefaultPDF(): Response<ApiResponse<VisitorDocumentPDF>>
-
-    /**
-     * List all available PDFs in public folder
+     * List all available PDFs
      */
     @GET("documents/list")
     suspend fun listAvailablePDFs(): Response<ApiResponse<Any>>
+
+    /**
+     * Get document file (image, PDF, etc) by filename
+     */
+    @GET("documents/{fileName}")
+    suspend fun getDocument(
+        @Path("fileName") fileName: String
+    ): Response<ResponseBody>
+
+    /**
+     * Check vehicle status by registration
+     */
+    @GET("vehicles/{registration}")
+    suspend fun getVehicleStatus(
+        @Path("registration") registration: String
+    ): Response<ApiResponse<VehicleStatusResponse>>
+
+    /**
+     * Checkout a vehicle (vehicle going out)
+     */
+    @POST("vehicles/checkout")
+    suspend fun checkoutVehicle(
+        @Body request: VehicleCheckOutRequest
+    ): Response<ApiResponse<VehicleCheckOut>>
+
+    /**
+     * Check-in a vehicle (vehicle coming back)
+     */
+    @POST("vehicles/checkin")
+    suspend fun checkinVehicle(
+        @Body request: VehicleCheckInRequest
+    ): Response<ApiResponse<VehicleCheckIn>>
+
+    /**
+     * Report vehicle damage
+     */
+    @POST("vehicles/damage")
+    suspend fun reportVehicleDamage(
+        @Body request: VehicleDamageRequest
+    ): Response<ApiResponse<VehicleDamage>>
+
 }

@@ -12,16 +12,20 @@
         "source": "com.visitormanagement.app-main-42:/layout/item_log_entry.xml"
     },
     {
+        "merged": "com.visitormanagement.app-debug-40:/layout_activity_vehicle_checkout.xml.flat",
+        "source": "com.visitormanagement.app-main-42:/layout/activity_vehicle_checkout.xml"
+    },
+    {
         "merged": "com.visitormanagement.app-debug-40:/drawable_button_background_primary_stateful.xml.flat",
         "source": "com.visitormanagement.app-main-42:/drawable/button_background_primary_stateful.xml"
     },
     {
-        "merged": "com.visitormanagement.app-debug-40:/drawable_button_background_gray.xml.flat",
-        "source": "com.visitormanagement.app-main-42:/drawable/button_background_gray.xml"
+        "merged": "com.visitormanagement.app-debug-40:/layout_dialog_pdf_signature.xml.flat",
+        "source": "com.visitormanagement.app-main-42:/layout/dialog_pdf_signature.xml"
     },
     {
-        "merged": "com.visitormanagement.app-debug-40:/xml_file_paths.xml.flat",
-        "source": "com.visitormanagement.app-main-42:/xml/file_paths.xml"
+        "merged": "com.visitormanagement.app-debug-40:/drawable_button_background_gray.xml.flat",
+        "source": "com.visitormanagement.app-main-42:/drawable/button_background_gray.xml"
     },
     {
         "merged": "com.visitormanagement.app-debug-40:/layout_activity_sign_in.xml.flat",
@@ -40,10 +44,6 @@
         "source": "com.visitormanagement.app-main-42:/layout/activity_main.xml"
     },
     {
-        "merged": "com.visitormanagement.app-debug-40:/layout_dialog_document_acknowledgment.xml.flat",
-        "source": "com.visitormanagement.app-main-42:/layout/dialog_document_acknowledgment.xml"
-    },
-    {
         "merged": "com.visitormanagement.app-debug-40:/drawable_button_background_primary.xml.flat",
         "source": "com.visitormanagement.app-main-42:/drawable/button_background_primary.xml"
     },
@@ -56,6 +56,10 @@
         "source": "com.visitormanagement.app-main-42:/drawable/ic_person.xml"
     },
     {
+        "merged": "com.visitormanagement.app-debug-40:/layout_dialog_vehicle_damage.xml.flat",
+        "source": "com.visitormanagement.app-main-42:/layout/dialog_vehicle_damage.xml"
+    },
+    {
         "merged": "com.visitormanagement.app-debug-40:/layout_item_active_visitor.xml.flat",
         "source": "com.visitormanagement.app-main-42:/layout/item_active_visitor.xml"
     },
@@ -66,6 +70,10 @@
     {
         "merged": "com.visitormanagement.app-debug-40:/layout_fragment_active_visitors.xml.flat",
         "source": "com.visitormanagement.app-main-42:/layout/fragment_active_visitors.xml"
+    },
+    {
+        "merged": "com.visitormanagement.app-debug-40:/drawable_chassis_cab_logo.png.flat",
+        "source": "com.visitormanagement.app-main-42:/drawable/chassis_cab_logo.png"
     },
     {
         "merged": "com.visitormanagement.app-debug-40:/layout_fragment_sharepoint.xml.flat",
