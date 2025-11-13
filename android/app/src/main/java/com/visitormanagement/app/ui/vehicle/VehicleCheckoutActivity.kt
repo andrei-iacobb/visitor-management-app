@@ -2,6 +2,9 @@ package com.visitormanagement.app.ui.vehicle
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -20,7 +23,7 @@ import java.util.*
 
 class VehicleCheckoutActivity : AppCompatActivity() {
 
-    private lateinit var etVehicleReg: TextInputEditText
+    private lateinit var etVehicleReg: AutoCompleteTextView
     private lateinit var btnLookup: MaterialButton
     private lateinit var clCheckoutForm: ConstraintLayout
     private lateinit var clCheckinForm: ConstraintLayout
@@ -35,7 +38,42 @@ class VehicleCheckoutActivity : AppCompatActivity() {
         requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         initializeViews()
+        loadVehicleRegistrations()
         setupListeners()
+    }
+
+    private fun loadVehicleRegistrations() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.apiService.getVehicleRegistrations()
+
+                if (response.isSuccessful && response.body() != null) {
+                    val registrations = response.body()!!.data ?: emptyList()
+
+                    Log.d("VehicleCheckout", "Loaded ${registrations.size} vehicle registrations for autocomplete")
+
+                    // Set up adapter for AutoCompleteTextView
+                    val adapter = ArrayAdapter(
+                        this@VehicleCheckoutActivity,
+                        android.R.layout.simple_dropdown_item_1line,
+                        registrations
+                    )
+                    etVehicleReg.setAdapter(adapter)
+
+                    // Show dropdown on focus
+                    etVehicleReg.setOnFocusChangeListener { _, hasFocus ->
+                        if (hasFocus && registrations.isNotEmpty()) {
+                            etVehicleReg.showDropDown()
+                        }
+                    }
+                } else {
+                    Log.w("VehicleCheckout", "Failed to load vehicle registrations: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("VehicleCheckout", "Error loading vehicle registrations", e)
+                // Non-critical - user can still type manually
+            }
+        }
     }
 
     private fun initializeViews() {

@@ -79,6 +79,9 @@ dependencies {
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
+    // FlexboxLayout for dynamic grid
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -4,6 +4,7 @@ package com.visitormanagement.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public final class ActivityVehicleCheckoutBinding implements ViewBinding {
   public final TextInputEditText etStartingMileage;
 
   @NonNull
-  public final TextInputEditText etVehicleReg;
+  public final AutoCompleteTextView etVehicleReg;
 
   @NonNull
   public final LinearLayout llRegInputContainer;
@@ -99,7 +100,7 @@ public final class ActivityVehicleCheckoutBinding implements ViewBinding {
       @NonNull ConstraintLayout clCheckinForm, @NonNull ConstraintLayout clCheckoutForm,
       @NonNull TextInputEditText etCompanyName, @NonNull TextInputEditText etDriverName,
       @NonNull TextInputEditText etReturnDriver, @NonNull TextInputEditText etReturnMileage,
-      @NonNull TextInputEditText etStartingMileage, @NonNull TextInputEditText etVehicleReg,
+      @NonNull TextInputEditText etStartingMileage, @NonNull AutoCompleteTextView etVehicleReg,
       @NonNull LinearLayout llRegInputContainer, @NonNull TextInputLayout tilCompanyName,
       @NonNull TextInputLayout tilDriverName, @NonNull TextInputLayout tilReturnDriver,
       @NonNull TextInputLayout tilReturnMileage, @NonNull TextInputLayout tilStartingMileage,
@@ -226,7 +227,7 @@ public final class ActivityVehicleCheckoutBinding implements ViewBinding {
       }
 
       id = R.id.etVehicleReg;
-      TextInputEditText etVehicleReg = ViewBindings.findChildViewById(rootView, id);
+      AutoCompleteTextView etVehicleReg = ViewBindings.findChildViewById(rootView, id);
       if (etVehicleReg == null) {
         break missingId;
       }

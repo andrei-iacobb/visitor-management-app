@@ -29,8 +29,9 @@ const handleValidationErrors = (req, res, next) => {
 router.post('/verify', [
   body('company_name')
     .trim()
+    .notEmpty().withMessage('Company name is required')
     .isLength({ min: 2, max: 255 })
-    .withMessage('Company name is required'),
+    .withMessage('Company name must be between 2 and 255 characters'),
   body('contractor_name')
     .optional({ checkFalsy: true })
     .trim()
@@ -39,16 +40,34 @@ router.post('/verify', [
   try {
     const { company_name, contractor_name } = req.body;
 
-    // Check if contractor/company is approved
-    const checkQuery = `
-      SELECT id, status, expiry_date, notes
-      FROM allowed_contractors
-      WHERE LOWER(company_name) = LOWER($1)
-        AND (contractor_name IS NULL OR LOWER(contractor_name) = LOWER($2))
-      LIMIT 1
-    `;
+    // Search logic: if contractor_name provided, look for exact match (case-insensitive)
+    // Otherwise, find any approved contractor under that company (regardless of contractor_name)
+    let checkQuery;
+    let queryParams;
 
-    const result = await pool.query(checkQuery, [company_name, contractor_name || null]);
+    if (contractor_name && contractor_name.trim()) {
+      // Search for specific contractor under company (both required to match)
+      checkQuery = `
+        SELECT id, status, expiry_date, notes
+        FROM allowed_contractors
+        WHERE LOWER(TRIM(company_name)) = LOWER(TRIM($1))
+          AND LOWER(TRIM(contractor_name)) = LOWER(TRIM($2))
+        LIMIT 1
+      `;
+      queryParams = [company_name, contractor_name];
+    } else {
+      // Search for ANY approved contractor under this company
+      // This allows company-only registration if they have approved contractors
+      checkQuery = `
+        SELECT id, status, expiry_date, notes
+        FROM allowed_contractors
+        WHERE LOWER(TRIM(company_name)) = LOWER(TRIM($1))
+        LIMIT 1
+      `;
+      queryParams = [company_name];
+    }
+
+    const result = await pool.query(checkQuery, queryParams);
 
     if (result.rows.length === 0) {
       // Not found in allowed list - log unauthorized attempt
@@ -57,7 +76,6 @@ router.post('/verify', [
       return res.status(401).json({
         success: false,
         allowed: false,
-        reason: 'NOT_ON_APPROVED_LIST',
         message: `${company_name}${contractor_name ? ` (${contractor_name})` : ''} is not on the approved contractors list.`
       });
     }
@@ -68,13 +86,14 @@ router.post('/verify', [
     if (contractor.status !== 'approved') {
       await logUnauthorizedAttempt(company_name, contractor_name, `Status: ${contractor.status}`);
 
+      const statusMessage = contractor.status === 'pending'
+        ? `${company_name} is pending approval. Please contact administration.`
+        : `${company_name} approval has been denied. Please contact administration.`;
+
       return res.status(401).json({
         success: false,
         allowed: false,
-        reason: contractor.status === 'pending' ? 'PENDING_APPROVAL' : 'APPROVAL_DENIED',
-        message: contractor.status === 'pending'
-          ? `${company_name} is pending approval. Please contact administration.`
-          : `${company_name} approval has been denied. Please contact administration.`
+        message: statusMessage
       });
     }
 
@@ -85,7 +104,6 @@ router.post('/verify', [
       return res.status(401).json({
         success: false,
         allowed: false,
-        reason: 'APPROVAL_EXPIRED',
         message: `${company_name}'s approval has expired. Please contact administration to renew.`
       });
     }
@@ -108,8 +126,132 @@ router.post('/verify', [
 });
 
 /**
+ * GET /api/contractors/companies
+ * Get list of distinct company names (for autocomplete)
+ */
+router.get('/companies', async (req, res) => {
+  try {
+    const query = `
+      SELECT DISTINCT company_name
+      FROM allowed_contractors
+      WHERE status = 'approved'
+        AND (expiry_date IS NULL OR expiry_date >= CURRENT_TIMESTAMP)
+      ORDER BY company_name ASC
+    `;
+
+    const result = await pool.query(query);
+
+    res.json({
+      success: true,
+      data: result.rows.map(row => row.company_name)
+    });
+  } catch (error) {
+    console.error('Error fetching company names:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch company names',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+});
+
+/**
+ * GET /api/contractors/by-company
+ * Get approved contractors for a specific company (for contractor selection UI)
+ * NOTE: This route must come BEFORE /:id to avoid route conflict
+ */
+router.get('/by-company', [
+  query('company_name')
+    .trim()
+    .notEmpty().withMessage('Company name is required')
+    .isLength({ min: 2, max: 255 })
+    .withMessage('Company name must be between 2 and 255 characters')
+], handleValidationErrors, async (req, res) => {
+  try {
+    const { company_name } = req.query;
+
+    const query = `
+      SELECT
+        id, company_name, contractor_name, status, expiry_date
+      FROM allowed_contractors
+      WHERE LOWER(TRIM(company_name)) = LOWER(TRIM($1))
+        AND status = 'approved'
+        AND (expiry_date IS NULL OR expiry_date >= CURRENT_TIMESTAMP)
+      ORDER BY contractor_name ASC
+    `;
+
+    const result = await pool.query(query, [company_name]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: `No approved contractors found for "${company_name}". Please check the company name or contact administration.`
+      });
+    }
+
+    res.json({
+      success: true,
+      data: result.rows
+    });
+  } catch (error) {
+    console.error('Error fetching contractors by company:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch contractors',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+});
+
+/**
+ * GET /api/contractors
+ * Get list of all contractors (all statuses) - for admin dashboard stats
+ */
+router.get('/', [
+  query('limit').optional().isInt({ min: 1, max: 100 }).toInt(),
+  query('offset').optional().isInt({ min: 0 }).toInt()
+], handleValidationErrors, async (req, res) => {
+  try {
+    const { limit = 50, offset = 0 } = req.query;
+
+    const query = `
+      SELECT
+        id, company_name, contractor_name, email, phone_number,
+        status, approval_date, expiry_date, notes
+      FROM allowed_contractors
+      ORDER BY company_name ASC
+      LIMIT $1 OFFSET $2
+    `;
+
+    const result = await pool.query(query, [limit, offset]);
+
+    // Get total count
+    const countResult = await pool.query('SELECT COUNT(*) FROM allowed_contractors');
+    const total = parseInt(countResult.rows[0].count);
+
+    res.json({
+      success: true,
+      data: result.rows,
+      pagination: {
+        total,
+        limit,
+        offset,
+        hasMore: offset + result.rows.length < total
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching all contractors:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch contractors',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+});
+
+/**
  * GET /api/contractors/approved
- * Get list of all approved contractors (for admin dashboard)
+ * Get list of all approved contractors (for sign-in verification)
  */
 router.get('/approved', [
   query('limit').optional().isInt({ min: 1, max: 100 }).toInt(),
@@ -125,7 +267,7 @@ router.get('/approved', [
         CASE
           WHEN expiry_date IS NOT NULL AND expiry_date < CURRENT_TIMESTAMP THEN 'EXPIRED'
           WHEN status = 'approved' THEN 'ACTIVE'
-          ELSE UPPER(status)
+          ELSE UPPER(status::text)
         END as approval_status
       FROM allowed_contractors
       WHERE status = 'approved'
@@ -249,22 +391,88 @@ router.post('/', [
 });
 
 /**
+ * GET /api/contractors/:id
+ * Get a single contractor by ID
+ */
+router.get('/:id', [
+  param('id').isInt().withMessage('ID must be a valid integer')
+], handleValidationErrors, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const query = `
+      SELECT
+        id, company_name, contractor_name, email, phone_number,
+        status, approval_date, expiry_date, notes, created_at, updated_at
+      FROM allowed_contractors
+      WHERE id = $1
+    `;
+
+    const result = await pool.query(query, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Contractor not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: result.rows[0]
+    });
+  } catch (error) {
+    console.error('Error fetching contractor:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch contractor',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+});
+
+/**
  * PUT /api/contractors/:id
- * Update contractor approval status
+ * Update contractor information
  */
 router.put('/:id', [
   param('id').isInt().withMessage('ID must be a valid integer'),
+  body('company_name')
+    .optional({ checkFalsy: true })
+    .trim()
+    .isLength({ min: 2, max: 255 })
+    .withMessage('Company name must be between 2 and 255 characters'),
+  body('contractor_name')
+    .optional({ checkFalsy: true })
+    .trim()
+    .isLength({ max: 255 })
+    .withMessage('Contractor name must not exceed 255 characters'),
+  body('email')
+    .optional({ checkFalsy: true })
+    .isEmail()
+    .withMessage('Invalid email format'),
+  body('phone_number')
+    .optional({ checkFalsy: true })
+    .trim()
+    .isLength({ max: 50 })
+    .withMessage('Phone number must not exceed 50 characters'),
   body('status')
-    .isIn(['approved', 'pending', 'denied'])
-    .withMessage('Status must be approved, pending, or denied'),
+    .optional({ checkFalsy: true })
+    .isIn(['approved', 'pending', 'denied', 'inbuilding'])
+    .withMessage('Status must be approved, pending, denied, or inbuilding'),
+  body('expiry_date')
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .withMessage('Expiry date must be a valid ISO8601 date'),
   body('notes')
     .optional({ checkFalsy: true })
     .trim()
     .isLength({ max: 1000 })
+    .withMessage('Notes must not exceed 1000 characters')
 ], handleValidationErrors, async (req, res) => {
   try {
     const { id } = req.params;
-    const { status, notes } = req.body;
+    const { company_name, contractor_name, email, phone_number, status, expiry_date, notes } = req.body;
 
     // Check if contractor exists
     const checkQuery = 'SELECT * FROM allowed_contractors WHERE id = $1';
@@ -277,20 +485,73 @@ router.put('/:id', [
       });
     }
 
+    // Build dynamic update query
+    const updates = [];
+    const values = [];
+    let paramNum = 1;
+
+    if (company_name !== undefined) {
+      updates.push(`company_name = $${paramNum++}`);
+      values.push(company_name);
+    }
+
+    if (contractor_name !== undefined) {
+      updates.push(`contractor_name = $${paramNum++}`);
+      values.push(contractor_name || null);
+    }
+
+    if (email !== undefined) {
+      updates.push(`email = $${paramNum++}`);
+      values.push(email || null);
+    }
+
+    if (phone_number !== undefined) {
+      updates.push(`phone_number = $${paramNum++}`);
+      values.push(phone_number || null);
+    }
+
+    if (status !== undefined) {
+      updates.push(`status = $${paramNum++}`);
+      values.push(status);
+      // Set approval_date when transitioning to approved
+      if (status === 'approved') {
+        updates.push(`approval_date = CURRENT_TIMESTAMP`);
+      }
+    }
+
+    if (expiry_date !== undefined) {
+      updates.push(`expiry_date = $${paramNum++}`);
+      values.push(expiry_date || null);
+    }
+
+    if (notes !== undefined) {
+      updates.push(`notes = $${paramNum++}`);
+      values.push(notes || null);
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No fields to update'
+      });
+    }
+
+    // Always update the updated_at timestamp
+    updates.push(`updated_at = CURRENT_TIMESTAMP`);
+    values.push(id);
+
     const updateQuery = `
       UPDATE allowed_contractors
-      SET status = $1,
-          approval_date = CASE WHEN $1 = 'approved' THEN CURRENT_TIMESTAMP ELSE approval_date END,
-          notes = COALESCE($2, notes)
-      WHERE id = $3
+      SET ${updates.join(', ')}
+      WHERE id = $${paramNum}
       RETURNING *
     `;
 
-    const result = await pool.query(updateQuery, [status, notes || null, id]);
+    const result = await pool.query(updateQuery, values);
 
     res.json({
       success: true,
-      message: 'Contractor status updated successfully',
+      message: 'Contractor updated successfully',
       data: result.rows[0]
     });
   } catch (error) {

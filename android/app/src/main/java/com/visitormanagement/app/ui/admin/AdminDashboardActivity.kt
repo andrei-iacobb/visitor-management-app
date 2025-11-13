@@ -41,6 +41,8 @@ class AdminDashboardActivity : AppCompatActivity() {
                 0 -> "Active Visitors"
                 1 -> "All Logs"
                 2 -> "SharePoint"
+                3 -> "Health Check"
+                4 -> "Settings"
                 else -> "Tab $position"
             }
         }.attach()
@@ -64,13 +66,15 @@ class AdminDashboardActivity : AppCompatActivity() {
     }
 
     private inner class AdminPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
-        override fun getItemCount(): Int = 3
+        override fun getItemCount(): Int = 5
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> ActiveVisitorsFragment()
                 1 -> AllLogsFragment()
                 2 -> SharePointFragment()
+                3 -> HealthCheckFragment()
+                4 -> SettingsFragment()
                 else -> Fragment()
             }
         }

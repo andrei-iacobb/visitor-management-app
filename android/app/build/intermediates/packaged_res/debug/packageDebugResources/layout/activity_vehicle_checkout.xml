@@ -63,7 +63,7 @@
             <!-- Vehicle Registration -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilVehicleReg"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -72,12 +72,13 @@
                 app:boxStrokeColor="@color/primary_dark_blue"
                 app:errorEnabled="true">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/etVehicleReg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:completionThreshold="1"
                     android:textAllCaps="true" />
             </com.google.android.material.textfield.TextInputLayout>
 

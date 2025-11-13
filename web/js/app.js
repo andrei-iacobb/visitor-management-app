@@ -116,20 +116,26 @@ function openAddContractorModal() {
     openModal('contractorModal');
 }
 
-function editContractor(id) {
-    const contractor = currentContractors.find(c => c.id === id);
-    if (!contractor) return;
+async function editContractor(id) {
+    try {
+        // Fetch fresh data from server to ensure we have all fields
+        const result = await contractorAPI.getSingle(id);
+        const contractor = result.data;
 
-    editingContractorId = id;
-    document.getElementById('companyName').value = contractor.company_name;
-    document.getElementById('contractorName').value = contractor.contractor_name || '';
-    document.getElementById('contractorEmail').value = contractor.email || '';
-    document.getElementById('contractorPhone').value = contractor.phone_number || '';
-    document.getElementById('contractorStatus').value = contractor.status;
-    document.getElementById('contractorNotes').value = contractor.notes || '';
+        editingContractorId = id;
+        document.getElementById('companyName').value = contractor.company_name || '';
+        document.getElementById('contractorName').value = contractor.contractor_name || '';
+        document.getElementById('contractorEmail').value = contractor.email || '';
+        document.getElementById('contractorPhone').value = contractor.phone_number || '';
+        document.getElementById('contractorStatus').value = contractor.status || 'pending';
+        document.getElementById('contractorNotes').value = contractor.notes || '';
 
-    document.getElementById('contractorModalTitle').textContent = 'Edit Contractor';
-    openModal('contractorModal');
+        document.getElementById('contractorModalTitle').textContent = 'Edit Contractor';
+        openModal('contractorModal');
+    } catch (error) {
+        console.error('Error loading contractor for edit:', error);
+        showAlert('Error loading contractor data: ' + (error.message || 'Unknown error'), 'error');
+    }
 }
 
 async function handleContractorFormSubmit(e) {
@@ -233,17 +239,23 @@ function openAddVehicleModal() {
     openModal('vehicleModal');
 }
 
-function editVehicle(id) {
-    const vehicle = currentVehicles.find(v => v.id === id);
-    if (!vehicle) return;
+async function editVehicle(id) {
+    try {
+        // Fetch fresh data from server to ensure we have all fields
+        const result = await vehicleAPI.getSingle(id);
+        const vehicle = result.data;
 
-    editingVehicleId = id;
-    document.getElementById('vehicleReg').value = vehicle.registration;
-    document.getElementById('vehicleStatus').value = vehicle.status;
-    document.getElementById('vehicleMileage').value = vehicle.current_mileage || 0;
+        editingVehicleId = id;
+        document.getElementById('vehicleReg').value = vehicle.registration || '';
+        document.getElementById('vehicleStatus').value = vehicle.status || 'available';
+        document.getElementById('vehicleMileage').value = vehicle.current_mileage || 0;
 
-    document.getElementById('vehicleModalTitle').textContent = 'Edit Vehicle';
-    openModal('vehicleModal');
+        document.getElementById('vehicleModalTitle').textContent = 'Edit Vehicle';
+        openModal('vehicleModal');
+    } catch (error) {
+        console.error('Error loading vehicle for edit:', error);
+        showAlert('Error loading vehicle data: ' + (error.message || 'Unknown error'), 'error');
+    }
 }
 
 async function handleVehicleFormSubmit(e) {

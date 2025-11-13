@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Health Check"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_dark_blue"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Backend URL Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/background_light"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp"
+            app:cornerRadius="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Backend URL"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvBackendUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading..."
+                android:textSize="13sp"
+                android:textColor="@color/primary_dark_blue"
+                android:breakStrategy="balanced"
+                android:textIsSelectable="true" />
+
+        </LinearLayout>
+
+        <!-- Status Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Connection Status"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:visibility="gone"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:indeterminate="true" />
+
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ready to test"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginTop="8dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <!-- Test Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTestHealth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test Connection"
+            android:textColor="@color/white"
+            android:paddingVertical="12dp"
+            app:backgroundTint="@color/primary_dark_blue"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Result Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Response Time -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Response Time:"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvResponseTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0ms"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    android:alpha="0.3"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Response Text -->
+                <TextView
+                    android:id="@+id/tvResponse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Testing..."
+                    android:textSize="11sp"
+                    android:textColor="@color/white"
+                    android:lineSpacingExtra="4sp"
+                    android:textIsSelectable="true" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Info Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/background_light"
+            android:padding="16dp"
+            android:layout_marginTop="24dp"
+            app:cornerRadius="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How it works:"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Sends a test request to your backend\n• Shows response time in milliseconds\n• Green = Backend is reachable\n• Red = Connection issue\n• Check Settings tab to change backend URL"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:lineSpacingExtra="4sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

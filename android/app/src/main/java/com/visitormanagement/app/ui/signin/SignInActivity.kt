@@ -190,7 +190,7 @@ class SignInActivity : AppCompatActivity() {
                         proceedWithSignIn(fullName, phone, email, company, purpose, visitingPerson, carReg)
                     } else {
                         // Contractor is NOT approved - show rejection dialog
-                        showContractorRejectionDialog(body.message, body.reason)
+                        showContractorRejectionDialog(body.message)
                     }
                 } else {
                     // Handle API error
@@ -318,26 +318,11 @@ class SignInActivity : AppCompatActivity() {
     /**
      * Show rejection dialog when contractor is not approved
      */
-    private fun showContractorRejectionDialog(message: String, reason: String?) {
-        val titleText = "Access Denied"
-        val detailedMessage = when (reason) {
-            "NOT_ON_APPROVED_LIST" -> {
-                "$message\n\nPlease contact your supervisor or administration to be added to the approved contractors list."
-            }
-            "PENDING_APPROVAL" -> {
-                "$message\n\nYour company is currently pending approval. Please check back later or contact administration."
-            }
-            "APPROVAL_EXPIRED" -> {
-                "$message\n\nPlease contact administration to renew your approval."
-            }
-            else -> {
-                "$message\n\nPlease contact administration for more information."
-            }
-        }
-
+    private fun showContractorRejectionDialog(message: String) {
+        // Backend now provides complete user-friendly messages
         AlertDialog.Builder(this)
-            .setTitle(titleText)
-            .setMessage(detailedMessage)
+            .setTitle("Access Denied")
+            .setMessage(message)
             .setPositiveButton("OK") { _, _ ->
                 // Do nothing - stay on sign-in screen
             }

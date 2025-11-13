@@ -2,6 +2,12 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 // Database connection pool configuration
+// TODO: PRODUCTION - Adjust pool settings for containerized environment:
+// TODO: PRODUCTION - Reduce 'max' from 20 to 10-15 for containerized backends (memory constraints)
+// TODO: PRODUCTION - Increase idleTimeoutMillis to 60000ms for Kubernetes environments with frequent restarts
+// TODO: PRODUCTION - Use database service DNS (e.g., db-service.default.svc.cluster.local) instead of localhost
+// TODO: PRODUCTION - Enable SSL for database connections (require_ssl: true, ssl: {rejectUnauthorized: false})
+// TODO: PRODUCTION - Add connection retry logic for orchestration platform health checks
 const pool = new Pool({
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 5432,

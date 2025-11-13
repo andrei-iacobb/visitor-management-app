@@ -36,9 +36,20 @@ const createSignInValidation = [
     .isEmail()
     .withMessage('Invalid email format'),
   body('company_name')
-    .optional({ checkFalsy: true })
+    .if(() => true) // Always validate for contractors
     .trim()
-    .isLength({ max: 255 }),
+    .custom((value, { req }) => {
+      // Company name is required for contractors
+      if (req.body.visitor_type === 'contractor') {
+        if (!value || value.trim().length === 0) {
+          throw new Error('Company name is required for contractors');
+        }
+        if (value.trim().length < 2 || value.length > 255) {
+          throw new Error('Company name must be between 2 and 255 characters');
+        }
+      }
+      return true;
+    }),
   body('purpose_of_visit')
     .trim()
     .isLength({ min: 3 })

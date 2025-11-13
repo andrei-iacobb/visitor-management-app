@@ -80,6 +80,20 @@ interface ApiService {
     ): Response<ContractorVerificationResponse>
 
     /**
+     * Get list of company names for autocomplete
+     */
+    @GET("contractors/companies")
+    suspend fun getCompanyNames(): Response<ApiResponse<List<String>>>
+
+    /**
+     * Get approved contractors for a specific company
+     */
+    @GET("contractors/by-company")
+    suspend fun getContractorsByCompany(
+        @Query("company_name") companyName: String
+    ): Response<ApiResponse<List<com.visitormanagement.app.data.model.Contractor>>>
+
+    /**
      * Get all approved contractors
      */
     @GET("contractors/approved")
@@ -119,6 +133,12 @@ interface ApiService {
     suspend fun getDocument(
         @Path("fileName") fileName: String
     ): Response<ResponseBody>
+
+    /**
+     * Get list of vehicle registrations for autocomplete
+     */
+    @GET("vehicles/list/all")
+    suspend fun getVehicleRegistrations(): Response<ApiResponse<List<String>>>
 
     /**
      * Check vehicle status by registration

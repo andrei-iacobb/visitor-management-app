@@ -1,5 +1,6 @@
 // API Configuration
-const API_BASE_URL = 'http://localhost:5000/api';
+// Use relative URL so it works with any hostname/IP
+const API_BASE_URL = '/api';
 
 // Helper function for API calls
 async function apiCall(endpoint, method = 'GET', data = null) {
@@ -31,7 +32,11 @@ async function apiCall(endpoint, method = 'GET', data = null) {
 
 // Contractor APIs
 const contractorAPI = {
+    // Get all contractors (all statuses) - for dashboard list and stats
     getAll: () => apiCall('/contractors'),
+
+    // Get approved contractors only - for sign-in verification
+    getApproved: () => apiCall('/contractors/approved'),
 
     getById: (id) => apiCall(`/contractors/${id}`),
 
@@ -41,9 +46,12 @@ const contractorAPI = {
 
     delete: (id) => apiCall(`/contractors/${id}`, 'DELETE'),
 
-    approve: (id) => apiCall(`/contractors/${id}/approve`, 'PUT'),
+    approve: (id) => apiCall(`/contractors/${id}`, 'PUT', { status: 'approved' }),
 
-    deny: (id) => apiCall(`/contractors/${id}/deny`, 'PUT'),
+    deny: (id) => apiCall(`/contractors/${id}`, 'PUT', { status: 'denied' }),
+
+    // Get single contractor by ID (for editing)
+    getSingle: (id) => apiCall(`/contractors/${id}`),
 };
 
 // Vehicle APIs
@@ -51,6 +59,9 @@ const vehicleAPI = {
     getAll: () => apiCall('/vehicles'),
 
     getByReg: (registration) => apiCall(`/vehicles/${registration}`),
+
+    // Get single vehicle by ID (for editing) - uses /vehicles/id/:id route
+    getSingle: (id) => apiCall(`/vehicles/id/${id}`),
 
     create: (data) => apiCall('/vehicles', 'POST', data),
 

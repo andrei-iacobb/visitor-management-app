@@ -97,3 +97,21 @@ object SignInStatus {
     const val SIGNED_IN = "signed_in"
     const val SIGNED_OUT = "signed_out"
 }
+
+/**
+ * Data model for contractor from approved list
+ */
+data class Contractor(
+    val id: Int,
+
+    @SerializedName("company_name")
+    val companyName: String,
+
+    @SerializedName("contractor_name")
+    val contractorName: String?,
+
+    val status: String,
+
+    @SerializedName("expiry_date")
+    val expiryDate: String?
+)

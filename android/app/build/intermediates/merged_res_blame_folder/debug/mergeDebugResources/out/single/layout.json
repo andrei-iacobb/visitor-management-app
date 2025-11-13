@@ -1,54 +1,74 @@
 [
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/item_active_visitor.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/item_active_visitor.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/item_active_visitor.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/item_active_visitor.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/activity_main.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/activity_main.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/fragment_active_visitors.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/fragment_active_visitors.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/activity_sign_out.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/activity_sign_out.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/activity_vehicle_checkout.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/activity_vehicle_checkout.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/dialog_vehicle_damage.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/dialog_vehicle_damage.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/fragment_settings.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/fragment_settings.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/fragment_active_visitors.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/fragment_active_visitors.xml"
+        "merged": "com.visitormanagement.app-mergeDebugResources-40:/layout/activity_vehicle_checkout.xml",
+        "source": "com.visitormanagement.app-main-43:/layout/activity_vehicle_checkout.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/dialog_pdf_signature.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/dialog_pdf_signature.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/activity_sign_out.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/activity_sign_out.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/item_sign_out_result.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/item_sign_out_result.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/activity_sign_in.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/activity_sign_in.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/activity_vehicle_checkout.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/activity_vehicle_checkout.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/dialog_vehicle_damage.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/dialog_vehicle_damage.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/activity_sign_in.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/activity_sign_in.xml"
+        "merged": "com.visitormanagement.app-mergeDebugResources-40:/layout/activity_contractor_sign_in.xml",
+        "source": "com.visitormanagement.app-main-43:/layout/activity_contractor_sign_in.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/fragment_all_logs.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/fragment_all_logs.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/fragment_health_check.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/fragment_health_check.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/item_log_entry.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/item_log_entry.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/dialog_pdf_signature.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/dialog_pdf_signature.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/activity_admin_dashboard.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/activity_admin_dashboard.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/item_sign_out_result.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/item_sign_out_result.xml"
     },
     {
-        "merged": "com.visitormanagement.app-mergeDebugResources-39:/layout/fragment_sharepoint.xml",
-        "source": "com.visitormanagement.app-main-42:/layout/fragment_sharepoint.xml"
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/activity_main.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/activity_admin_dashboard.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/activity_admin_dashboard.xml"
+    },
+    {
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/item_log_entry.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/item_log_entry.xml"
+    },
+    {
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/fragment_all_logs.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/fragment_all_logs.xml"
+    },
+    {
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/fragment_sharepoint.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/fragment_sharepoint.xml"
+    },
+    {
+        "merged": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-mergeDebugResources-40:/layout/activity_contractor_sign_in.xml",
+        "source": "/Users/andreiiacob/.gradle/daemon/9.0-milestone-1/com.visitormanagement.app-main-43:/layout/activity_contractor_sign_in.xml"
     }
 ]

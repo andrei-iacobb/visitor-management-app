@@ -3,6 +3,35 @@ const router = express.Router();
 const { pool } = require('../config/database');
 
 /**
+ * GET /vehicles/list/all
+ * Get list of all vehicle registrations (for autocomplete)
+ * NOTE: This route must come BEFORE /:registration to avoid route conflict
+ */
+router.get('/list/all', async (req, res) => {
+    try {
+        const query = `
+            SELECT registration
+            FROM vehicles
+            ORDER BY registration ASC
+        `;
+
+        const result = await pool.query(query);
+
+        res.json({
+            success: true,
+            data: result.rows.map(row => row.registration)
+        });
+    } catch (error) {
+        console.error('Error fetching vehicle registrations:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch vehicle registrations',
+            error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+        });
+    }
+});
+
+/**
  * GET /vehicles/:registration
  * Check vehicle status by registration
  */
@@ -458,25 +487,137 @@ router.post('/', async (req, res) => {
 });
 
 /**
+ * GET /vehicles/:id (by numeric ID)
+ * Get a single vehicle by ID
+ */
+router.get('/id/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Validate ID is a number
+        if (!/^\d+$/.test(id)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid vehicle ID format',
+                data: null
+            });
+        }
+
+        const result = await pool.query(
+            `SELECT id, registration, status, current_mileage, last_checkout_id, created_at, updated_at
+             FROM vehicles
+             WHERE id = $1`,
+            [parseInt(id)]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Vehicle not found',
+                data: null
+            });
+        }
+
+        res.json({
+            success: true,
+            data: result.rows[0]
+        });
+    } catch (error) {
+        console.error('Error fetching vehicle:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+});
+
+/**
  * PUT /vehicles/:id
  * Update a vehicle
  */
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { status, current_mileage } = req.body;
+        const { registration, status, current_mileage } = req.body;
+
+        // Validate ID is a number
+        if (!/^\d+$/.test(id)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid vehicle ID format',
+                data: null
+            });
+        }
+
+        // Check if vehicle exists
+        const checkResult = await pool.query(
+            'SELECT id, registration FROM vehicles WHERE id = $1',
+            [parseInt(id)]
+        );
+
+        if (checkResult.rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Vehicle not found',
+                data: null
+            });
+        }
+
+        // If registration is being updated, check for uniqueness
+        if (registration !== undefined && registration.toUpperCase() !== checkResult.rows[0].registration) {
+            const dupCheck = await pool.query(
+                'SELECT id FROM vehicles WHERE UPPER(registration) = $1',
+                [registration.toUpperCase()]
+            );
+            if (dupCheck.rows.length > 0) {
+                return res.status(409).json({
+                    success: false,
+                    message: 'A vehicle with this registration already exists',
+                    data: null
+                });
+            }
+        }
 
         // Build update query dynamically
         let updateFields = [];
         let values = [];
         let paramNum = 1;
 
+        if (registration !== undefined) {
+            updateFields.push(`registration = $${paramNum++}`);
+            values.push(registration.toUpperCase());
+        }
+
         if (status !== undefined) {
+            // Validate status value
+            if (!['available', 'in_use', 'maintenance'].includes(status)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid status. Must be one of: available, in_use, maintenance',
+                    data: null
+                });
+            }
             updateFields.push(`status = $${paramNum++}`);
             values.push(status);
         }
 
         if (current_mileage !== undefined) {
+            // Validate mileage
+            if (!Number.isInteger(current_mileage) || current_mileage < 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Mileage must be a non-negative integer',
+                    data: null
+                });
+            }
+            if (current_mileage > 999999) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Mileage exceeds maximum allowed value (999,999)',
+                    data: null
+                });
+            }
             updateFields.push(`current_mileage = $${paramNum++}`);
             values.push(current_mileage);
         }
@@ -490,23 +631,15 @@ router.put('/:id', async (req, res) => {
         }
 
         updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
-        values.push(id);
+        values.push(parseInt(id));
 
         const result = await pool.query(
             `UPDATE vehicles
              SET ${updateFields.join(', ')}
              WHERE id = $${paramNum}
-             RETURNING id, registration, status, current_mileage, created_at, updated_at`,
+             RETURNING id, registration, status, current_mileage, last_checkout_id, created_at, updated_at`,
             values
         );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'Vehicle not found',
-                data: null
-            });
-        }
 
         res.json({
             success: true,

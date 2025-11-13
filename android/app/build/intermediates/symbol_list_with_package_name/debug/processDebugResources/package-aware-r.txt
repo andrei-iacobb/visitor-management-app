@@ -122,6 +122,8 @@ attr alertDialogButtonGroupStyle
 attr alertDialogCenterButtons
 attr alertDialogStyle
 attr alertDialogTheme
+attr alignContent
+attr alignItems
 attr allowStacking
 attr alpha
 attr alphabeticModifiers
@@ -459,6 +461,9 @@ attr dialogTheme
 attr displayOptions
 attr divider
 attr dividerColor
+attr dividerDrawable
+attr dividerDrawableHorizontal
+attr dividerDrawableVertical
 attr dividerHorizontal
 attr dividerInsetEnd
 attr dividerInsetStart
@@ -550,6 +555,8 @@ attr fastScrollHorizontalTrackDrawable
 attr fastScrollVerticalThumbDrawable
 attr fastScrollVerticalTrackDrawable
 attr firstBaselineToTopHeight
+attr flexDirection
+attr flexWrap
 attr floatingActionButtonLargePrimaryStyle
 attr floatingActionButtonLargeSecondaryStyle
 attr floatingActionButtonLargeStyle
@@ -685,6 +692,7 @@ attr itemTextAppearanceActiveBoldEnabled
 attr itemTextAppearanceInactive
 attr itemTextColor
 attr itemVerticalPadding
+attr justifyContent
 attr keyPositionType
 attr keyboardIcon
 attr keylines
@@ -699,6 +707,7 @@ attr layout
 attr layoutDescription
 attr layoutDuringTransition
 attr layoutManager
+attr layout_alignSelf
 attr layout_anchor
 attr layout_anchorGravity
 attr layout_behavior
@@ -753,6 +762,9 @@ attr layout_constraintWidth_percent
 attr layout_dodgeInsetEdges
 attr layout_editor_absoluteX
 attr layout_editor_absoluteY
+attr layout_flexBasisPercent
+attr layout_flexGrow
+attr layout_flexShrink
 attr layout_goneMarginBaseline
 attr layout_goneMarginBottom
 attr layout_goneMarginEnd
@@ -763,10 +775,16 @@ attr layout_goneMarginTop
 attr layout_insetEdge
 attr layout_keyline
 attr layout_marginBaseline
+attr layout_maxHeight
+attr layout_maxWidth
+attr layout_minHeight
+attr layout_minWidth
 attr layout_optimizationLevel
+attr layout_order
 attr layout_scrollEffect
 attr layout_scrollFlags
 attr layout_scrollInterpolator
+attr layout_wrapBefore
 attr layout_wrapBehaviorInParent
 attr liftOnScroll
 attr liftOnScrollColor
@@ -851,6 +869,7 @@ attr maxButtonHeight
 attr maxCharacterCount
 attr maxHeight
 attr maxImageSize
+attr maxLine
 attr maxLines
 attr maxNumber
 attr maxVelocity
@@ -1037,6 +1056,9 @@ attr shouldRemoveExpandedCorners
 attr showAnimationBehavior
 attr showAsAction
 attr showDelay
+attr showDivider
+attr showDividerHorizontal
+attr showDividerVertical
 attr showDividers
 attr showMotionSpec
 attr showPaths
@@ -2216,6 +2238,8 @@ dimen compat_button_padding_vertical_material
 dimen compat_control_corner_material
 dimen compat_notification_large_icon_max_height
 dimen compat_notification_large_icon_max_width
+dimen contractor_button_height
+dimen contractor_button_margin
 dimen def_drawer_elevation
 dimen design_appbar_elevation
 dimen design_bottom_navigation_active_item_max_width
@@ -3212,6 +3236,8 @@ id bounceEnd
 id bounceStart
 id btnAdmin
 id btnBack
+id btnBackStep2
+id btnBackStep3
 id btnCancel
 id btnCheckinVehicle
 id btnCheckoutVehicle
@@ -3222,19 +3248,25 @@ id btnFilterSignedIn
 id btnFilterSignedOut
 id btnFilterToday
 id btnLookupVehicle
+id btnNextStep1
 id btnReadFromSharePoint
 id btnRefresh
+id btnReset
+id btnSave
 id btnSearch
 id btnSignOut
 id btnSubmit
+id btnSubmitStep3
 id btnSyncNow
 id btnSyncUnsyncedOnly
+id btnTestHealth
 id buttonPanel
 id cache_measures
 id callMeasure
 id cancel_button
 id cardContractor
 id cardKeys
+id cardResult
 id cardSearch
 id cardSignOut
 id cardVisitor
@@ -3259,6 +3291,8 @@ id clip_vertical
 id clockwise
 id closest
 id collapseActionView
+id column
+id column_reverse
 id compress
 id confirm_button
 id constraint
@@ -3268,6 +3302,7 @@ id contentContainer
 id contentPanel
 id contiguous
 id continuousVelocity
+id contractorButtonsContainer
 id coordinator
 id cos
 id counterclockwise
@@ -3319,9 +3354,11 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id etBackendUrl
 id etCarReg
 id etCompany
 id etCompanyName
+id etCompanyStep1
 id etDamageDescription
 id etDriverName
 id etEmail
@@ -3349,6 +3386,8 @@ id fitStart
 id fitToContents
 id fitXY
 id fixed
+id flex_end
+id flex_start
 id flip
 id floating
 id footerContainer
@@ -3482,6 +3521,7 @@ id north
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id nowrap
 id off
 id on
 id onInterceptTouchReturnSwipe
@@ -3532,7 +3572,9 @@ id rightToLeft
 id right_icon
 id right_side
 id rounded
+id row
 id row_index_key
+id row_reverse
 id rvActiveVisitors
 id rvLogs
 id rvResults
@@ -3576,6 +3618,9 @@ id snackbar_text
 id snap
 id snapMargins
 id south
+id space_around
+id space_between
+id space_evenly
 id spacer
 id special_effects_controller_view_tag
 id spline
@@ -3595,6 +3640,9 @@ id startVertical
 id staticLayout
 id staticPostLayout
 id statusIndicator
+id step1Container
+id step2Container
+id step3Container
 id stop
 id stretch
 id submenuarrow
@@ -3634,6 +3682,7 @@ id textinput_suffix_text
 id tilCarReg
 id tilCompany
 id tilCompanyName
+id tilCompanyStep1
 id tilDamageDescription
 id tilDriverName
 id tilEmail
@@ -3664,11 +3713,14 @@ id transition_scene_layoutid_cache
 id transition_transform
 id triangle
 id tvActiveCount
+id tvBackendUrl
 id tvCheckinTitle
 id tvCheckoutTitle
 id tvClock
 id tvCompany
+id tvCompanyNameStep2
 id tvContractorCount
+id tvCurrentUrl
 id tvDate
 id tvDetails
 id tvDuration
@@ -3678,7 +3730,10 @@ id tvName
 id tvPhone
 id tvPurpose
 id tvRequiredNote
+id tvResponse
+id tvResponseTime
 id tvResultsHeader
+id tvSelectedContractorName
 id tvSignInTime
 id tvSignOutTime
 id tvStatus
@@ -3713,6 +3768,7 @@ id withinBounds
 id wrap
 id wrap_content
 id wrap_content_constrained
+id wrap_reverse
 id x_left
 id x_right
 integer abc_config_activityDefaultDur
@@ -3830,6 +3886,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_admin_dashboard
+layout activity_contractor_sign_in
 layout activity_main
 layout activity_sign_in
 layout activity_sign_out
@@ -3854,6 +3911,8 @@ layout dialog_pdf_signature
 layout dialog_vehicle_damage
 layout fragment_active_visitors
 layout fragment_all_logs
+layout fragment_health_check
+layout fragment_settings
 layout fragment_sharepoint
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
@@ -5417,6 +5476,8 @@ styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color dra
 styleable DrawerLayout elevation
 styleable ExtendedFloatingActionButton collapsedSize elevation extendMotionSpec extendStrategy hideMotionSpec showMotionSpec shrinkMotionSpec
 styleable ExtendedFloatingActionButton_Behavior_Layout behavior_autoHide behavior_autoShrink
+styleable FlexboxLayout alignContent alignItems dividerDrawable dividerDrawableHorizontal dividerDrawableVertical flexDirection flexWrap justifyContent maxLine showDivider showDividerHorizontal showDividerVertical
+styleable FlexboxLayout_Layout layout_alignSelf layout_flexBasisPercent layout_flexGrow layout_flexShrink layout_maxHeight layout_maxWidth layout_minHeight layout_minWidth layout_order layout_wrapBefore
 styleable FloatingActionButton android_enabled backgroundTint backgroundTintMode borderWidth elevation ensureMinTouchTargetSize fabCustomSize fabSize hideMotionSpec hoveredFocusedTranslationZ maxImageSize pressedTranslationZ rippleColor shapeAppearance shapeAppearanceOverlay showMotionSpec useCompatPadding
 styleable FloatingActionButton_Behavior_Layout behavior_autoHide
 styleable FlowLayout itemSpacing lineSpacing

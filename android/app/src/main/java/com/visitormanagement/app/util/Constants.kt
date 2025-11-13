@@ -8,7 +8,11 @@ object Constants {
     // IMPORTANT: Replace with your actual server IP address
     // For Android Emulator: use 10.0.2.2 to access host machine's localhost
     // For Physical Device: use your computer's IP address (e.g., 192.168.1.100)
-    const val BASE_URL = "http://192.168.1.48:3000/api/"  // Physical device IP
+    // TODO: PRODUCTION - Replace hardcoded IP with proxy URL (e.g., https://api.yourdomain.com/api/)
+    // TODO: PRODUCTION - Load BASE_URL from BuildConfig or remote configuration for environment-specific URLs
+    // TODO: PRODUCTION - Use HTTPS instead of HTTP for production (SSL/TLS certificate required)
+    // TODO: PRODUCTION - Implement certificate pinning for API security in production builds
+    const val BASE_URL = "http://192.168.11.105:3000/api/"  // Physical device IP
 
     // Network timeouts
     const val TIMEOUT_SECONDS = 30L
@@ -36,6 +40,8 @@ object Constants {
     const val EXTRA_SIGNATURE_DATA = "signature_data"
 
     // Shared Preferences
+    // TODO: PRODUCTION - Implement dynamic API URL configuration via Shared Preferences
+    // TODO: PRODUCTION - Allow configuration updates from admin dashboard without recompiling
     const val PREF_NAME = "visitor_management_prefs"
     const val PREF_API_BASE_URL = "api_base_url"
 

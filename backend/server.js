@@ -25,13 +25,19 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrcAttr: ["'unsafe-inline'"], // Allow inline event handlers like onclick
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
+      connectSrc: ["'self'", "http://192.168.11.105:3000"],
       imgSrc: ["'self'", "data:"],
+      fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
     }
   }
 }));
 
 // CORS configuration - Allow requests from Android app
+// TODO: PRODUCTION - Configure CORS whitelist with proxy URL instead of '*'
+// TODO: PRODUCTION - Use environment variable for allowed origins (e.g., CORS_ORIGIN from .env)
+// Example: origin: process.env.CORS_ORIGIN || 'http://localhost:3000'
 app.use(cors({
   origin: '*', // In production, specify your Android app's origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -39,6 +45,8 @@ app.use(cors({
 }));
 
 // Request logging
+// TODO: PRODUCTION - Change morgan format from 'dev' to 'combined' for production logs
+// TODO: PRODUCTION - Implement structured logging (Winston/Pino) for Docker/ECS environments
 app.use(morgan('dev'));
 
 // Body parsing middleware
@@ -46,6 +54,9 @@ app.use(express.json({ limit: '10mb' })); // Increased limit for photo/signature
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Serve static files (public and web UI)
+// TODO: PRODUCTION - Configure static file serving via CDN or reverse proxy (Nginx) instead of Express
+// TODO: PRODUCTION - Set proper cache headers for static assets (Cache-Control, ETag)
+// TODO: PRODUCTION - Consider separate static server or S3/CloudFront for public files in containerized environment
 app.use(express.static('public'));
 app.use(express.static('../web'));
 
@@ -172,7 +183,13 @@ const startServer = async () => {
       process.exit(1);
     }
 
+    // TODO: PRODUCTION - Set environment to production via NODE_ENV environment variable
+    // TODO: PRODUCTION - Use database connection pooling optimized for containerized environments
+    // TODO: PRODUCTION - Implement health check endpoint for container orchestration (Docker/Kubernetes)
+    // TODO: PRODUCTION - Add readiness probe for graceful startup detection in orchestration
+
     // Start server
+    // TODO: PRODUCTION - Bind to 0.0.0.0 instead of localhost for container environments
     global.server = app.listen(PORT, () => {
       console.log('========================================');
       console.log('=� Visitor Management API Server');

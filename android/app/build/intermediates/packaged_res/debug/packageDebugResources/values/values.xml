@@ -31,6 +31,8 @@
     <color name="transparent">#00000000</color>
     <color name="warning_orange">#FF9800</color>
     <color name="white">#FFFFFF</color>
+    <dimen name="contractor_button_height">64dp</dimen>
+    <dimen name="contractor_button_margin">12dp</dimen>
     <string name="active_visitors_title">Active Sign-Ins</string>
     <string name="app_name">Visitor Management</string>
     <string name="btn_acknowledge_terms">Acknowledge &amp; Sign</string>

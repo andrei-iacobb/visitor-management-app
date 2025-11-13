@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-68:12
-INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-68:12
-INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-68:12
-INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-68:12
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-75:12
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-75:12
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-75:12
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:2:1-75:12
 MERGED from [androidx.databinding:viewbinding:8.11.2] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/b9037a9b5e854f4401ab7884ad4a710e/transformed/viewbinding-8.11.2/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5868068ef87ff85503b0762c655a4ed3/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
@@ -43,6 +43,7 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Users/andreiiaco
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/d9c8d30adfe54b03400d6d5537a7dfc8/transformed/lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/7827192834fad844d7325311b45c6141/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core-ktx:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a22d71d3fc9ba82880549eda88204881/transformed/core-ktx-1.12.0/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.flexbox:flexbox:3.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/47dcdacf4059833d17319c13bbbf7050/transformed/flexbox-3.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a928417aae29791e8c1b6a527883e3a8/transformed/annotation-experimental-1.3.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6a2f69c50ba0c502bb852e2e8685e066/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cardview:cardview:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/f3dd57531e0449fd049a698c642bebe8/transformed/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -90,8 +91,8 @@ ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/Androi
 	android:name
 		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:15:9-57
 application
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:18:5-66:19
-INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:18:5-66:19
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:18:5-73:19
+INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:18:5-73:19
 MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/c3abe21fb1e8bb0519b55c1684e53c3f/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/5868068ef87ff85503b0762c655a4ed3/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -113,63 +114,73 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/andreiiacob/.gradle/
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/e964bde9160f449995e6be036e6d66cc/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:21:9-35
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:22:9-35
 	android:label
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:20:9-41
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:21:9-41
 	tools:targetApi
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:24:9-29
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:25:9-29
 	android:allowBackup
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:19:9-35
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:20:9-35
 	android:theme
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:22:9-55
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:23:9-55
 	android:usesCleartextTraffic
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:23:9-44
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:19:9-45
 activity#com.visitormanagement.app.ui.main.MainActivity
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:27:9-35:20
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:28:9-36:20
 	android:screenOrientation
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:30:13-50
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:31:13-50
 	android:exported
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:29:13-36
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:30:13-36
 	android:name
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:28:13-49
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:29:13-49
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:31:13-34:29
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:32:13-35:29
 action#android.intent.action.MAIN
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:32:17-69
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:33:17-69
 	android:name
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:32:25-66
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:33:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:33:17-77
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:34:17-77
 	android:name
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:33:27-74
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:34:27-74
 activity#com.visitormanagement.app.ui.signin.SignInActivity
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:38:9-41:58
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:39:9-42:58
 	android:screenOrientation
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:40:13-50
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:41:13-50
 	android:windowSoftInputMode
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:41:13-55
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:42:13-55
 	android:name
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:39:13-53
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:40:13-53
+activity#com.visitormanagement.app.ui.signin.ContractorSignInActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:45:9-48:58
+	android:screenOrientation
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:47:13-50
+	android:windowSoftInputMode
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:48:13-55
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:46:13-63
 activity#com.visitormanagement.app.ui.signout.SignOutActivity
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:44:9-46:53
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:51:9-53:53
 	android:screenOrientation
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:46:13-50
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:53:13-50
 	android:name
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:45:13-55
-activity#com.visitormanagement.app.ui.vehicle.VehicleCheckoutActivity
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:49:9-52:58
-	android:screenOrientation
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:51:13-50
-	android:windowSoftInputMode
 		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:52:13-55
-	android:name
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:50:13-63
-activity#com.visitormanagement.app.ui.admin.AdminDashboardActivity
-ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:55:9-57:53
+activity#com.visitormanagement.app.ui.vehicle.VehicleCheckoutActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:56:9-59:58
 	android:screenOrientation
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:57:13-50
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:58:13-50
+	android:windowSoftInputMode
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:59:13-55
 	android:name
-		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:56:13-60
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:57:13-63
+activity#com.visitormanagement.app.ui.admin.AdminDashboardActivity
+ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:62:9-64:53
+	android:screenOrientation
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:64:13-50
+	android:name
+		ADDED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml:63:13-60
 uses-sdk
 INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/andreiiacob/visitor-management-app/android/app/src/main/AndroidManifest.xml
@@ -252,6 +263,8 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/and
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/7827192834fad844d7325311b45c6141/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core-ktx:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a22d71d3fc9ba82880549eda88204881/transformed/core-ktx-1.12.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.core:core-ktx:1.12.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a22d71d3fc9ba82880549eda88204881/transformed/core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.flexbox:flexbox:3.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/47dcdacf4059833d17319c13bbbf7050/transformed/flexbox-3.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.flexbox:flexbox:3.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/47dcdacf4059833d17319c13bbbf7050/transformed/flexbox-3.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a928417aae29791e8c1b6a527883e3a8/transformed/annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/a928417aae29791e8c1b6a527883e3a8/transformed/annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/andreiiacob/.gradle/caches/9.0-milestone-1/transforms/6a2f69c50ba0c502bb852e2e8685e066/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44

@@ -11,6 +11,7 @@ import com.visitormanagement.app.R
 import com.visitormanagement.app.data.model.VisitorType
 import com.visitormanagement.app.util.Constants
 import com.visitormanagement.app.ui.signin.SignInActivity
+import com.visitormanagement.app.ui.signin.ContractorSignInActivity
 import com.visitormanagement.app.ui.signout.SignOutActivity
 import com.visitormanagement.app.ui.admin.AdminDashboardActivity
 import com.visitormanagement.app.ui.vehicle.VehicleCheckoutActivity
@@ -73,7 +74,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startSignIn(visitorType: String) {
-        val intent = Intent(this, SignInActivity::class.java).apply {
+        // Use ContractorSignInActivity for contractors, SignInActivity for visitors
+        val activityClass = if (visitorType == VisitorType.CONTRACTOR) {
+            ContractorSignInActivity::class.java
+        } else {
+            SignInActivity::class.java
+        }
+
+        val intent = Intent(this, activityClass).apply {
             putExtra(Constants.EXTRA_VISITOR_TYPE, visitorType)
         }
         startActivity(intent)

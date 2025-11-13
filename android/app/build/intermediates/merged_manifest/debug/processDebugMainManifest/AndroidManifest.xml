@@ -28,6 +28,7 @@
     <uses-permission android:name="com.visitormanagement.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
+        android:name="com.visitormanagement.app.VisitorManagementApp"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
@@ -52,6 +53,12 @@
         <!-- Sign In Activity - LANDSCAPE ONLY -->
         <activity
             android:name="com.visitormanagement.app.ui.signin.SignInActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Contractor Sign In Activity - LANDSCAPE ONLY -->
+        <activity
+            android:name="com.visitormanagement.app.ui.signin.ContractorSignInActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
 

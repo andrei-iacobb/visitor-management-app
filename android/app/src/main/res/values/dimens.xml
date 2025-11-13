@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Contractor button dimensions -->
+    <dimen name="contractor_button_height">64dp</dimen>
+    <dimen name="contractor_button_margin">12dp</dimen>
+</resources>

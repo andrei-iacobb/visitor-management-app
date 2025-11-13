@@ -17,6 +17,9 @@ object RetrofitClient {
 
     /**
      * Logging interceptor for debugging
+     * TODO: PRODUCTION - Disable verbose logging in production builds
+     * TODO: PRODUCTION - Use ProGuard/R8 to strip sensitive HTTP logs from release APKs
+     * TODO: PRODUCTION - Implement conditional logging based on BuildConfig.DEBUG
      */
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -24,6 +27,10 @@ object RetrofitClient {
 
     /**
      * OkHttp client with timeouts and logging
+     * TODO: PRODUCTION - Add certificate pinning for HTTPS security
+     * TODO: PRODUCTION - Implement request/response interceptors for authentication tokens
+     * TODO: PRODUCTION - Add network interceptor to handle proxy authentication if required
+     * TODO: PRODUCTION - Configure connection pool for containerized backend (adjust pool size for throughput)
      */
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
@@ -42,10 +49,21 @@ object RetrofitClient {
         .create()
 
     /**
-     * Retrofit instance
+     * Retrofit instance - recreated when base URL changes
      */
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
+    private var retrofit: Retrofit = createRetrofit()
+
+    /**
+     * API service instance - recreated when base URL changes
+     */
+    var apiService: ApiService = retrofit.create(ApiService::class.java)
+        private set
+
+    /**
+     * Create a new Retrofit instance with the current base URL
+     */
+    private fun createRetrofit(): Retrofit {
+        return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -53,17 +71,14 @@ object RetrofitClient {
     }
 
     /**
-     * API service instance
-     */
-    val apiService: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
-    }
-
-    /**
-     * Update base URL (useful for configuration)
+     * Update base URL and recreate Retrofit and ApiService instances
      */
     fun updateBaseUrl(newBaseUrl: String) {
         baseUrl = if (newBaseUrl.endsWith("/")) newBaseUrl else "$newBaseUrl/"
+
+        // Recreate Retrofit and ApiService with new base URL
+        retrofit = createRetrofit()
+        apiService = retrofit.create(ApiService::class.java)
     }
 
     /**
