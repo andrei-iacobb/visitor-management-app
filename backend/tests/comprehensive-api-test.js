@@ -193,7 +193,7 @@ async function testAuthVerify() {
 
     if (response.status === 200 && response.body.valid) {
       logSuccess('Token verified successfully');
-      logInfo(`User: ${response.body.user.username}`);
+      logInfo(`User: ${response.body.data.username}`);
       return true;
     } else {
       logError('Token verification failed');
@@ -452,10 +452,11 @@ async function testGetActiveVisitors() {
     });
 
     if (response.status === 200 && response.body.success) {
-      logSuccess(`Retrieved ${response.body.count} active visitors`);
+      const count = response.body.count || (response.body.data ? response.body.data.length : 0);
+      logSuccess(`Retrieved ${count} active visitors`);
       return true;
     } else {
-      logError('Failed to get active visitors');
+      logError(`Failed to get active visitors - Status: ${response.status}, Body: ${JSON.stringify(response.body)}`);
       return false;
     }
   } catch (error) {
