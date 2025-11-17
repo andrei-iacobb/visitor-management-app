@@ -11,6 +11,7 @@
     "test:stress": "node tests/stress-test.js",
     "test:all": "npm run test && npm run test:comprehensive",
     "db:setup": "psql -U postgres -f database/schema.sql",
+    "setup:admin": "node scripts/setup-admin.js",
     "archive:dry-run": "node scripts/archive-old-records.js --dry-run",
     "archive:run": "node scripts/archive-old-records.js"
   },
