@@ -72,6 +72,7 @@ CREATE TABLE sign_ins (
     sign_in_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     sign_out_time TIMESTAMP WITH TIME ZONE,
     status sign_in_status_enum DEFAULT 'signed_in',
+    signature TEXT,
     sharepoint_synced BOOLEAN DEFAULT FALSE,
     sharepoint_sync_time TIMESTAMP WITH TIME ZONE,
     sharepoint_sync_error TEXT,
@@ -87,12 +88,15 @@ CREATE INDEX idx_sign_ins_visitor_type ON sign_ins(visitor_type);
 CREATE INDEX idx_sign_ins_sign_in_time ON sign_ins(sign_in_time DESC);
 CREATE INDEX idx_sign_ins_visiting_person ON sign_ins(visiting_person);
 CREATE INDEX idx_sign_ins_sharepoint_synced ON sign_ins(sharepoint_synced) WHERE sharepoint_synced = FALSE;
+CREATE INDEX idx_sign_ins_email ON sign_ins(email) WHERE email IS NOT NULL;
+CREATE INDEX idx_sign_ins_car_registration ON sign_ins(car_registration) WHERE car_registration IS NOT NULL;
 CREATE INDEX idx_staff_email ON staff(email);
 
 -- Contractor validation indexes
 CREATE INDEX idx_allowed_contractors_company ON allowed_contractors(company_name);
 CREATE INDEX idx_allowed_contractors_status ON allowed_contractors(status);
 CREATE INDEX idx_allowed_contractors_expiry ON allowed_contractors(expiry_date);
+CREATE INDEX idx_allowed_contractors_composite ON allowed_contractors(company_name, contractor_name);
 CREATE UNIQUE INDEX idx_allowed_contractors_unique ON allowed_contractors(company_name, contractor_name) WHERE status = 'approved';
 
 -- Unauthorized attempts indexes
@@ -238,6 +242,74 @@ SELECT
 FROM sign_ins
 WHERE status = 'signed_in'
 ORDER BY sign_in_time DESC;
+
+-- Archival tables for long-term storage
+-- Sign-ins archive table (identical structure to sign_ins)
+CREATE TABLE sign_ins_archive (
+    id SERIAL PRIMARY KEY,
+    original_id INTEGER NOT NULL,
+    visitor_type visitor_type_enum NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(50) NOT NULL,
+    email VARCHAR(255),
+    company_name VARCHAR(255),
+    purpose_of_visit TEXT NOT NULL,
+    car_registration VARCHAR(50),
+    visiting_person VARCHAR(255) NOT NULL,
+    sign_in_time TIMESTAMP WITH TIME ZONE,
+    sign_out_time TIMESTAMP WITH TIME ZONE,
+    status sign_in_status_enum,
+    signature TEXT,
+    sharepoint_synced BOOLEAN,
+    sharepoint_sync_time TIMESTAMP WITH TIME ZONE,
+    sharepoint_sync_error TEXT,
+    document_acknowledged BOOLEAN,
+    document_acknowledgment_time TIMESTAMP WITH TIME ZONE,
+    archived_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Vehicle checkouts archive table
+CREATE TABLE vehicle_checkouts_archive (
+    id SERIAL PRIMARY KEY,
+    original_id INTEGER NOT NULL,
+    vehicle_id INTEGER NOT NULL,
+    registration VARCHAR(50) NOT NULL,
+    checkout_date DATE NOT NULL,
+    checkout_time TIME NOT NULL,
+    company_name VARCHAR(255) NOT NULL,
+    driver_name VARCHAR(255) NOT NULL,
+    starting_mileage INTEGER NOT NULL,
+    signature TEXT,
+    acknowledged_terms BOOLEAN,
+    acknowledgment_time TIMESTAMP WITH TIME ZONE,
+    status VARCHAR(50),
+    archived_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Data retention policy configuration table
+CREATE TABLE data_retention_policy (
+    id SERIAL PRIMARY KEY,
+    table_name VARCHAR(100) UNIQUE NOT NULL,
+    retention_months INTEGER NOT NULL DEFAULT 12,
+    last_archival_run TIMESTAMP WITH TIME ZONE,
+    records_archived_last_run INTEGER DEFAULT 0,
+    enabled BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert default retention policies
+INSERT INTO data_retention_policy (table_name, retention_months, enabled) VALUES
+    ('sign_ins', 12, TRUE),
+    ('vehicle_checkouts', 12, TRUE),
+    ('unauthorized_attempts', 24, TRUE);
+
+-- Archival indexes
+CREATE INDEX idx_sign_ins_archive_original_id ON sign_ins_archive(original_id);
+CREATE INDEX idx_sign_ins_archive_sign_in_time ON sign_ins_archive(sign_in_time DESC);
+CREATE INDEX idx_sign_ins_archive_archived_at ON sign_ins_archive(archived_at DESC);
+CREATE INDEX idx_vehicle_checkouts_archive_original_id ON vehicle_checkouts_archive(original_id);
+CREATE INDEX idx_vehicle_checkouts_archive_checkout_date ON vehicle_checkouts_archive(checkout_date DESC);
 
 -- Grant permissions (adjust as needed)
 -- GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO visitor_app_user;

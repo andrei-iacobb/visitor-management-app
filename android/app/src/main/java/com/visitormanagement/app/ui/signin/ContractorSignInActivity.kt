@@ -416,7 +416,6 @@ class ContractorSignInActivity : AppCompatActivity() {
             purposeOfVisit = purpose,
             carRegistration = if (carReg.isNullOrBlank()) null else carReg,
             visitingPerson = "", // Will be filled by backend or left blank
-            photo = null,
             signature = signatureBase64,
             documentAcknowledged = true,
             documentAcknowledgmentTime = getAcknowledgmentTimestamp()

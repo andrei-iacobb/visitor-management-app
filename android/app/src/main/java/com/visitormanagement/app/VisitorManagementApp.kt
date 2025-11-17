@@ -13,6 +13,9 @@ class VisitorManagementApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // Initialize RetrofitClient with application context
+        RetrofitClient.init(this)
+
         // Load saved API URL from SharedPreferences and apply it
         loadSavedApiUrl()
     }

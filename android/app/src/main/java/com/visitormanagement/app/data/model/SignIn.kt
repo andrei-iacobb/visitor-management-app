@@ -31,8 +31,6 @@ data class SignIn(
     @SerializedName("visiting_person")
     val visitingPerson: String,
 
-    val photo: String? = null, // Base64 encoded image
-
     val signature: String? = null, // Base64 encoded signature
 
     @SerializedName("sign_in_time")
@@ -70,8 +68,6 @@ data class SignInRequest(
 
     @SerializedName("visiting_person")
     val visitingPerson: String,
-
-    val photo: String? = null,
 
     val signature: String? = null,
 

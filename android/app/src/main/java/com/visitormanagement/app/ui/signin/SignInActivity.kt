@@ -257,7 +257,6 @@ class SignInActivity : AppCompatActivity() {
             purposeOfVisit = purpose,
             carRegistration = if (carReg.isNullOrBlank()) null else carReg,
             visitingPerson = visitingPerson,
-            photo = null,
             signature = signatureBase64,
             documentAcknowledged = true,
             documentAcknowledgmentTime = getAcknowledgmentTimestamp()

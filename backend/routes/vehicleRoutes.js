@@ -102,6 +102,7 @@ router.get('/:registration', async (req, res) => {
 /**
  * POST /vehicles/checkout
  * Record a vehicle checkout
+ * Uses transaction with row-level locking to prevent race conditions
  */
 router.post('/checkout', async (req, res) => {
     try {
@@ -145,46 +146,59 @@ router.post('/checkout', async (req, res) => {
             });
         }
 
-        // Get vehicle ID
-        const vehicleResult = await pool.query(
-            'SELECT id FROM vehicles WHERE registration = $1',
-            [registration.toUpperCase()]
-        );
+        // Use transaction with row-level locking to prevent race conditions
+        const { transaction } = require('../config/database');
+        const checkout = await transaction(async (client) => {
+            // Lock the vehicle row for update to prevent concurrent checkouts
+            const vehicleResult = await client.query(
+                'SELECT id, status FROM vehicles WHERE registration = $1 FOR UPDATE',
+                [registration.toUpperCase()]
+            );
 
-        if (vehicleResult.rows.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'Vehicle not found',
-                data: null
-            });
-        }
+            if (vehicleResult.rows.length === 0) {
+                throw new Error('Vehicle not found');
+            }
 
-        const vehicleId = vehicleResult.rows[0].id;
+            const vehicle = vehicleResult.rows[0];
 
-        // Insert checkout record
-        const checkoutResult = await pool.query(
-            `INSERT INTO vehicle_checkouts
-             (vehicle_id, registration, checkout_date, checkout_time, company_name,
-              driver_name, starting_mileage, signature, acknowledged_terms,
-              acknowledgment_time, status)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'checked_out')
-             RETURNING id, vehicle_id, registration, checkout_date, checkout_time,
-                      company_name, driver_name, starting_mileage, acknowledged_terms,
-                      acknowledgment_time, status, created_at`,
-            [vehicleId, registration.toUpperCase(), checkout_date, checkout_time,
-             company_name, driver_name, starting_mileage, signature,
-             acknowledged_terms || false, acknowledgment_time]
-        );
+            // Check if vehicle is already in use
+            if (vehicle.status === 'in_use') {
+                throw new Error('Vehicle is already checked out');
+            }
 
-        const checkout = checkoutResult.rows[0];
+            if (vehicle.status === 'maintenance') {
+                throw new Error('Vehicle is under maintenance and cannot be checked out');
+            }
 
-        // Update vehicle status
-        await pool.query(
-            `UPDATE vehicles
-             SET status = 'in_use', last_checkout_id = $1, updated_at = CURRENT_TIMESTAMP
-             WHERE id = $2`,
-            [checkout.id, vehicleId]
-        );
+            const vehicleId = vehicle.id;
+
+            // Insert checkout record
+            const checkoutResult = await client.query(
+                `INSERT INTO vehicle_checkouts
+                 (vehicle_id, registration, checkout_date, checkout_time, company_name,
+                  driver_name, starting_mileage, signature, acknowledged_terms,
+                  acknowledgment_time, status)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'checked_out')
+                 RETURNING id, vehicle_id, registration, checkout_date, checkout_time,
+                          company_name, driver_name, starting_mileage, acknowledged_terms,
+                          acknowledgment_time, status, created_at`,
+                [vehicleId, registration.toUpperCase(), checkout_date, checkout_time,
+                 company_name, driver_name, starting_mileage, signature,
+                 acknowledged_terms || false, acknowledgment_time]
+            );
+
+            const checkoutRecord = checkoutResult.rows[0];
+
+            // Update vehicle status
+            await client.query(
+                `UPDATE vehicles
+                 SET status = 'in_use', last_checkout_id = $1, updated_at = CURRENT_TIMESTAMP
+                 WHERE id = $2`,
+                [checkoutRecord.id, vehicleId]
+            );
+
+            return checkoutRecord;
+        });
 
         res.status(201).json({
             success: true,
@@ -193,10 +207,16 @@ router.post('/checkout', async (req, res) => {
         });
     } catch (error) {
         console.error('Error checking out vehicle:', error);
-        res.status(500).json({
+
+        // Return appropriate status code based on error type
+        const statusCode = error.message.includes('not found') ? 404 :
+                          error.message.includes('already checked out') ||
+                          error.message.includes('maintenance') ? 409 : 500;
+
+        res.status(statusCode).json({
             success: false,
-            message: 'Internal server error',
-            error: error.message
+            message: error.message || 'Internal server error',
+            data: null
         });
     }
 });
@@ -204,6 +224,7 @@ router.post('/checkout', async (req, res) => {
 /**
  * POST /vehicles/checkin
  * Record a vehicle check-in
+ * Uses transaction with row-level locking to prevent race conditions
  */
 router.post('/checkin', async (req, res) => {
     try {
@@ -243,82 +264,76 @@ router.post('/checkin', async (req, res) => {
             });
         }
 
-        // Get vehicle ID and last checkout
-        const vehicleResult = await pool.query(
-            `SELECT id, last_checkout_id FROM vehicles
-             WHERE registration = $1`,
-            [registration.toUpperCase()]
-        );
+        // Use transaction with row-level locking to prevent race conditions
+        const { transaction } = require('../config/database');
+        const checkin = await transaction(async (client) => {
+            // Lock the vehicle row for update
+            const vehicleResult = await client.query(
+                `SELECT id, last_checkout_id, status FROM vehicles
+                 WHERE registration = $1 FOR UPDATE`,
+                [registration.toUpperCase()]
+            );
 
-        if (vehicleResult.rows.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'Vehicle not found',
-                data: null
-            });
-        }
-
-        const { id: vehicleId, last_checkout_id } = vehicleResult.rows[0];
-
-        if (!last_checkout_id) {
-            return res.status(400).json({
-                success: false,
-                message: 'Vehicle is not currently checked out',
-                data: null
-            });
-        }
-
-        // Get the checkout record to validate return mileage
-        const checkoutResult = await pool.query(
-            'SELECT starting_mileage FROM vehicle_checkouts WHERE id = $1',
-            [last_checkout_id]
-        );
-
-        if (checkoutResult.rows.length > 0) {
-            const startingMileage = checkoutResult.rows[0].starting_mileage;
-
-            // Validate return mileage is not less than starting mileage
-            if (return_mileage < startingMileage) {
-                return res.status(400).json({
-                    success: false,
-                    message: `Return mileage (${return_mileage}) cannot be less than starting mileage (${startingMileage})`,
-                    data: null
-                });
+            if (vehicleResult.rows.length === 0) {
+                throw new Error('Vehicle not found');
             }
 
-            // Validate trip distance is reasonable (max 1000 miles per trip)
-            const distanceTraveled = return_mileage - startingMileage;
-            if (distanceTraveled > 1000) {
-                return res.status(400).json({
-                    success: false,
-                    message: `Distance traveled (${distanceTraveled} miles) exceeds maximum single trip of 1000 miles. Please verify mileage.`,
-                    data: null
-                });
+            const { id: vehicleId, last_checkout_id, status } = vehicleResult.rows[0];
+
+            if (!last_checkout_id) {
+                throw new Error('Vehicle is not currently checked out');
             }
-        }
 
-        // Insert checkin record
-        const checkinResult = await pool.query(
-            `INSERT INTO vehicle_checkins
-             (vehicle_id, checkout_id, registration, checkin_date, checkin_time,
-              return_mileage, driver_name, status)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, 'checked_in')
-             RETURNING id, vehicle_id, checkout_id, registration, checkin_date,
-                      checkin_time, return_mileage, driver_name, status, created_at`,
-            [vehicleId, last_checkout_id, registration.toUpperCase(),
-             checkin_date, checkin_time, return_mileage, driver_name]
-        );
+            if (status !== 'in_use') {
+                throw new Error('Vehicle is not in use');
+            }
 
-        const checkin = checkinResult.rows[0];
+            // Get the checkout record to validate return mileage
+            const checkoutResult = await client.query(
+                'SELECT starting_mileage FROM vehicle_checkouts WHERE id = $1',
+                [last_checkout_id]
+            );
 
-        // Update vehicle status back to available
-        await pool.query(
-            `UPDATE vehicles
-             SET status = 'available', current_mileage = $1, last_checkout_id = NULL,
-                 updated_at = CURRENT_TIMESTAMP
-             WHERE id = $2`,
-            [return_mileage, vehicleId]
-        );
+            if (checkoutResult.rows.length > 0) {
+                const startingMileage = checkoutResult.rows[0].starting_mileage;
+
+                // Validate return mileage is not less than starting mileage
+                if (return_mileage < startingMileage) {
+                    throw new Error(`Return mileage (${return_mileage}) cannot be less than starting mileage (${startingMileage})`);
+                }
+
+                // Validate trip distance is reasonable (max 1000 miles per trip)
+                const distanceTraveled = return_mileage - startingMileage;
+                if (distanceTraveled > 1000) {
+                    throw new Error(`Distance traveled (${distanceTraveled} miles) exceeds maximum single trip of 1000 miles. Please verify mileage.`);
+                }
+            }
+
+            // Insert checkin record
+            const checkinResult = await client.query(
+                `INSERT INTO vehicle_checkins
+                 (vehicle_id, checkout_id, registration, checkin_date, checkin_time,
+                  return_mileage, driver_name, status)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, 'checked_in')
+                 RETURNING id, vehicle_id, checkout_id, registration, checkin_date,
+                          checkin_time, return_mileage, driver_name, status, created_at`,
+                [vehicleId, last_checkout_id, registration.toUpperCase(),
+                 checkin_date, checkin_time, return_mileage, driver_name]
+            );
+
+            const checkinRecord = checkinResult.rows[0];
+
+            // Update vehicle status back to available
+            await client.query(
+                `UPDATE vehicles
+                 SET status = 'available', current_mileage = $1, last_checkout_id = NULL,
+                     updated_at = CURRENT_TIMESTAMP
+                 WHERE id = $2`,
+                [return_mileage, vehicleId]
+            );
+
+            return checkinRecord;
+        });
 
         res.status(201).json({
             success: true,
@@ -327,10 +342,17 @@ router.post('/checkin', async (req, res) => {
         });
     } catch (error) {
         console.error('Error checking in vehicle:', error);
-        res.status(500).json({
+
+        // Return appropriate status code based on error type
+        const statusCode = error.message.includes('not found') ? 404 :
+                          error.message.includes('not currently checked out') ||
+                          error.message.includes('not in use') ||
+                          error.message.includes('mileage') ? 400 : 500;
+
+        res.status(statusCode).json({
             success: false,
-            message: 'Internal server error',
-            error: error.message
+            message: error.message || 'Internal server error',
+            data: null
         });
     }
 });

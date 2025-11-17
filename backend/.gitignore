@@ -26,3 +26,9 @@ temp/
 
 # Testing
 coverage/
+
+# Certificates (sensitive)
+certs/
+*.pem
+*.p12
+*.key

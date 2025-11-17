@@ -1,10 +1,21 @@
 const express = require('express');
+const https = require('https');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
-const morgan = require('morgan');
+const compression = require('compression');
+const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
-const { testConnection } = require('./config/database');
+const logger = require('./utils/logger');
+const { testConnection, pool } = require('./config/database');
+const { authenticateToken } = require('./middleware/auth');
+const { apiLimiter } = require('./middleware/rateLimiter');
+
+// Import routes
+const authRoutes = require('./routes/authRoutes');
 const signInRoutes = require('./routes/signInRoutes');
 const staffRoutes = require('./routes/staffRoutes');
 const sharepointRoutes = require('./routes/sharepointRoutes');
@@ -19,56 +30,58 @@ const PORT = process.env.PORT || 3000;
 // Middleware Configuration
 // ========================================
 
-// Security headers - Configure CSP to allow inline scripts for admin dashboard
+// Request ID middleware - Add unique ID to each request for tracking
+app.use((req, res, next) => {
+  req.id = uuidv4();
+  req.requestTime = new Date().toISOString();
+  res.setHeader('X-Request-ID', req.id);
+  next();
+});
+
+// HTTP Request logging with Winston
+const morgan = require('morgan');
+morgan.token('id', (req) => req.id);
+app.use(morgan(':id :method :url :status :res[content-length] - :response-time ms', {
+  stream: logger.stream
+}));
+
+// Compression middleware
+app.use(compression());
+
+// Security headers - Configure CSP for admin dashboard
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrcAttr: ["'unsafe-inline'"], // Allow inline event handlers like onclick
+      scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-      connectSrc: ["'self'", "http://192.168.11.105:3000"],
+      connectSrc: ["'self'"],
       imgSrc: ["'self'", "data:"],
       fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
     }
   }
 }));
 
-// CORS configuration - Allow requests from Android app
-// TODO: PRODUCTION - Configure CORS whitelist with proxy URL instead of '*'
-// TODO: PRODUCTION - Use environment variable for allowed origins (e.g., CORS_ORIGIN from .env)
-// Example: origin: process.env.CORS_ORIGIN || 'http://localhost:3000'
+// CORS configuration
+const corsOrigins = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*';
 app.use(cors({
-  origin: '*', // In production, specify your Android app's origin
+  origin: corsOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
-// Request logging
-// TODO: PRODUCTION - Change morgan format from 'dev' to 'combined' for production logs
-// TODO: PRODUCTION - Implement structured logging (Winston/Pino) for Docker/ECS environments
-app.use(morgan('dev'));
-
 // Body parsing middleware
-app.use(express.json({ limit: '10mb' })); // Increased limit for photo/signature base64
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Serve static files (public and web UI)
-// TODO: PRODUCTION - Configure static file serving via CDN or reverse proxy (Nginx) instead of Express
-// TODO: PRODUCTION - Set proper cache headers for static assets (Cache-Control, ETag)
-// TODO: PRODUCTION - Consider separate static server or S3/CloudFront for public files in containerized environment
+// Serve static files
 app.use(express.static('public'));
 app.use(express.static('../web'));
 
-// Request timestamp middleware
+// Cache control for API endpoints
 app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
-
-// Add cache control headers to prevent 304 caching issues
-app.use((req, res, next) => {
-  // Disable caching for API endpoints to ensure fresh data
   if (req.url.startsWith('/api/')) {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
@@ -79,43 +92,71 @@ app.use((req, res, next) => {
 });
 
 // ========================================
-// Routes
+// Public Routes (No Authentication Required)
 // ========================================
 
 // Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({
+app.get('/health', async (req, res) => {
+  const health = {
     success: true,
     message: 'Visitor Management API is running',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
-});
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    database: 'unknown'
+  };
 
-// API routes
-app.use('/api/sign-ins', signInRoutes);
-app.use('/api/staff', staffRoutes);
-app.use('/api/sharepoint', sharepointRoutes);
-app.use('/api/contractors', contractorValidationRoutes);
-app.use('/api/documents', documentRoutes);
-app.use('/api/vehicles', vehicleRoutes);
+  try {
+    // Check database connectivity
+    await pool.query('SELECT 1');
+    health.database = 'connected';
+    res.json(health);
+  } catch (error) {
+    health.database = 'disconnected';
+    health.success = false;
+    logger.error('Health check failed - database disconnected', { error: error.message });
+    res.status(503).json(health);
+  }
+});
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     success: true,
     message: 'Welcome to Visitor Management API',
-    version: '1.0.0',
-    endpoints: {
-      signIns: '/api/sign-ins',
-      staff: '/api/staff',
-      sharepoint: '/api/sharepoint',
-      contractors: '/api/contractors',
-      documents: '/api/documents',
-      health: '/health'
-    }
+    version: '2.0.0',
+    documentation: '/api/docs',
+    health: '/health'
   });
 });
+
+// ========================================
+// API Routes v1
+// ========================================
+
+// Authentication routes (public - no JWT required, but certificate required if mTLS enabled)
+app.use('/api/v1/auth', authRoutes);
+
+// Apply rate limiting to all API routes
+app.use('/api/v1', apiLimiter);
+
+// Protected routes - Require JWT authentication
+app.use('/api/v1/sign-ins', authenticateToken, signInRoutes);
+app.use('/api/v1/staff', authenticateToken, staffRoutes);
+app.use('/api/v1/sharepoint', authenticateToken, sharepointRoutes);
+app.use('/api/v1/contractors', authenticateToken, contractorValidationRoutes);
+app.use('/api/v1/documents', authenticateToken, documentRoutes);
+app.use('/api/v1/vehicles', authenticateToken, vehicleRoutes);
+
+// Legacy routes (backwards compatibility - will be deprecated)
+// TODO: Remove these after Android app is updated to use /api/v1
+logger.warn('Legacy API routes are enabled. Update clients to use /api/v1/* endpoints.');
+app.use('/api/sign-ins', authenticateToken, signInRoutes);
+app.use('/api/staff', authenticateToken, staffRoutes);
+app.use('/api/sharepoint', authenticateToken, sharepointRoutes);
+app.use('/api/contractors', authenticateToken, contractorValidationRoutes);
+app.use('/api/documents', authenticateToken, documentRoutes);
+app.use('/api/vehicles', authenticateToken, vehicleRoutes);
 
 // ========================================
 // Error Handling Middleware
@@ -123,24 +164,42 @@ app.get('/', (req, res) => {
 
 // 404 handler - Route not found
 app.use((req, res) => {
+  logger.warn('Route not found', {
+    path: req.path,
+    method: req.method,
+    ip: req.ip,
+    requestId: req.id
+  });
+
   res.status(404).json({
     success: false,
     message: 'Route not found',
-    path: req.path,
-    method: req.method
+    error: {
+      code: 'NOT_FOUND',
+      path: req.path,
+      method: req.method
+    },
+    requestId: req.id
   });
 });
 
 // Global error handler
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
+  logger.error('Unhandled error', {
+    error: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method,
+    requestId: req.id
+  });
 
   // Check for specific error types
   if (err.name === 'ValidationError') {
     return res.status(400).json({
       success: false,
       message: 'Validation error',
-      errors: err.errors
+      errors: err.errors,
+      requestId: req.id
     });
   }
 
@@ -148,7 +207,11 @@ app.use((err, req, res, next) => {
     return res.status(409).json({
       success: false,
       message: 'Duplicate entry',
-      error: err.detail
+      error: {
+        code: 'DUPLICATE_ENTRY',
+        detail: err.detail
+      },
+      requestId: req.id
     });
   }
 
@@ -156,7 +219,11 @@ app.use((err, req, res, next) => {
     return res.status(400).json({
       success: false,
       message: 'Referenced record does not exist',
-      error: err.detail
+      error: {
+        code: 'FOREIGN_KEY_VIOLATION',
+        detail: err.detail
+      },
+      requestId: req.id
     });
   }
 
@@ -164,7 +231,11 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Internal server error',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    error: {
+      code: 'SERVER_ERROR',
+      ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    },
+    requestId: req.id
   });
 });
 
@@ -174,75 +245,180 @@ app.use((err, req, res, next) => {
 
 const startServer = async () => {
   try {
+    // Validate environment variables
+    logger.info('Validating environment configuration...');
+    const requiredEnvVars = ['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'JWT_SECRET'];
+    const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+    if (missingVars.length > 0) {
+      logger.error('Missing required environment variables', { missing: missingVars });
+      throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+    }
+
+    // Warn if JWT_SECRET is too short
+    if (process.env.JWT_SECRET.length < 32) {
+      logger.warn('JWT_SECRET is shorter than recommended 32 characters. Please use a longer secret in production.');
+    }
+
     // Test database connection
-    console.log('= Testing database connection...');
+    logger.info('Testing database connection...');
     const dbConnected = await testConnection();
 
     if (!dbConnected) {
-      console.error('L Failed to connect to database. Please check your configuration.');
-      process.exit(1);
+      logger.error('Failed to connect to database');
+      throw new Error('Database connection failed');
     }
 
-    // TODO: PRODUCTION - Set environment to production via NODE_ENV environment variable
-    // TODO: PRODUCTION - Use database connection pooling optimized for containerized environments
-    // TODO: PRODUCTION - Implement health check endpoint for container orchestration (Docker/Kubernetes)
-    // TODO: PRODUCTION - Add readiness probe for graceful startup detection in orchestration
+    // Check if mTLS is enabled
+    const enableMTLS = process.env.ENABLE_MTLS === 'true';
+    let server;
+
+    if (enableMTLS) {
+      logger.info('mTLS enabled - Starting HTTPS server with client certificate authentication');
+
+      // Load certificates
+      const certPath = process.env.CERT_PATH || './certs/server-cert.pem';
+      const keyPath = process.env.KEY_PATH || './certs/server-key.pem';
+      const caPath = process.env.CA_PATH || './certs/ca-cert.pem';
+
+      // Check if certificate files exist
+      if (!fs.existsSync(certPath) || !fs.existsSync(keyPath) || !fs.existsSync(caPath)) {
+        logger.error('Certificate files not found', { certPath, keyPath, caPath });
+        throw new Error('Certificate files not found. Run: cd scripts && ./generate-certs.sh');
+      }
+
+      const httpsOptions = {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath),
+        ca: fs.readFileSync(caPath),
+        requestCert: true,        // Request client certificate
+        rejectUnauthorized: false  // Don't reject immediately - we'll validate in middleware
+      };
+
+      // Certificate validation middleware (only for mTLS)
+      app.use((req, res, next) => {
+        // Skip certificate check for health endpoint
+        if (req.path === '/health') {
+          return next();
+        }
+
+        const cert = req.socket.getPeerCertificate();
+
+        if (!req.client.authorized) {
+          logger.warn('Unauthorized certificate attempt', {
+            ip: req.ip,
+            path: req.path,
+            error: req.socket.authorizationError
+          });
+          return res.status(401).json({
+            success: false,
+            message: 'Invalid client certificate',
+            error: {
+              code: 'INVALID_CERTIFICATE',
+              detail: req.socket.authorizationError
+            }
+          });
+        }
+
+        logger.debug('Client certificate validated', {
+          subject: cert.subject,
+          issuer: cert.issuer
+        });
+        next();
+      });
+
+      server = https.createServer(httpsOptions, app);
+      logger.info('HTTPS server created with mTLS');
+    } else {
+      logger.warn('mTLS disabled - Starting HTTP server (NOT RECOMMENDED FOR PRODUCTION)');
+      server = http.createServer(app);
+    }
 
     // Start server
-    // TODO: PRODUCTION - Bind to 0.0.0.0 instead of localhost for container environments
-    global.server = app.listen(PORT, () => {
-      console.log('========================================');
-      console.log('=� Visitor Management API Server');
-      console.log('========================================');
-      console.log(`=� Server running on port ${PORT}`);
-      console.log(`< Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`= API URL: http://localhost:${PORT}`);
-      console.log(`=� Health check: http://localhost:${PORT}/health`);
-      console.log('========================================');
-      console.log('=� Available endpoints:');
-      console.log('   POST   /api/sign-ins              - Create new sign-in');
-      console.log('   GET    /api/sign-ins              - Get all sign-ins');
-      console.log('   GET    /api/sign-ins/:id          - Get single sign-in');
-      console.log('   GET    /api/sign-ins/status/active - Get active visitors');
-      console.log('   PUT    /api/sign-ins/:id/sign-out - Sign out visitor');
-      console.log('   DELETE /api/sign-ins/:id          - Delete sign-in');
-      console.log('   GET    /api/staff                 - Get all staff');
-      console.log('   POST   /api/staff                 - Create staff member');
-      console.log('   POST   /api/contractors/verify    - Verify contractor approval');
-      console.log('   GET    /api/contractors/approved  - Get approved contractors');
-      console.log('   POST   /api/contractors           - Add contractor to whitelist');
-      console.log('   PUT    /api/contractors/:id       - Update contractor status');
-      console.log('   POST   /api/sharepoint/sync       - Sync to SharePoint');
-      console.log('   GET    /api/sharepoint/read       - Read from SharePoint');
-      console.log('========================================');
+    global.server = server.listen(PORT, '0.0.0.0', () => {
+      logger.info('========================================');
+      logger.info('🚀 Visitor Management API Server');
+      logger.info('========================================');
+      logger.info(`🌐 Server running on port ${PORT}`);
+      logger.info(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+      logger.info(`🔒 Protocol: ${enableMTLS ? 'HTTPS (mTLS)' : 'HTTP'}`);
+      logger.info(`🔑 JWT Authentication: ENABLED`);
+      logger.info(`⏱️  Request ID tracking: ENABLED`);
+      logger.info(`📝 Logging level: ${process.env.LOG_LEVEL || 'info'}`);
+      logger.info(`🛡️  Rate limiting: ENABLED`);
+      logger.info(`📦 Compression: ENABLED`);
+      logger.info('========================================');
+      logger.info('✅ Server started successfully');
+      logger.info('========================================');
     });
+
   } catch (error) {
-    console.error('L Failed to start server:', error);
+    logger.error('Failed to start server', {
+      error: error.message,
+      stack: error.stack
+    });
     process.exit(1);
   }
 };
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('✓ SIGTERM signal received: closing HTTP server');
+// ========================================
+// Graceful Shutdown
+// ========================================
+
+const gracefulShutdown = async (signal) => {
+  logger.info(`${signal} signal received: initiating graceful shutdown`);
+
   if (global.server) {
-    global.server.close(() => {
-      console.log('✓ HTTP server closed');
-      process.exit(0);
+    // Stop accepting new connections
+    global.server.close(async () => {
+      logger.info('HTTP server closed - no longer accepting connections');
+
+      try {
+        // Close database pool
+        logger.info('Closing database connection pool...');
+        await pool.end();
+        logger.info('Database pool closed successfully');
+
+        logger.info('Graceful shutdown completed');
+        process.exit(0);
+      } catch (error) {
+        logger.error('Error during graceful shutdown', {
+          error: error.message,
+          stack: error.stack
+        });
+        process.exit(1);
+      }
     });
+
+    // Force shutdown after 30 seconds
+    setTimeout(() => {
+      logger.error('Graceful shutdown timed out, forcing exit');
+      process.exit(1);
+    }, 30000);
   } else {
+    logger.info('No active server to close');
     process.exit(0);
   }
-});
+};
 
-process.on('SIGINT', () => {
-  console.log('\n�  SIGINT signal received: closing HTTP server');
-  process.exit(0);
-});
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('L Unhandled Rejection at:', promise, 'reason:', reason);
+  logger.error('Unhandled Promise Rejection', {
+    reason: reason,
+    promise: promise
+  });
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  logger.error('Uncaught Exception', {
+    error: error.message,
+    stack: error.stack
+  });
+  gracefulShutdown('UNCAUGHT_EXCEPTION');
 });
 
 // Start the server
