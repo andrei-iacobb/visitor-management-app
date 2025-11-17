@@ -5,6 +5,22 @@ let currentVisitors = [];
 let editingContractorId = null;
 let editingVehicleId = null;
 
+// Global error handler
+window.addEventListener('error', (event) => {
+    console.error('Global error caught:', event.error);
+    showAlert('An unexpected error occurred. Please refresh the page.', 'error');
+    // Prevent default browser error handling
+    event.preventDefault();
+});
+
+// Handle unhandled promise rejections
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason);
+    showAlert('A network error occurred. Please check your connection.', 'error');
+    // Prevent default browser error handling
+    event.preventDefault();
+});
+
 // Check authentication
 function checkAuth() {
     const token = getAuthToken();
@@ -29,22 +45,27 @@ function checkAuth() {
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication first
-    if (!checkAuth()) {
-        return;
-    }
-
-    // Display username
-    const username = localStorage.getItem('username');
-    if (username) {
-        const usernameEl = document.querySelector('.username');
-        if (usernameEl) {
-            usernameEl.textContent = username;
+    try {
+        // Check authentication first
+        if (!checkAuth()) {
+            return;
         }
-    }
 
-    initializeEventListeners();
-    loadDashboard();
+        // Display username
+        const username = localStorage.getItem('username');
+        if (username) {
+            const usernameEl = document.querySelector('.username');
+            if (usernameEl) {
+                usernameEl.textContent = username;
+            }
+        }
+
+        initializeEventListeners();
+        loadDashboard();
+    } catch (error) {
+        console.error('Error initializing app:', error);
+        showAlert('Failed to initialize application. Please refresh the page.', 'error');
+    }
 });
 
 // Event Listeners
