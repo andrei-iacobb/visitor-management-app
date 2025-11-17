@@ -7,6 +7,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const { v4: uuidv4 } = require('uuid');
+const cron = require('node-cron');
+const { spawn } = require('child_process');
 require('dotenv').config();
 
 const logger = require('./utils/logger');
@@ -350,6 +352,59 @@ const startServer = async () => {
       logger.info('========================================');
       logger.info('✅ Server started successfully');
       logger.info('========================================');
+
+      // ========================================
+      // Scheduled Data Archival Job
+      // ========================================
+
+      // Schedule automated data archival (configurable via environment variables)
+      if (process.env.ENABLE_DATA_ARCHIVAL !== 'false') {
+        const archivalSchedule = process.env.ARCHIVAL_CRON_SCHEDULE || '0 2 1 * *'; // Default: 1st of each month at 2 AM
+        const retentionDays = process.env.ARCHIVAL_RETENTION_DAYS || '90';
+
+        cron.schedule(archivalSchedule, () => {
+          logger.info('Starting scheduled data archival job...', {
+            retentionDays,
+            schedule: archivalSchedule
+          });
+
+          const archivalProcess = spawn('node', [
+            path.join(__dirname, 'scripts', 'archive-old-records.js'),
+            `--retention-days=${retentionDays}`
+          ]);
+
+          archivalProcess.stdout.on('data', (data) => {
+            logger.info('Archival output', { message: data.toString().trim() });
+          });
+
+          archivalProcess.stderr.on('data', (data) => {
+            logger.error('Archival error output', { message: data.toString().trim() });
+          });
+
+          archivalProcess.on('close', (code) => {
+            if (code === 0) {
+              logger.info('Scheduled archival completed successfully', { exitCode: code });
+            } else {
+              logger.error('Scheduled archival failed', { exitCode: code });
+            }
+          });
+
+          archivalProcess.on('error', (error) => {
+            logger.error('Failed to spawn archival process', {
+              error: error.message,
+              stack: error.stack
+            });
+          });
+        });
+
+        logger.info('📅 Data archival scheduled', {
+          schedule: archivalSchedule,
+          retentionDays: `${retentionDays} days`,
+          enabled: true
+        });
+      } else {
+        logger.info('📅 Data archival: DISABLED');
+      }
     });
 
   } catch (error) {
