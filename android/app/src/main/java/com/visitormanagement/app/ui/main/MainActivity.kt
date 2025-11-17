@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     updateClockDisplay()
                 }
             }
-        }, 0, 1000) // Update every second
+        }, 0, Constants.CLOCK_UPDATE_INTERVAL_MS) // Update every second
     }
 
     private fun updateClockDisplay() {

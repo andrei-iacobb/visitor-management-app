@@ -291,7 +291,7 @@ class ContractorSignInActivity : AppCompatActivity() {
         val padding = resources.getDimensionPixelSize(R.dimen.contractor_button_margin)
 
         // Determine number of columns based on screen width
-        val minButtonWidth = 200 // dp
+        val minButtonWidth = Constants.MIN_BUTTON_WIDTH_DP // dp
         val minButtonWidthPx = (minButtonWidth * displayMetrics.density).toInt()
         val numColumns = maxOf(2, (screenWidth - padding * 2) / (minButtonWidthPx + padding))
 

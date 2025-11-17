@@ -180,8 +180,8 @@ class VehicleCheckoutActivity : AppCompatActivity() {
                     showError("Return mileage (${mileage.toInt()}) cannot be less than starting mileage (${currentCheckout!!.startingMileage})")
                 mileage.toInt() > 999999 ->
                     showError("Mileage value is unrealistic. Maximum allowed is 999,999 miles")
-                currentCheckout != null && (mileage.toInt() - currentCheckout!!.startingMileage) > 1000 ->
-                    showError("Distance traveled (${mileage.toInt() - currentCheckout!!.startingMileage} miles) exceeds maximum single trip of 1000 miles. Please verify mileage.")
+                currentCheckout != null && (mileage.toInt() - currentCheckout!!.startingMileage) > Constants.MAX_SINGLE_TRIP_MILES ->
+                    showError("Distance traveled (${mileage.toInt() - currentCheckout!!.startingMileage} miles) exceeds maximum single trip of ${Constants.MAX_SINGLE_TRIP_MILES} miles. Please verify mileage.")
                 else -> submitCheckin(driver, mileage.toInt())
             }
         }
