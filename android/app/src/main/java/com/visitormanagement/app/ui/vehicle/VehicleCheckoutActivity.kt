@@ -68,10 +68,19 @@ class VehicleCheckoutActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.w("VehicleCheckout", "Failed to load vehicle registrations: ${response.code()}")
+                    Toast.makeText(
+                        this@VehicleCheckoutActivity,
+                        "Unable to load vehicle suggestions. You can still type manually.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
                 Log.e("VehicleCheckout", "Error loading vehicle registrations", e)
-                // Non-critical - user can still type manually
+                Toast.makeText(
+                    this@VehicleCheckoutActivity,
+                    "Unable to load vehicle suggestions. You can still type manually.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

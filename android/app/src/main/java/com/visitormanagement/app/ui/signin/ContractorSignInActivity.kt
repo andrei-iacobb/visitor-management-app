@@ -123,10 +123,19 @@ class ContractorSignInActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.w("ContractorSignIn", "Failed to load company names: ${response.code()}")
+                    Toast.makeText(
+                        this@ContractorSignInActivity,
+                        "Unable to load company suggestions. You can still type manually.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
                 Log.e("ContractorSignIn", "Error loading company names", e)
-                // Non-critical - user can still type manually
+                Toast.makeText(
+                    this@ContractorSignInActivity,
+                    "Unable to load company suggestions. You can still type manually.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
