@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, param, validationResult } = require('express-validator');
 const { pool } = require('../config/database');
+const logger = require('../utils/logger');
 
 const router = express.Router();
 
@@ -44,7 +45,7 @@ router.get('/', async (req, res) => {
       count: result.rows.length
     });
   } catch (error) {
-    console.error('Error fetching staff:', error);
+    logger.error('Error fetching staff', { error: error.message, stack: error.stack, code: error.code });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch staff members',
@@ -75,7 +76,7 @@ router.get('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error fetching staff member:', error);
+    logger.error('Error fetching staff member', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch staff member',
@@ -115,7 +116,7 @@ router.post('/', createStaffValidation, handleValidationErrors, async (req, res)
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error creating staff member:', error);
+    logger.error('Error creating staff member', { error: error.message, stack: error.stack, email: req.body.email });
     res.status(500).json({
       success: false,
       message: 'Failed to create staff member',
@@ -173,7 +174,7 @@ router.put('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error updating staff member:', error);
+    logger.error('Error updating staff member', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to update staff member',
@@ -205,7 +206,7 @@ router.delete('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error deleting staff member:', error);
+    logger.error('Error deleting staff member', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to delete staff member',

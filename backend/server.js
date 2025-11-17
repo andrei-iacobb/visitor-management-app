@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
 const logger = require('./utils/logger');
-const { testConnection, pool } = require('./config/database');
+const { testConnection, pool, closePool } = require('./config/database');
 const { authenticateToken } = require('./middleware/auth');
 const { apiLimiter } = require('./middleware/rateLimiter');
 
@@ -375,9 +375,7 @@ const gracefulShutdown = async (signal) => {
 
       try {
         // Close database pool
-        logger.info('Closing database connection pool...');
-        await pool.end();
-        logger.info('Database pool closed successfully');
+        await closePool();
 
         logger.info('Graceful shutdown completed');
         process.exit(0);

@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, param, query, validationResult } = require('express-validator');
 const { pool } = require('../config/database');
+const logger = require('../utils/logger');
 
 const router = express.Router();
 
@@ -8,8 +9,12 @@ const router = express.Router();
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.error('❌ Validation errors:', JSON.stringify(errors.array(), null, 2));
-    console.error('📝 Request body:', JSON.stringify(req.body, null, 2));
+    logger.error('Validation errors', {
+      errors: errors.array(),
+      requestBody: req.body,
+      path: req.path,
+      method: req.method
+    });
     return res.status(400).json({
       success: false,
       errors: errors.array()
@@ -110,7 +115,11 @@ router.post('/', createSignInValidation, handleValidationErrors, async (req, res
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error creating sign-in:', error);
+    logger.error('Error creating sign-in', {
+      error: error.message,
+      stack: error.stack,
+      code: error.code
+    });
     res.status(500).json({
       success: false,
       message: 'Failed to create sign-in',
@@ -180,7 +189,11 @@ router.get('/', [
       }
     });
   } catch (error) {
-    console.error('Error fetching sign-ins:', error);
+    logger.error('Error fetching sign-ins', {
+      error: error.message,
+      stack: error.stack,
+      code: error.code
+    });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch sign-ins',
@@ -211,7 +224,11 @@ router.get('/status/active', async (req, res) => {
       count: result.rows.length
     });
   } catch (error) {
-    console.error('Error fetching active visitors:', error);
+    logger.error('Error fetching active visitors', {
+      error: error.message,
+      stack: error.stack,
+      code: error.code
+    });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch active visitors',
@@ -242,7 +259,12 @@ router.get('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error fetching sign-in:', error);
+    logger.error('Error fetching sign-in', {
+      error: error.message,
+      stack: error.stack,
+      code: error.code,
+      id: req.params.id
+    });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch sign-in',
@@ -292,7 +314,12 @@ router.put('/:id/sign-out', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error signing out visitor:', error);
+    logger.error('Error signing out visitor', {
+      error: error.message,
+      stack: error.stack,
+      code: error.code,
+      id: req.params.id
+    });
     res.status(500).json({
       success: false,
       message: 'Failed to sign out visitor',
@@ -324,7 +351,12 @@ router.delete('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error deleting sign-in:', error);
+    logger.error('Error deleting sign-in', {
+      error: error.message,
+      stack: error.stack,
+      code: error.code,
+      id: req.params.id
+    });
     res.status(500).json({
       success: false,
       message: 'Failed to delete sign-in',
