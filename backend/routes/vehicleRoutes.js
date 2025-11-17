@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../config/database');
+const logger = require('../utils/logger');
 
 /**
  * GET /vehicles/list/all
@@ -22,7 +23,11 @@ router.get('/list/all', async (req, res) => {
             data: result.rows.map(row => row.registration)
         });
     } catch (error) {
-        console.error('Error fetching vehicle registrations:', error);
+        logger.error('Error fetching vehicle registrations', {
+            error: error.message,
+            stack: error.stack,
+            code: error.code
+        });
         res.status(500).json({
             success: false,
             message: 'Failed to fetch vehicle registrations',
@@ -90,7 +95,11 @@ router.get('/:registration', async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error checking vehicle status:', error);
+        logger.error('Error checking vehicle status', {
+            error: error.message,
+            stack: error.stack,
+            registration: req.params.registration
+        });
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -206,7 +215,11 @@ router.post('/checkout', async (req, res) => {
             data: checkout
         });
     } catch (error) {
-        console.error('Error checking out vehicle:', error);
+        logger.error('Error checking out vehicle', {
+            error: error.message,
+            stack: error.stack,
+            registration: req.body.registration
+        });
 
         // Return appropriate status code based on error type
         const statusCode = error.message.includes('not found') ? 404 :
@@ -341,7 +354,11 @@ router.post('/checkin', async (req, res) => {
             data: checkin
         });
     } catch (error) {
-        console.error('Error checking in vehicle:', error);
+        logger.error('Error checking in vehicle', {
+            error: error.message,
+            stack: error.stack,
+            registration: req.body.registration
+        });
 
         // Return appropriate status code based on error type
         const statusCode = error.message.includes('not found') ? 404 :
@@ -415,7 +432,11 @@ router.post('/damage', async (req, res) => {
             data: damage
         });
     } catch (error) {
-        console.error('Error reporting damage:', error);
+        logger.error('Error reporting damage', {
+            error: error.message,
+            stack: error.stack,
+            checkin_id: req.body.checkin_id
+        });
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -442,7 +463,11 @@ router.get('/', async (req, res) => {
             data: result.rows
         });
     } catch (error) {
-        console.error('Error retrieving vehicles:', error);
+        logger.error('Error retrieving vehicles', {
+            error: error.message,
+            stack: error.stack,
+            code: error.code
+        });
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -499,7 +524,11 @@ router.post('/', async (req, res) => {
             data: result.rows[0]
         });
     } catch (error) {
-        console.error('Error creating vehicle:', error);
+        logger.error('Error creating vehicle', {
+            error: error.message,
+            stack: error.stack,
+            registration: req.body.registration
+        });
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -545,7 +574,11 @@ router.get('/id/:id', async (req, res) => {
             data: result.rows[0]
         });
     } catch (error) {
-        console.error('Error fetching vehicle:', error);
+        logger.error('Error fetching vehicle', {
+            error: error.message,
+            stack: error.stack,
+            id: req.params.id
+        });
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -669,7 +702,11 @@ router.put('/:id', async (req, res) => {
             data: result.rows[0]
         });
     } catch (error) {
-        console.error('Error updating vehicle:', error);
+        logger.error('Error updating vehicle', {
+            error: error.message,
+            stack: error.stack,
+            id: req.params.id
+        });
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -705,7 +742,11 @@ router.delete('/:id', async (req, res) => {
             data: result.rows[0]
         });
     } catch (error) {
-        console.error('Error deleting vehicle:', error);
+        logger.error('Error deleting vehicle', {
+            error: error.message,
+            stack: error.stack,
+            id: req.params.id
+        });
         res.status(500).json({
             success: false,
             message: 'Internal server error',

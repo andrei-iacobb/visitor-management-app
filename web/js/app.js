@@ -5,8 +5,44 @@ let currentVisitors = [];
 let editingContractorId = null;
 let editingVehicleId = null;
 
+// Check authentication
+function checkAuth() {
+    const token = getAuthToken();
+    if (!token) {
+        window.location.href = 'login.html';
+        return false;
+    }
+
+    // Verify token is valid
+    authAPI.verify()
+        .then(data => {
+            if (!data.valid) {
+                clearAuthAndRedirect();
+            }
+        })
+        .catch(() => {
+            clearAuthAndRedirect();
+        });
+
+    return true;
+}
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication first
+    if (!checkAuth()) {
+        return;
+    }
+
+    // Display username
+    const username = localStorage.getItem('username');
+    if (username) {
+        const usernameEl = document.querySelector('.username');
+        if (usernameEl) {
+            usernameEl.textContent = username;
+        }
+    }
+
     initializeEventListeners();
     loadDashboard();
 });
@@ -76,7 +112,7 @@ function initializeEventListeners() {
     // Logout
     document.getElementById('logoutBtn').addEventListener('click', () => {
         if (confirm('Are you sure you want to logout?')) {
-            window.location.href = '/';
+            authAPI.logout();
         }
     });
 }

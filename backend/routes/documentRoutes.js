@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const logger = require('../utils/logger');
 const fs = require('fs');
 
 // Cache for available PDFs and images - updated whenever files change
@@ -24,7 +25,7 @@ function scanForPDFs() {
             .filter(file => file.toLowerCase().endsWith('.pdf'))
             .sort();
     } catch (error) {
-        console.error('Error scanning PDF folder:', error);
+        logger.error('Error scanning PDF folder', { error: error.message, stack: error.stack });
         return [];
     }
 }
@@ -47,7 +48,7 @@ function scanForAllFiles() {
             })
             .sort();
     } catch (error) {
-        console.error('Error scanning file folder:', error);
+        logger.error('Error scanning file folder', { error: error.message, stack: error.stack });
         return [];
     }
 }
@@ -59,8 +60,8 @@ function initializePDFWatcher() {
     // Initial scan
     availablePDFs = scanForPDFs();
     availableFiles = scanForAllFiles();
-    console.log(`✓ Found ${availablePDFs.length} PDF(s) in public folder:`, availablePDFs);
-    console.log(`✓ Found ${availableFiles.length} total file(s) (PDFs and images):`, availableFiles);
+    logger.info('Found PDFs in public folder', { count: availablePDFs.length, files: availablePDFs });
+    logger.info('Found files in public folder', { count: availableFiles.length, files: availableFiles });
 
     // Watch for file changes
     try {
@@ -69,16 +70,16 @@ function initializePDFWatcher() {
                 const ext = path.extname(filename).toLowerCase();
                 if (ext === '.pdf') {
                     availablePDFs = scanForPDFs();
-                    console.log(`✓ PDFs updated (${eventType}):`, availablePDFs);
+                    logger.info('PDFs updated', { eventType, count: availablePDFs.length, files: availablePDFs });
                 }
                 if (SUPPORTED_EXTENSIONS.includes(ext)) {
                     availableFiles = scanForAllFiles();
-                    console.log(`✓ Files updated (${eventType}):`, availableFiles);
+                    logger.info('Files updated', { eventType, count: availableFiles.length, files: availableFiles });
                 }
             }
         });
     } catch (error) {
-        console.warn('Warning: Could not set up folder watcher:', error.message);
+        logger.warn('Could not set up folder watcher', { error: error.message });
     }
 }
 
@@ -106,7 +107,7 @@ router.get('/list', (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error listing PDFs:', error);
+        logger.error('Error listing PDFs', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Error listing documents',
@@ -168,7 +169,7 @@ router.get('/pdf/:fileName', (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error retrieving PDF:', error);
+        logger.error('Error retrieving PDF', { error: error.message, stack: error.stack, fileName: req.params.fileName });
         res.status(500).json({
             success: false,
             message: 'Error retrieving document',
@@ -216,7 +217,7 @@ router.get('/pdf/default', (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error retrieving default PDF:', error);
+        logger.error('Error retrieving default PDF', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Error retrieving document',
@@ -253,7 +254,7 @@ router.get('/:fileName', (req, res) => {
 
         // Check if file is in available files list
         if (!availableFiles.includes(fileName)) {
-            console.warn(`File not found in availableFiles: ${fileName}. Available: ${availableFiles.join(', ')}`);
+            logger.warn('File not found in availableFiles', { fileName, availableFiles });
             return res.status(404).json({
                 success: false,
                 message: 'File not found',
@@ -265,7 +266,7 @@ router.get('/:fileName', (req, res) => {
 
         // Double-check file exists (in case of race condition)
         if (!fs.existsSync(filePath)) {
-            console.warn(`File does not exist on disk: ${filePath}`);
+            logger.warn('File does not exist on disk', { filePath });
             availableFiles = scanForAllFiles(); // Re-scan
             return res.status(404).json({
                 success: false,
@@ -295,7 +296,7 @@ router.get('/:fileName', (req, res) => {
         res.send(fileBuffer);
 
     } catch (error) {
-        console.error('Error retrieving file:', error);
+        logger.error('Error retrieving file', { error: error.message, stack: error.stack, fileName: req.params.fileName });
         res.status(500).json({
             success: false,
             message: 'Error retrieving file',

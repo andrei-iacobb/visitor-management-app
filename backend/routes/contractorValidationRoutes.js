@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, param, query, validationResult } = require('express-validator');
 const { pool } = require('../config/database');
+const logger = require('../utils/logger');
 
 const router = express.Router();
 
@@ -8,7 +9,7 @@ const router = express.Router();
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.error('❌ Validation errors:', JSON.stringify(errors.array(), null, 2));
+    logger.error('Validation errors', { errors: errors.array(), path: req.path, method: req.method });
     return res.status(400).json({
       success: false,
       errors: errors.array()
@@ -116,7 +117,7 @@ router.post('/verify', [
       contractorId: contractor.id
     });
   } catch (error) {
-    console.error('Error verifying contractor:', error);
+    logger.error('Error verifying contractor', { error: error.message, stack: error.stack, company: req.body.company_name });
     res.status(500).json({
       success: false,
       message: 'Failed to verify contractor status',
@@ -146,7 +147,7 @@ router.get('/companies', async (req, res) => {
       data: result.rows.map(row => row.company_name)
     });
   } catch (error) {
-    console.error('Error fetching company names:', error);
+    logger.error('Error fetching company names', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch company names',
@@ -194,7 +195,7 @@ router.get('/by-company', [
       data: result.rows
     });
   } catch (error) {
-    console.error('Error fetching contractors by company:', error);
+    logger.error('Error fetching contractors by company', { error: error.message, stack: error.stack, company: req.params.company_name });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch contractors',
@@ -240,7 +241,7 @@ router.get('/', [
       }
     });
   } catch (error) {
-    console.error('Error fetching all contractors:', error);
+    logger.error('Error fetching all contractors', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch contractors',
@@ -295,7 +296,7 @@ router.get('/approved', [
       }
     });
   } catch (error) {
-    console.error('Error fetching approved contractors:', error);
+    logger.error('Error fetching approved contractors', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch approved contractors',
@@ -381,7 +382,7 @@ router.post('/', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error adding contractor:', error);
+    logger.error('Error adding contractor', { error: error.message, stack: error.stack, company: req.body.company_name });
     res.status(500).json({
       success: false,
       message: 'Failed to add contractor',
@@ -422,7 +423,7 @@ router.get('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error fetching contractor:', error);
+    logger.error('Error fetching contractor', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch contractor',
@@ -555,7 +556,7 @@ router.put('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error updating contractor:', error);
+    logger.error('Error updating contractor', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to update contractor',
@@ -607,7 +608,7 @@ router.get('/unauthorized-attempts', [
       }
     });
   } catch (error) {
-    console.error('Error fetching unauthorized attempts:', error);
+    logger.error('Error fetching unauthorized attempts', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to fetch unauthorized attempts',
@@ -642,7 +643,7 @@ router.delete('/:id', [
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Error deleting contractor:', error);
+    logger.error('Error deleting contractor', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to delete contractor',
@@ -666,7 +667,7 @@ async function logUnauthorizedAttempt(companyName, contractorName, reason = 'Not
     `;
     await pool.query(logQuery, [companyName, contractorName || 'N/A', reason]);
   } catch (error) {
-    console.error('Error logging unauthorized attempt:', error);
+    logger.error('Error logging unauthorized attempt', { error: error.message, stack: error.stack });
     // Don't throw - this is a non-critical operation
   }
 }

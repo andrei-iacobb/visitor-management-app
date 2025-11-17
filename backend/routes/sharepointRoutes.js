@@ -2,6 +2,7 @@ const express = require('express');
 const { param, validationResult } = require('express-validator');
 const sharepointService = require('../services/sharepointService');
 
+const logger = require('../utils/logger');
 const router = express.Router();
 
 // Validation middleware
@@ -27,7 +28,7 @@ router.post('/sync', async (req, res) => {
 
     res.json(result);
   } catch (error) {
-    console.error('Error syncing to SharePoint:', error);
+    logger.error('Error syncing to SharePoint', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to sync to SharePoint',
@@ -50,7 +51,7 @@ router.post('/sync/:id', [
 
     res.json(result);
   } catch (error) {
-    console.error('Error syncing record to SharePoint:', error);
+    logger.error('Error syncing record to SharePoint', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to sync record to SharePoint',
@@ -70,7 +71,7 @@ router.get('/read', async (req, res) => {
 
     res.json(result);
   } catch (error) {
-    console.error('Error reading from SharePoint:', error);
+    logger.error('Error reading from SharePoint', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to read from SharePoint',
@@ -91,7 +92,7 @@ router.get('/status', async (req, res) => {
       configured: !!(sharepointService.tenantId && sharepointService.clientId && sharepointService.clientSecret)
     });
   } catch (error) {
-    console.error('Error checking SharePoint status:', error);
+    logger.error('Error checking SharePoint status', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to check SharePoint status',

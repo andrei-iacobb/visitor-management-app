@@ -1,15 +1,37 @@
 // API Configuration
 // Use relative URL so it works with any hostname/IP
-const API_BASE_URL = '/api';
+const API_BASE_URL = '/api/v1';
 
-// Helper function for API calls
-async function apiCall(endpoint, method = 'GET', data = null) {
+// Get JWT token from localStorage
+function getAuthToken() {
+    return localStorage.getItem('authToken');
+}
+
+// Clear auth token and redirect to login
+function clearAuthAndRedirect() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
+    window.location.href = 'login.html';
+}
+
+// Helper function for API calls with JWT authentication
+async function apiCall(endpoint, method = 'GET', data = null, requiresAuth = true) {
     const options = {
         method,
         headers: {
             'Content-Type': 'application/json',
         },
     };
+
+    // Add JWT token to headers if authentication is required
+    if (requiresAuth) {
+        const token = getAuthToken();
+        if (!token) {
+            clearAuthAndRedirect();
+            throw new Error('No authentication token');
+        }
+        options.headers['Authorization'] = `Bearer ${token}`;
+    }
 
     if (data) {
         options.body = JSON.stringify(data);
@@ -18,6 +40,12 @@ async function apiCall(endpoint, method = 'GET', data = null) {
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
         const result = await response.json();
+
+        // Handle authentication errors
+        if (response.status === 401) {
+            clearAuthAndRedirect();
+            throw new Error('Session expired. Please login again.');
+        }
 
         if (!response.ok) {
             throw new Error(result.message || 'API Error');
@@ -29,6 +57,15 @@ async function apiCall(endpoint, method = 'GET', data = null) {
         throw error;
     }
 }
+
+// Authentication API
+const authAPI = {
+    login: (username, password) => apiCall('/auth/login', 'POST', { username, password }, false),
+    verify: () => apiCall('/auth/verify', 'POST'),
+    logout: () => {
+        clearAuthAndRedirect();
+    }
+};
 
 // Contractor APIs
 const contractorAPI = {
