@@ -80,6 +80,71 @@ router.get('/read', async (req, res) => {
   }
 });
 
+// ==================== NEW: Excel → Database Sync Endpoints ====================
+
+// POST /api/v1/sharepoint/sync/contractors/pull - Sync contractors from Excel to DB
+router.post('/sync/contractors/pull', async (req, res) => {
+  try {
+    logger.info('Manual trigger: Syncing contractors from Excel to Database');
+    const result = await sharepointService.syncContractorsFromExcel();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    logger.error('Error syncing contractors from Excel', { error: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to sync contractors from Excel',
+      error: error.message
+    });
+  }
+});
+
+// POST /api/v1/sharepoint/sync/vehicles/pull - Sync vehicles from Excel to DB
+router.post('/sync/vehicles/pull', async (req, res) => {
+  try {
+    logger.info('Manual trigger: Syncing vehicles from Excel to Database');
+    const result = await sharepointService.syncVehiclesFromExcel();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    logger.error('Error syncing vehicles from Excel', { error: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to sync vehicles from Excel',
+      error: error.message
+    });
+  }
+});
+
+// POST /api/v1/sharepoint/sync/full - Full bidirectional sync
+router.post('/sync/full', async (req, res) => {
+  try {
+    logger.info('Manual trigger: Full bidirectional sync');
+    const result = await sharepointService.syncBidirectional();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    logger.error('Error performing full sync', { error: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to perform full sync',
+      error: error.message
+    });
+  }
+});
+
 // GET /api/sharepoint/status - Check SharePoint integration status
 router.get('/status', async (req, res) => {
   try {
