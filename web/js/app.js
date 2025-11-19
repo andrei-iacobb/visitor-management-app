@@ -507,6 +507,7 @@ function displaySyncResults(type, result) {
                         <h4 style="margin-top: 0; color: white;"><i class="fas fa-users"></i> Contractors</h4>
                         <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${c.inserted}</strong></p>
                         <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${c.updated}</strong></p>
+                        <p style="margin: 0.5rem 0;">🗑️ Deleted: <strong>${c.deleted || 0}</strong></p>
                         <p style="margin: 0.5rem 0;">❌ Errors: <strong>${c.errors}</strong></p>
                     </div>
                 `;
@@ -519,6 +520,7 @@ function displaySyncResults(type, result) {
                         <h4 style="margin-top: 0; color: white;"><i class="fas fa-car"></i> Vehicles</h4>
                         <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${v.inserted}</strong></p>
                         <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${v.updated}</strong></p>
+                        <p style="margin: 0.5rem 0;">🗑️ Deleted: <strong>${v.deleted || 0}</strong></p>
                         <p style="margin: 0.5rem 0;">❌ Errors: <strong>${v.errors}</strong></p>
                     </div>
                 `;
@@ -540,6 +542,7 @@ function displaySyncResults(type, result) {
                 <div style="background: rgba(255,255,255,0.25); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
                     <p style="margin: 0.5rem 0; font-size: 1.1rem;">✅ Inserted: <strong>${s.inserted}</strong></p>
                     <p style="margin: 0.5rem 0; font-size: 1.1rem;">🔄 Updated: <strong>${s.updated}</strong></p>
+                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">🗑️ Deleted: <strong>${s.deleted || 0}</strong></p>
                     <p style="margin: 0.5rem 0; font-size: 1.1rem;">❌ Errors: <strong>${s.errors}</strong></p>
                 </div>
             `;

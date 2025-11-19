@@ -431,7 +431,10 @@ class SharePointService {
         };
       }
 
-      const stats = { inserted: 0, updated: 0, errors: 0, errorDetails: [] };
+      const stats = { inserted: 0, updated: 0, deleted: 0, errors: 0, errorDetails: [] };
+
+      // Track all contractors from Excel (for deletion of missing records)
+      const excelContractors = [];
 
       // Upsert each record
       for (const record of records) {
@@ -446,6 +449,12 @@ class SharePointService {
           if (record.status && !validStatuses.includes(record.status.toLowerCase())) {
             throw new Error(`Invalid status: ${record.status}. Must be: approved, pending, or denied`);
           }
+
+          // Track this contractor for deletion check later
+          excelContractors.push({
+            company_name: record.company_name,
+            contractor_name: record.contractor_name || null
+          });
 
           // Check if contractor exists
           const checkQuery = `
@@ -507,7 +516,45 @@ class SharePointService {
         }
       }
 
-      const message = `Contractors sync completed: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.errors} errors`;
+      // Delete contractors from DB that are not in Excel (Excel is source of truth)
+      if (excelContractors.length > 0) {
+        try {
+          // Build condition to keep only contractors that are in Excel
+          const conditions = excelContractors.map((c, idx) => {
+            const companyParam = `$${idx * 2 + 1}`;
+            const nameParam = `$${idx * 2 + 2}`;
+            return `(company_name = ${companyParam} AND (contractor_name = ${nameParam} OR (contractor_name IS NULL AND ${nameParam} IS NULL)))`;
+          }).join(' OR ');
+
+          const params = [];
+          excelContractors.forEach(c => {
+            params.push(c.company_name);
+            params.push(c.contractor_name);
+          });
+
+          const deleteQuery = `
+            DELETE FROM allowed_contractors
+            WHERE NOT (${conditions})
+            RETURNING company_name, contractor_name
+          `;
+
+          const deleteResult = await pool.query(deleteQuery, params);
+          stats.deleted = deleteResult.rowCount;
+
+          if (stats.deleted > 0) {
+            logger.info(`Deleted ${stats.deleted} contractors not found in Excel:`,
+              deleteResult.rows.map(r => `${r.company_name} - ${r.contractor_name || 'N/A'}`));
+          }
+        } catch (error) {
+          logger.error('Failed to delete contractors not in Excel', { error: error.message });
+          stats.errorDetails.push({
+            operation: 'delete_missing',
+            error: error.message
+          });
+        }
+      }
+
+      const message = `Contractors sync completed: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.deleted} deleted, ${stats.errors} errors`;
       logger.info(message, stats);
 
       return {
@@ -562,7 +609,10 @@ class SharePointService {
         };
       }
 
-      const stats = { inserted: 0, updated: 0, errors: 0, errorDetails: [] };
+      const stats = { inserted: 0, updated: 0, deleted: 0, errors: 0, errorDetails: [] };
+
+      // Track all vehicle registrations from Excel (for deletion of missing records)
+      const excelRegistrations = [];
 
       // Upsert each record
       for (const record of records) {
@@ -577,6 +627,9 @@ class SharePointService {
           if (record.status && !validStatuses.includes(record.status.toLowerCase())) {
             throw new Error(`Invalid status: ${record.status}. Must be: available, in_use, or maintenance`);
           }
+
+          // Track this registration for deletion check later
+          excelRegistrations.push(record.registration.toUpperCase());
 
           // Parse numeric fields
           const year = record.year ? parseInt(record.year) : null;
@@ -630,7 +683,35 @@ class SharePointService {
         }
       }
 
-      const message = `Vehicles sync completed: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.errors} errors`;
+      // Delete vehicles from DB that are not in Excel (Excel is source of truth)
+      if (excelRegistrations.length > 0) {
+        try {
+          // Build placeholders for parameterized query
+          const placeholders = excelRegistrations.map((_, idx) => `$${idx + 1}`).join(', ');
+
+          const deleteQuery = `
+            DELETE FROM vehicles
+            WHERE registration NOT IN (${placeholders})
+            RETURNING registration
+          `;
+
+          const deleteResult = await pool.query(deleteQuery, excelRegistrations);
+          stats.deleted = deleteResult.rowCount;
+
+          if (stats.deleted > 0) {
+            logger.info(`Deleted ${stats.deleted} vehicles not found in Excel:`,
+              deleteResult.rows.map(r => r.registration));
+          }
+        } catch (error) {
+          logger.error('Failed to delete vehicles not in Excel', { error: error.message });
+          stats.errorDetails.push({
+            operation: 'delete_missing',
+            error: error.message
+          });
+        }
+      }
+
+      const message = `Vehicles sync completed: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.deleted} deleted, ${stats.errors} errors`;
       logger.info(message, stats);
 
       return {
