@@ -494,7 +494,7 @@ function displaySyncResults(type, result) {
     const syncResults = document.getElementById('syncResults');
 
     if (result.success) {
-        let html = `<p><strong>${type}</strong> sync completed successfully.</p>`;
+        let html = `<p style="font-size: 1.1rem; margin-bottom: 1rem;"><strong>${type}</strong> completed successfully! ✓</p>`;
 
         // Handle full sync results
         if (result.data) {
@@ -503,11 +503,11 @@ function displaySyncResults(type, result) {
             if (result.data.contractors) {
                 const c = result.data.contractors.pull;
                 html += `
-                    <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin-top: 0;"><i class="fas fa-users"></i> Contractors</h4>
-                        <p>✅ Inserted: ${c.inserted}</p>
-                        <p>🔄 Updated: ${c.updated}</p>
-                        <p>❌ Errors: ${c.errors}</p>
+                    <div style="background: rgba(255,255,255,0.25); padding: 1rem; border-radius: 8px; border-left: 4px solid #4CAF50;">
+                        <h4 style="margin-top: 0; color: white;"><i class="fas fa-users"></i> Contractors</h4>
+                        <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${c.inserted}</strong></p>
+                        <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${c.updated}</strong></p>
+                        <p style="margin: 0.5rem 0;">❌ Errors: <strong>${c.errors}</strong></p>
                     </div>
                 `;
             }
@@ -515,11 +515,11 @@ function displaySyncResults(type, result) {
             if (result.data.vehicles) {
                 const v = result.data.vehicles.pull;
                 html += `
-                    <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 4px solid #2196F3;">
-                        <h4 style="margin-top: 0;"><i class="fas fa-car"></i> Vehicles</h4>
-                        <p>✅ Inserted: ${v.inserted}</p>
-                        <p>🔄 Updated: ${v.updated}</p>
-                        <p>❌ Errors: ${v.errors}</p>
+                    <div style="background: rgba(255,255,255,0.25); padding: 1rem; border-radius: 8px; border-left: 4px solid #2196F3;">
+                        <h4 style="margin-top: 0; color: white;"><i class="fas fa-car"></i> Vehicles</h4>
+                        <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${v.inserted}</strong></p>
+                        <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${v.updated}</strong></p>
+                        <p style="margin: 0.5rem 0;">❌ Errors: <strong>${v.errors}</strong></p>
                     </div>
                 `;
             }
@@ -527,20 +527,20 @@ function displaySyncResults(type, result) {
             html += '</div>';
 
             if (result.data.duration) {
-                html += `<p style="margin-top: 1rem;"><strong>Duration:</strong> ${result.data.duration}</p>`;
+                html += `<p style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.9;">⏱️ Duration: <strong>${result.data.duration}</strong></p>`;
             }
             if (result.data.timestamp) {
-                html += `<p><strong>Timestamp:</strong> ${new Date(result.data.timestamp).toLocaleString()}</p>`;
+                html += `<p style="font-size: 0.95rem; opacity: 0.9;">🕐 ${new Date(result.data.timestamp).toLocaleString()}</p>`;
             }
         }
         // Handle single entity sync results
         else if (result.stats) {
             const s = result.stats;
             html += `
-                <div style="background: white; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
-                    <p>✅ Inserted: ${s.inserted}</p>
-                    <p>🔄 Updated: ${s.updated}</p>
-                    <p>❌ Errors: ${s.errors}</p>
+                <div style="background: rgba(255,255,255,0.25); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">✅ Inserted: <strong>${s.inserted}</strong></p>
+                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">🔄 Updated: <strong>${s.updated}</strong></p>
+                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">❌ Errors: <strong>${s.errors}</strong></p>
                 </div>
             `;
         }
@@ -548,7 +548,7 @@ function displaySyncResults(type, result) {
         syncResults.innerHTML = html;
         syncStatus.style.display = 'block';
     } else {
-        syncResults.innerHTML = `<p style="color: red;">${result.message}</p>`;
+        syncResults.innerHTML = `<p style="background: rgba(255,0,0,0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid #ff4444;"><strong>Error:</strong> ${result.message}</p>`;
         syncStatus.style.display = 'block';
     }
 }
