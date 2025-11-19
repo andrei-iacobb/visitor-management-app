@@ -79,8 +79,9 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Serve static files
+const path = require('path');
 app.use(express.static('public'));
-app.use(express.static('../web'));
+app.use(express.static(path.join(__dirname, '../web')));
 
 // Cache control for API endpoints
 app.use((req, res, next) => {
