@@ -362,10 +362,19 @@ class SharePointService {
           const header = headers[colNumber];
           if (header && mapping[header]) {
             const dbField = mapping[header];
-            const value = cell.value;
+            let value = cell.value;
 
             // Handle different cell value types
             if (value !== null && value !== undefined) {
+              // Handle hyperlink objects (email/phone links in Excel)
+              if (typeof value === 'object' && value.text !== undefined) {
+                value = value.text;
+              }
+              // Handle rich text objects
+              else if (typeof value === 'object' && value.richText !== undefined) {
+                value = value.richText.map(t => t.text).join('');
+              }
+              // Convert to string
               record[dbField] = value.toString().trim();
               hasData = true;
             }
@@ -438,38 +447,53 @@ class SharePointService {
             throw new Error(`Invalid status: ${record.status}. Must be: approved, pending, or denied`);
           }
 
-          // Upsert query (INSERT or UPDATE)
-          const query = `
-            INSERT INTO allowed_contractors (
-              company_name, contractor_name, email, phone_number, status, notes
-            )
-            VALUES ($1, $2, $3, $4, $5, $6)
-            ON CONFLICT (company_name, contractor_name)
-            DO UPDATE SET
-              email = EXCLUDED.email,
-              phone_number = EXCLUDED.phone_number,
-              status = EXCLUDED.status,
-              notes = EXCLUDED.notes,
-              updated_at = CURRENT_TIMESTAMP
-            RETURNING (xmax = 0) AS inserted
+          // Check if contractor exists
+          const checkQuery = `
+            SELECT id FROM allowed_contractors
+            WHERE company_name = $1 AND (contractor_name = $2 OR (contractor_name IS NULL AND $2 IS NULL))
+            LIMIT 1
           `;
+          const existing = await pool.query(checkQuery, [record.company_name, record.contractor_name || null]);
 
-          const values = [
-            record.company_name,
-            record.contractor_name || null,
-            record.email || null,
-            record.phone_number || null,
-            record.status ? record.status.toLowerCase() : 'pending',
-            record.notes || null
-          ];
-
-          const result = await pool.query(query, values);
-
-          // Check if it was an INSERT (xmax = 0) or UPDATE (xmax > 0)
-          if (result.rows[0].inserted) {
-            stats.inserted++;
-          } else {
+          let result;
+          if (existing.rows.length > 0) {
+            // UPDATE existing contractor
+            const updateQuery = `
+              UPDATE allowed_contractors SET
+                email = $1,
+                phone_number = $2,
+                status = $3,
+                notes = $4,
+                updated_at = CURRENT_TIMESTAMP
+              WHERE id = $5
+              RETURNING id
+            `;
+            result = await pool.query(updateQuery, [
+              record.email || null,
+              record.phone_number || null,
+              record.status ? record.status.toLowerCase() : 'pending',
+              record.notes || null,
+              existing.rows[0].id
+            ]);
             stats.updated++;
+          } else {
+            // INSERT new contractor
+            const insertQuery = `
+              INSERT INTO allowed_contractors (
+                company_name, contractor_name, email, phone_number, status, notes
+              )
+              VALUES ($1, $2, $3, $4, $5, $6)
+              RETURNING id
+            `;
+            result = await pool.query(insertQuery, [
+              record.company_name,
+              record.contractor_name || null,
+              record.email || null,
+              record.phone_number || null,
+              record.status ? record.status.toLowerCase() : 'pending',
+              record.notes || null
+            ]);
+            stats.inserted++;
           }
 
           logger.info(`Upserted contractor: ${record.company_name} - ${record.contractor_name || 'N/A'}`);
