@@ -302,12 +302,20 @@ class SharePointService {
     try {
       logger.info(`Downloading Excel file from SharePoint: ${filePath}`);
 
-      const fileResponse = await this.client
+      // Get the file as a stream
+      const stream = await this.client
         .api(`/drives/${this.driveId}/root:${filePath}:/content`)
-        .get();
+        .getStream();
 
-      logger.info(`Successfully downloaded Excel file: ${filePath}`);
-      return fileResponse;
+      // Convert stream to buffer
+      const chunks = [];
+      for await (const chunk of stream) {
+        chunks.push(chunk);
+      }
+      const buffer = Buffer.concat(chunks);
+
+      logger.info(`Successfully downloaded Excel file: ${filePath} (${buffer.length} bytes)`);
+      return buffer;
     } catch (error) {
       logger.error(`Failed to download Excel file: ${filePath}`, { error: error.message });
       throw new Error(`Failed to download ${filePath}: ${error.message}`);
