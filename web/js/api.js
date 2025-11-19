@@ -150,3 +150,18 @@ const statsAPI = {
         }
     },
 };
+
+// SharePoint Sync API
+const sharepointAPI = {
+    // Get SharePoint integration status
+    getStatus: () => apiCall('/sharepoint/status'),
+
+    // Sync contractors from Excel to Database
+    syncContractors: () => apiCall('/sharepoint/sync/contractors/pull', 'POST'),
+
+    // Sync vehicles from Excel to Database
+    syncVehicles: () => apiCall('/sharepoint/sync/vehicles/pull', 'POST'),
+
+    // Full bidirectional sync
+    syncAll: () => apiCall('/sharepoint/sync/full', 'POST'),
+};

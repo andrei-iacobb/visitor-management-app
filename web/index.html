@@ -67,6 +67,29 @@
                             <p class="stat-number" id="vehiclesInUse">0</p>
                         </div>
                     </div>
+
+                    <!-- SharePoint Sync Section -->
+                    <div class="sync-section" style="margin-top: 2rem;">
+                        <div class="sync-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h2><i class="fas fa-cloud-download-alt"></i> SharePoint Sync</h2>
+                            <div>
+                                <button class="btn btn-primary" id="syncContractorsBtn">
+                                    <i class="fas fa-sync-alt"></i> Sync Contractors
+                                </button>
+                                <button class="btn btn-primary" id="syncVehiclesBtn" style="margin-left: 0.5rem;">
+                                    <i class="fas fa-sync-alt"></i> Sync Vehicles
+                                </button>
+                                <button class="btn btn-success" id="syncAllBtn" style="margin-left: 0.5rem;">
+                                    <i class="fas fa-sync"></i> Sync All
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="syncStatus" class="sync-status" style="background: #f5f5f5; padding: 1rem; border-radius: 8px; display: none;">
+                            <h3 style="margin-top: 0;">Last Sync Status</h3>
+                            <div id="syncResults"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Contractors Page -->

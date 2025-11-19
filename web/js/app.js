@@ -136,6 +136,11 @@ function initializeEventListeners() {
             authAPI.logout();
         }
     });
+
+    // SharePoint Sync
+    document.getElementById('syncContractorsBtn').addEventListener('click', syncContractors);
+    document.getElementById('syncVehiclesBtn').addEventListener('click', syncVehicles);
+    document.getElementById('syncAllBtn').addEventListener('click', syncAll);
 }
 
 // Dashboard
@@ -392,4 +397,158 @@ function filterVisitors() {
     );
 
     renderVisitorsTable(filtered);
+}
+
+// SharePoint Sync Functions
+async function syncContractors() {
+    const btn = document.getElementById('syncContractorsBtn');
+    const originalHTML = btn.innerHTML;
+
+    try {
+        // Disable button and show loading state
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
+
+        const result = await sharepointAPI.syncContractors();
+
+        // Show results
+        displaySyncResults('Contractors', result);
+        showAlert(result.message, 'success');
+
+        // Reload contractors to show new data
+        if (result.stats && (result.stats.inserted > 0 || result.stats.updated > 0)) {
+            await loadContractors();
+            await loadDashboard();
+        }
+    } catch (error) {
+        console.error('Sync error:', error);
+        showAlert(error.message || 'Failed to sync contractors from SharePoint', 'error');
+    } finally {
+        // Re-enable button
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+}
+
+async function syncVehicles() {
+    const btn = document.getElementById('syncVehiclesBtn');
+    const originalHTML = btn.innerHTML;
+
+    try {
+        // Disable button and show loading state
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
+
+        const result = await sharepointAPI.syncVehicles();
+
+        // Show results
+        displaySyncResults('Vehicles', result);
+        showAlert(result.message, 'success');
+
+        // Reload vehicles to show new data
+        if (result.stats && (result.stats.inserted > 0 || result.stats.updated > 0)) {
+            await loadVehicles();
+            await loadDashboard();
+        }
+    } catch (error) {
+        console.error('Sync error:', error);
+        showAlert(error.message || 'Failed to sync vehicles from SharePoint', 'error');
+    } finally {
+        // Re-enable button
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+}
+
+async function syncAll() {
+    const btn = document.getElementById('syncAllBtn');
+    const originalHTML = btn.innerHTML;
+
+    try {
+        // Disable button and show loading state
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing All...';
+
+        const result = await sharepointAPI.syncAll();
+
+        // Show results
+        displaySyncResults('Full Sync', result);
+        showAlert(result.message, 'success');
+
+        // Reload all data
+        await loadContractors();
+        await loadVehicles();
+        await loadDashboard();
+    } catch (error) {
+        console.error('Sync error:', error);
+        showAlert(error.message || 'Failed to perform full sync', 'error');
+    } finally {
+        // Re-enable button
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+}
+
+function displaySyncResults(type, result) {
+    const syncStatus = document.getElementById('syncStatus');
+    const syncResults = document.getElementById('syncResults');
+
+    if (result.success) {
+        let html = `<p><strong>${type}</strong> sync completed successfully.</p>`;
+
+        // Handle full sync results
+        if (result.data) {
+            html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">';
+
+            if (result.data.contractors) {
+                const c = result.data.contractors.pull;
+                html += `
+                    <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 4px solid #4CAF50;">
+                        <h4 style="margin-top: 0;"><i class="fas fa-users"></i> Contractors</h4>
+                        <p>✅ Inserted: ${c.inserted}</p>
+                        <p>🔄 Updated: ${c.updated}</p>
+                        <p>❌ Errors: ${c.errors}</p>
+                    </div>
+                `;
+            }
+
+            if (result.data.vehicles) {
+                const v = result.data.vehicles.pull;
+                html += `
+                    <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 4px solid #2196F3;">
+                        <h4 style="margin-top: 0;"><i class="fas fa-car"></i> Vehicles</h4>
+                        <p>✅ Inserted: ${v.inserted}</p>
+                        <p>🔄 Updated: ${v.updated}</p>
+                        <p>❌ Errors: ${v.errors}</p>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+
+            if (result.data.duration) {
+                html += `<p style="margin-top: 1rem;"><strong>Duration:</strong> ${result.data.duration}</p>`;
+            }
+            if (result.data.timestamp) {
+                html += `<p><strong>Timestamp:</strong> ${new Date(result.data.timestamp).toLocaleString()}</p>`;
+            }
+        }
+        // Handle single entity sync results
+        else if (result.stats) {
+            const s = result.stats;
+            html += `
+                <div style="background: white; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                    <p>✅ Inserted: ${s.inserted}</p>
+                    <p>🔄 Updated: ${s.updated}</p>
+                    <p>❌ Errors: ${s.errors}</p>
+                </div>
+            `;
+        }
+
+        syncResults.innerHTML = html;
+        syncStatus.style.display = 'block';
+    } else {
+        syncResults.innerHTML = `<p style="color: red;">${result.message}</p>`;
+        syncStatus.style.display = 'block';
+    }
 }
