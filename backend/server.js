@@ -80,17 +80,22 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Serve static files
 const path = require('path');
-app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, '../web')));
+app.use(express.static('public', {
+  maxAge: 0,
+  etag: false,
+  lastModified: false
+}));
+app.use(express.static(path.join(__dirname, '../web'), {
+  maxAge: 0,
+  etag: false,
+  lastModified: false
+}));
 
-// Cache control for API endpoints
+// Cache control for all routes (static files and API)
 app.use((req, res, next) => {
-  if (req.url.startsWith('/api/')) {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    res.removeHeader('ETag');
-  }
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   next();
 });
 
