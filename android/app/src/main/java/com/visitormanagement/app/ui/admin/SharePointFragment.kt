@@ -92,7 +92,7 @@ class SharePointFragment : Fragment(), RefreshableFragment {
 
     private fun loadStatistics() {
         lifecycleScope.launch {
-            when (val result = repository.getSignIns(limit = 1000)) {
+            when (val result = repository.getSignIns(limit = Constants.SHAREPOINT_SYNC_LIMIT)) {
                 is Result.Success -> {
                     val total = result.data.size
                     // Note: We don't have sharepoint_synced in the response model yet

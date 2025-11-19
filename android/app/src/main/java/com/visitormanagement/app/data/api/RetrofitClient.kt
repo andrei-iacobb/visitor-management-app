@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.visitormanagement.app.R
 import com.visitormanagement.app.util.Constants
+import com.visitormanagement.app.util.SecureConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -97,12 +98,13 @@ object RetrofitClient {
             // Load client certificate (PKCS12)
             val clientCertInputStream: InputStream = applicationContext.resources.openRawResource(R.raw.client)
             val clientKeyStore = KeyStore.getInstance("PKCS12")
-            clientKeyStore.load(clientCertInputStream, "visitor123".toCharArray())
+            val certPassword = SecureConfig.getCertificatePassword().toCharArray()
+            clientKeyStore.load(clientCertInputStream, certPassword)
             clientCertInputStream.close()
 
             // Initialize KeyManagerFactory with client certificate
             val keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
-            keyManagerFactory.init(clientKeyStore, "visitor123".toCharArray())
+            keyManagerFactory.init(clientKeyStore, certPassword)
 
             // Load CA certificate (PEM)
             val caCertInputStream: InputStream = applicationContext.resources.openRawResource(R.raw.ca_cert)

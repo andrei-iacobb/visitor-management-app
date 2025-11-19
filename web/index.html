@@ -45,6 +45,41 @@
             <div class="content-area">
                 <!-- Dashboard Page -->
                 <div id="dashboard-page" class="page active">
+
+                    <!-- PROMINENT SHAREPOINT SYNC CARD -->
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: white;">
+                                    <i class="fas fa-cloud-download-alt"></i> SharePoint Data Sync
+                                </h2>
+                                <p style="margin: 0; opacity: 0.9; font-size: 1rem;">
+                                    Sync contractors and vehicles from Excel files in SharePoint
+                                </p>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                <button id="syncContractorsBtn" style="background: white; color: #667eea; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                                    <i class="fas fa-users"></i> Sync Contractors
+                                </button>
+                                <button id="syncVehiclesBtn" style="background: white; color: #667eea; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                                    <i class="fas fa-car"></i> Sync Vehicles
+                                </button>
+                                <button id="syncAllBtn" style="background: #4CAF50; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                                    <i class="fas fa-sync"></i> Sync All
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Sync Status Results -->
+                        <div id="syncStatus" style="margin-top: 1.5rem; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: 8px; display: none;">
+                            <h3 style="margin: 0 0 1rem 0; color: white; font-size: 1.2rem;">
+                                <i class="fas fa-info-circle"></i> Last Sync Results
+                            </h3>
+                            <div id="syncResults" style="color: white;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Cards -->
                     <div class="dashboard-grid">
                         <div class="stat-card">
                             <i class="fas fa-users"></i>

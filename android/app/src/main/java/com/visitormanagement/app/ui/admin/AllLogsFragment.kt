@@ -130,7 +130,7 @@ class AllLogsFragment : Fragment(), RefreshableFragment {
         Log.d("AllLogsFragment", "Starting to load logs...")
 
         lifecycleScope.launch {
-            when (val result = repository.getSignIns(limit = 100)) {
+            when (val result = repository.getSignIns(limit = Constants.LOGS_PAGE_LIMIT)) {
                 is Result.Success -> {
                     Log.d("AllLogsFragment", "Successfully loaded ${result.data.size} logs")
                     showLoading(false)

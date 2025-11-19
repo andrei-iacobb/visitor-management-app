@@ -2,6 +2,7 @@ const { Client } = require('@microsoft/microsoft-graph-client');
 const { ClientSecretCredential } = require('@azure/identity');
 const ExcelJS = require('exceljs');
 const { pool } = require('../config/database');
+const logger = require('../utils/logger');
 require('dotenv').config();
 
 class SharePointService {
@@ -13,6 +14,8 @@ class SharePointService {
     this.siteId = process.env.SHAREPOINT_SITE_ID;
     this.driveId = process.env.SHAREPOINT_DRIVE_ID;
     this.excelFilePath = process.env.EXCEL_FILE_PATH;
+    this.contractorsExcelPath = process.env.CONTRACTORS_EXCEL_PATH;
+    this.vehiclesExcelPath = process.env.VEHICLES_EXCEL_PATH;
     this.client = null;
   }
 
@@ -281,6 +284,381 @@ class SharePointService {
     } catch (error) {
       console.error('Error reading from SharePoint:', error);
       return { success: false, message: error.message };
+    }
+  }
+
+  // ==================== NEW: Excel → Database Sync ====================
+
+  /**
+   * Download Excel file from SharePoint
+   * @param {string} filePath - Path to Excel file (e.g., /VisitorManagement/AllowedContractors.xlsx)
+   * @returns {Buffer} - Excel file buffer
+   */
+  async downloadExcelFile(filePath) {
+    if (!this.client) {
+      throw new Error('SharePoint client not initialized');
+    }
+
+    try {
+      logger.info(`Downloading Excel file from SharePoint: ${filePath}`);
+
+      const fileResponse = await this.client
+        .api(`/drives/${this.driveId}/root:${filePath}:/content`)
+        .get();
+
+      logger.info(`Successfully downloaded Excel file: ${filePath}`);
+      return fileResponse;
+    } catch (error) {
+      logger.error(`Failed to download Excel file: ${filePath}`, { error: error.message });
+      throw new Error(`Failed to download ${filePath}: ${error.message}`);
+    }
+  }
+
+  /**
+   * Parse Excel buffer to JSON array using column mapping
+   * @param {Buffer} buffer - Excel file buffer
+   * @param {string} sheetName - Name of the worksheet (default: first sheet)
+   * @param {Object} mapping - Column header to database field mapping
+   * @returns {Array} - Array of parsed records
+   */
+  async parseExcelToJSON(buffer, sheetName = null, mapping = {}) {
+    try {
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.load(buffer);
+
+      const worksheet = sheetName ? workbook.getWorksheet(sheetName) : workbook.worksheets[0];
+
+      if (!worksheet) {
+        throw new Error(`Worksheet "${sheetName}" not found`);
+      }
+
+      const records = [];
+      const headers = [];
+
+      // Read headers from first row
+      const headerRow = worksheet.getRow(1);
+      headerRow.eachCell((cell, colNumber) => {
+        headers[colNumber] = cell.value?.toString().trim();
+      });
+
+      logger.info(`Parsing Excel with headers: ${headers.filter(h => h).join(', ')}`);
+
+      // Parse data rows (starting from row 2)
+      worksheet.eachRow((row, rowNumber) => {
+        if (rowNumber === 1) return; // Skip header row
+
+        const record = {};
+        let hasData = false;
+
+        row.eachCell((cell, colNumber) => {
+          const header = headers[colNumber];
+          if (header && mapping[header]) {
+            const dbField = mapping[header];
+            const value = cell.value;
+
+            // Handle different cell value types
+            if (value !== null && value !== undefined) {
+              record[dbField] = value.toString().trim();
+              hasData = true;
+            }
+          }
+        });
+
+        // Only add record if it has at least one field with data
+        if (hasData) {
+          records.push(record);
+        }
+      });
+
+      logger.info(`Parsed ${records.length} records from Excel`);
+      return records;
+    } catch (error) {
+      logger.error('Failed to parse Excel to JSON', { error: error.message });
+      throw new Error(`Failed to parse Excel: ${error.message}`);
+    }
+  }
+
+  /**
+   * Sync contractors from Excel to Database (Excel → DB)
+   * Upsert strategy: INSERT if new, UPDATE if exists
+   */
+  async syncContractorsFromExcel() {
+    if (!this.enabled) {
+      return { success: false, message: 'SharePoint integration is disabled' };
+    }
+
+    try {
+      await this.initialize();
+
+      logger.info('Starting contractors sync from Excel to Database...');
+
+      // Column mapping: Excel header → Database field
+      const mapping = {
+        'Company Name': 'company_name',
+        'Contractor Name': 'contractor_name',
+        'Email': 'email',
+        'Phone Number': 'phone_number',
+        'Status': 'status',
+        'Notes': 'notes'
+      };
+
+      // Download and parse Excel file
+      const buffer = await this.downloadExcelFile(this.contractorsExcelPath);
+      const records = await this.parseExcelToJSON(buffer, null, mapping);
+
+      if (records.length === 0) {
+        return {
+          success: true,
+          message: 'No contractor records found in Excel',
+          stats: { inserted: 0, updated: 0, errors: 0 }
+        };
+      }
+
+      const stats = { inserted: 0, updated: 0, errors: 0, errorDetails: [] };
+
+      // Upsert each record
+      for (const record of records) {
+        try {
+          // Validate required fields
+          if (!record.company_name) {
+            throw new Error('Missing required field: company_name');
+          }
+
+          // Validate status enum
+          const validStatuses = ['approved', 'pending', 'denied'];
+          if (record.status && !validStatuses.includes(record.status.toLowerCase())) {
+            throw new Error(`Invalid status: ${record.status}. Must be: approved, pending, or denied`);
+          }
+
+          // Upsert query (INSERT or UPDATE)
+          const query = `
+            INSERT INTO allowed_contractors (
+              company_name, contractor_name, email, phone_number, status, notes
+            )
+            VALUES ($1, $2, $3, $4, $5, $6)
+            ON CONFLICT (company_name, contractor_name)
+            DO UPDATE SET
+              email = EXCLUDED.email,
+              phone_number = EXCLUDED.phone_number,
+              status = EXCLUDED.status,
+              notes = EXCLUDED.notes,
+              updated_at = CURRENT_TIMESTAMP
+            RETURNING (xmax = 0) AS inserted
+          `;
+
+          const values = [
+            record.company_name,
+            record.contractor_name || null,
+            record.email || null,
+            record.phone_number || null,
+            record.status ? record.status.toLowerCase() : 'pending',
+            record.notes || null
+          ];
+
+          const result = await pool.query(query, values);
+
+          // Check if it was an INSERT (xmax = 0) or UPDATE (xmax > 0)
+          if (result.rows[0].inserted) {
+            stats.inserted++;
+          } else {
+            stats.updated++;
+          }
+
+          logger.info(`Upserted contractor: ${record.company_name} - ${record.contractor_name || 'N/A'}`);
+        } catch (error) {
+          stats.errors++;
+          stats.errorDetails.push({
+            record,
+            error: error.message
+          });
+          logger.error(`Failed to upsert contractor`, { record, error: error.message });
+        }
+      }
+
+      const message = `Contractors sync completed: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.errors} errors`;
+      logger.info(message, stats);
+
+      return {
+        success: true,
+        message,
+        stats
+      };
+    } catch (error) {
+      logger.error('Contractors sync failed', { error: error.message, stack: error.stack });
+      return {
+        success: false,
+        message: `Contractors sync failed: ${error.message}`,
+        error: error.message
+      };
+    }
+  }
+
+  /**
+   * Sync vehicles from Excel to Database (Excel → DB)
+   * Upsert strategy: INSERT if new, UPDATE if exists
+   */
+  async syncVehiclesFromExcel() {
+    if (!this.enabled) {
+      return { success: false, message: 'SharePoint integration is disabled' };
+    }
+
+    try {
+      await this.initialize();
+
+      logger.info('Starting vehicles sync from Excel to Database...');
+
+      // Column mapping: Excel header → Database field
+      const mapping = {
+        'Registration': 'registration',
+        'Make': 'make',
+        'Model': 'model',
+        'Year': 'year',
+        'Status': 'status',
+        'Current Mileage': 'current_mileage',
+        'Notes': 'notes'
+      };
+
+      // Download and parse Excel file
+      const buffer = await this.downloadExcelFile(this.vehiclesExcelPath);
+      const records = await this.parseExcelToJSON(buffer, null, mapping);
+
+      if (records.length === 0) {
+        return {
+          success: true,
+          message: 'No vehicle records found in Excel',
+          stats: { inserted: 0, updated: 0, errors: 0 }
+        };
+      }
+
+      const stats = { inserted: 0, updated: 0, errors: 0, errorDetails: [] };
+
+      // Upsert each record
+      for (const record of records) {
+        try {
+          // Validate required fields
+          if (!record.registration) {
+            throw new Error('Missing required field: registration');
+          }
+
+          // Validate status enum
+          const validStatuses = ['available', 'in_use', 'maintenance'];
+          if (record.status && !validStatuses.includes(record.status.toLowerCase())) {
+            throw new Error(`Invalid status: ${record.status}. Must be: available, in_use, or maintenance`);
+          }
+
+          // Parse numeric fields
+          const year = record.year ? parseInt(record.year) : null;
+          const mileage = record.current_mileage ? parseInt(record.current_mileage.toString().replace(/,/g, '')) : null;
+
+          // Upsert query (INSERT or UPDATE)
+          const query = `
+            INSERT INTO vehicles (
+              registration, make, model, year, status, current_mileage, notes
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            ON CONFLICT (registration)
+            DO UPDATE SET
+              make = EXCLUDED.make,
+              model = EXCLUDED.model,
+              year = EXCLUDED.year,
+              status = EXCLUDED.status,
+              current_mileage = EXCLUDED.current_mileage,
+              notes = EXCLUDED.notes,
+              updated_at = CURRENT_TIMESTAMP
+            RETURNING (xmax = 0) AS inserted
+          `;
+
+          const values = [
+            record.registration.toUpperCase(),
+            record.make || null,
+            record.model || null,
+            year,
+            record.status ? record.status.toLowerCase() : 'available',
+            mileage,
+            record.notes || null
+          ];
+
+          const result = await pool.query(query, values);
+
+          // Check if it was an INSERT (xmax = 0) or UPDATE (xmax > 0)
+          if (result.rows[0].inserted) {
+            stats.inserted++;
+          } else {
+            stats.updated++;
+          }
+
+          logger.info(`Upserted vehicle: ${record.registration}`);
+        } catch (error) {
+          stats.errors++;
+          stats.errorDetails.push({
+            record,
+            error: error.message
+          });
+          logger.error(`Failed to upsert vehicle`, { record, error: error.message });
+        }
+      }
+
+      const message = `Vehicles sync completed: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.errors} errors`;
+      logger.info(message, stats);
+
+      return {
+        success: true,
+        message,
+        stats
+      };
+    } catch (error) {
+      logger.error('Vehicles sync failed', { error: error.message, stack: error.stack });
+      return {
+        success: false,
+        message: `Vehicles sync failed: ${error.message}`,
+        error: error.message
+      };
+    }
+  }
+
+  /**
+   * Bidirectional sync: Excel → DB → Excel
+   * Pull data from Excel files and push current DB state back
+   */
+  async syncBidirectional() {
+    if (!this.enabled) {
+      return { success: false, message: 'SharePoint integration is disabled' };
+    }
+
+    try {
+      logger.info('Starting bidirectional sync...');
+      const startTime = Date.now();
+
+      // Phase 1: Pull from Excel → DB
+      const contractorsPull = await this.syncContractorsFromExcel();
+      const vehiclesPull = await this.syncVehiclesFromExcel();
+
+      const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+
+      const result = {
+        success: true,
+        message: 'Bidirectional sync completed',
+        data: {
+          contractors: {
+            pull: contractorsPull.stats || { inserted: 0, updated: 0, errors: 0 }
+          },
+          vehicles: {
+            pull: vehiclesPull.stats || { inserted: 0, updated: 0, errors: 0 }
+          },
+          duration: `${duration}s`,
+          timestamp: new Date().toISOString()
+        }
+      };
+
+      logger.info('Bidirectional sync completed', result.data);
+      return result;
+    } catch (error) {
+      logger.error('Bidirectional sync failed', { error: error.message, stack: error.stack });
+      return {
+        success: false,
+        message: `Bidirectional sync failed: ${error.message}`,
+        error: error.message
+      };
     }
   }
 }

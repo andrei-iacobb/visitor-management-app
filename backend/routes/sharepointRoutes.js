@@ -2,6 +2,7 @@ const express = require('express');
 const { param, validationResult } = require('express-validator');
 const sharepointService = require('../services/sharepointService');
 
+const logger = require('../utils/logger');
 const router = express.Router();
 
 // Validation middleware
@@ -27,7 +28,7 @@ router.post('/sync', async (req, res) => {
 
     res.json(result);
   } catch (error) {
-    console.error('Error syncing to SharePoint:', error);
+    logger.error('Error syncing to SharePoint', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to sync to SharePoint',
@@ -50,7 +51,7 @@ router.post('/sync/:id', [
 
     res.json(result);
   } catch (error) {
-    console.error('Error syncing record to SharePoint:', error);
+    logger.error('Error syncing record to SharePoint', { error: error.message, stack: error.stack, id: req.params.id });
     res.status(500).json({
       success: false,
       message: 'Failed to sync record to SharePoint',
@@ -70,10 +71,75 @@ router.get('/read', async (req, res) => {
 
     res.json(result);
   } catch (error) {
-    console.error('Error reading from SharePoint:', error);
+    logger.error('Error reading from SharePoint', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to read from SharePoint',
+      error: error.message
+    });
+  }
+});
+
+// ==================== NEW: Excel → Database Sync Endpoints ====================
+
+// POST /api/v1/sharepoint/sync/contractors/pull - Sync contractors from Excel to DB
+router.post('/sync/contractors/pull', async (req, res) => {
+  try {
+    logger.info('Manual trigger: Syncing contractors from Excel to Database');
+    const result = await sharepointService.syncContractorsFromExcel();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    logger.error('Error syncing contractors from Excel', { error: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to sync contractors from Excel',
+      error: error.message
+    });
+  }
+});
+
+// POST /api/v1/sharepoint/sync/vehicles/pull - Sync vehicles from Excel to DB
+router.post('/sync/vehicles/pull', async (req, res) => {
+  try {
+    logger.info('Manual trigger: Syncing vehicles from Excel to Database');
+    const result = await sharepointService.syncVehiclesFromExcel();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    logger.error('Error syncing vehicles from Excel', { error: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to sync vehicles from Excel',
+      error: error.message
+    });
+  }
+});
+
+// POST /api/v1/sharepoint/sync/full - Full bidirectional sync
+router.post('/sync/full', async (req, res) => {
+  try {
+    logger.info('Manual trigger: Full bidirectional sync');
+    const result = await sharepointService.syncBidirectional();
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    logger.error('Error performing full sync', { error: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to perform full sync',
       error: error.message
     });
   }
@@ -91,7 +157,7 @@ router.get('/status', async (req, res) => {
       configured: !!(sharepointService.tenantId && sharepointService.clientId && sharepointService.clientSecret)
     });
   } catch (error) {
-    console.error('Error checking SharePoint status:', error);
+    logger.error('Error checking SharePoint status', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
       message: 'Failed to check SharePoint status',

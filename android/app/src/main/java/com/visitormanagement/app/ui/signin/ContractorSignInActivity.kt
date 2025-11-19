@@ -123,10 +123,19 @@ class ContractorSignInActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.w("ContractorSignIn", "Failed to load company names: ${response.code()}")
+                    Toast.makeText(
+                        this@ContractorSignInActivity,
+                        "Unable to load company suggestions. You can still type manually.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
                 Log.e("ContractorSignIn", "Error loading company names", e)
-                // Non-critical - user can still type manually
+                Toast.makeText(
+                    this@ContractorSignInActivity,
+                    "Unable to load company suggestions. You can still type manually.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -291,7 +300,7 @@ class ContractorSignInActivity : AppCompatActivity() {
         val padding = resources.getDimensionPixelSize(R.dimen.contractor_button_margin)
 
         // Determine number of columns based on screen width
-        val minButtonWidth = 200 // dp
+        val minButtonWidth = Constants.MIN_BUTTON_WIDTH_DP // dp
         val minButtonWidthPx = (minButtonWidth * displayMetrics.density).toInt()
         val numColumns = maxOf(2, (screenWidth - padding * 2) / (minButtonWidthPx + padding))
 

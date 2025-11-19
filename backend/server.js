@@ -7,10 +7,12 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const { v4: uuidv4 } = require('uuid');
+const cron = require('node-cron');
+const { spawn } = require('child_process');
 require('dotenv').config();
 
 const logger = require('./utils/logger');
-const { testConnection, pool } = require('./config/database');
+const { testConnection, pool, closePool } = require('./config/database');
 const { authenticateToken } = require('./middleware/auth');
 const { apiLimiter } = require('./middleware/rateLimiter');
 
@@ -77,17 +79,23 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Serve static files
-app.use(express.static('public'));
-app.use(express.static('../web'));
+const path = require('path');
+app.use(express.static('public', {
+  maxAge: 0,
+  etag: false,
+  lastModified: false
+}));
+app.use(express.static(path.join(__dirname, '../web'), {
+  maxAge: 0,
+  etag: false,
+  lastModified: false
+}));
 
-// Cache control for API endpoints
+// Cache control for all routes (static files and API)
 app.use((req, res, next) => {
-  if (req.url.startsWith('/api/')) {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    res.removeHeader('ETag');
-  }
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   next();
 });
 
@@ -350,6 +358,59 @@ const startServer = async () => {
       logger.info('========================================');
       logger.info('✅ Server started successfully');
       logger.info('========================================');
+
+      // ========================================
+      // Scheduled Data Archival Job
+      // ========================================
+
+      // Schedule automated data archival (configurable via environment variables)
+      if (process.env.ENABLE_DATA_ARCHIVAL !== 'false') {
+        const archivalSchedule = process.env.ARCHIVAL_CRON_SCHEDULE || '0 2 1 * *'; // Default: 1st of each month at 2 AM
+        const retentionDays = process.env.ARCHIVAL_RETENTION_DAYS || '90';
+
+        cron.schedule(archivalSchedule, () => {
+          logger.info('Starting scheduled data archival job...', {
+            retentionDays,
+            schedule: archivalSchedule
+          });
+
+          const archivalProcess = spawn('node', [
+            path.join(__dirname, 'scripts', 'archive-old-records.js'),
+            `--retention-days=${retentionDays}`
+          ]);
+
+          archivalProcess.stdout.on('data', (data) => {
+            logger.info('Archival output', { message: data.toString().trim() });
+          });
+
+          archivalProcess.stderr.on('data', (data) => {
+            logger.error('Archival error output', { message: data.toString().trim() });
+          });
+
+          archivalProcess.on('close', (code) => {
+            if (code === 0) {
+              logger.info('Scheduled archival completed successfully', { exitCode: code });
+            } else {
+              logger.error('Scheduled archival failed', { exitCode: code });
+            }
+          });
+
+          archivalProcess.on('error', (error) => {
+            logger.error('Failed to spawn archival process', {
+              error: error.message,
+              stack: error.stack
+            });
+          });
+        });
+
+        logger.info('📅 Data archival scheduled', {
+          schedule: archivalSchedule,
+          retentionDays: `${retentionDays} days`,
+          enabled: true
+        });
+      } else {
+        logger.info('📅 Data archival: DISABLED');
+      }
     });
 
   } catch (error) {
@@ -375,9 +436,7 @@ const gracefulShutdown = async (signal) => {
 
       try {
         // Close database pool
-        logger.info('Closing database connection pool...');
-        await pool.end();
-        logger.info('Database pool closed successfully');
+        await closePool();
 
         logger.info('Graceful shutdown completed');
         process.exit(0);

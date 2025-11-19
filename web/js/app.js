@@ -5,10 +5,67 @@ let currentVisitors = [];
 let editingContractorId = null;
 let editingVehicleId = null;
 
+// Global error handler
+window.addEventListener('error', (event) => {
+    console.error('Global error caught:', event.error);
+    showAlert('An unexpected error occurred. Please refresh the page.', 'error');
+    // Prevent default browser error handling
+    event.preventDefault();
+});
+
+// Handle unhandled promise rejections
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason);
+    showAlert('A network error occurred. Please check your connection.', 'error');
+    // Prevent default browser error handling
+    event.preventDefault();
+});
+
+// Check authentication
+function checkAuth() {
+    const token = getAuthToken();
+    if (!token) {
+        window.location.href = 'login.html';
+        return false;
+    }
+
+    // Verify token is valid
+    authAPI.verify()
+        .then(data => {
+            if (!data.valid) {
+                clearAuthAndRedirect();
+            }
+        })
+        .catch(() => {
+            clearAuthAndRedirect();
+        });
+
+    return true;
+}
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
-    initializeEventListeners();
-    loadDashboard();
+    try {
+        // Check authentication first
+        if (!checkAuth()) {
+            return;
+        }
+
+        // Display username
+        const username = localStorage.getItem('username');
+        if (username) {
+            const usernameEl = document.querySelector('.username');
+            if (usernameEl) {
+                usernameEl.textContent = username;
+            }
+        }
+
+        initializeEventListeners();
+        loadDashboard();
+    } catch (error) {
+        console.error('Error initializing app:', error);
+        showAlert('Failed to initialize application. Please refresh the page.', 'error');
+    }
 });
 
 // Event Listeners
@@ -76,9 +133,14 @@ function initializeEventListeners() {
     // Logout
     document.getElementById('logoutBtn').addEventListener('click', () => {
         if (confirm('Are you sure you want to logout?')) {
-            window.location.href = '/';
+            authAPI.logout();
         }
     });
+
+    // SharePoint Sync
+    document.getElementById('syncContractorsBtn').addEventListener('click', syncContractors);
+    document.getElementById('syncVehiclesBtn').addEventListener('click', syncVehicles);
+    document.getElementById('syncAllBtn').addEventListener('click', syncAll);
 }
 
 // Dashboard
@@ -335,4 +397,158 @@ function filterVisitors() {
     );
 
     renderVisitorsTable(filtered);
+}
+
+// SharePoint Sync Functions
+async function syncContractors() {
+    const btn = document.getElementById('syncContractorsBtn');
+    const originalHTML = btn.innerHTML;
+
+    try {
+        // Disable button and show loading state
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
+
+        const result = await sharepointAPI.syncContractors();
+
+        // Show results
+        displaySyncResults('Contractors', result);
+        showAlert(result.message, 'success');
+
+        // Reload contractors to show new data
+        if (result.stats && (result.stats.inserted > 0 || result.stats.updated > 0)) {
+            await loadContractors();
+            await loadDashboard();
+        }
+    } catch (error) {
+        console.error('Sync error:', error);
+        showAlert(error.message || 'Failed to sync contractors from SharePoint', 'error');
+    } finally {
+        // Re-enable button
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+}
+
+async function syncVehicles() {
+    const btn = document.getElementById('syncVehiclesBtn');
+    const originalHTML = btn.innerHTML;
+
+    try {
+        // Disable button and show loading state
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
+
+        const result = await sharepointAPI.syncVehicles();
+
+        // Show results
+        displaySyncResults('Vehicles', result);
+        showAlert(result.message, 'success');
+
+        // Reload vehicles to show new data
+        if (result.stats && (result.stats.inserted > 0 || result.stats.updated > 0)) {
+            await loadVehicles();
+            await loadDashboard();
+        }
+    } catch (error) {
+        console.error('Sync error:', error);
+        showAlert(error.message || 'Failed to sync vehicles from SharePoint', 'error');
+    } finally {
+        // Re-enable button
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+}
+
+async function syncAll() {
+    const btn = document.getElementById('syncAllBtn');
+    const originalHTML = btn.innerHTML;
+
+    try {
+        // Disable button and show loading state
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing All...';
+
+        const result = await sharepointAPI.syncAll();
+
+        // Show results
+        displaySyncResults('Full Sync', result);
+        showAlert(result.message, 'success');
+
+        // Reload all data
+        await loadContractors();
+        await loadVehicles();
+        await loadDashboard();
+    } catch (error) {
+        console.error('Sync error:', error);
+        showAlert(error.message || 'Failed to perform full sync', 'error');
+    } finally {
+        // Re-enable button
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+}
+
+function displaySyncResults(type, result) {
+    const syncStatus = document.getElementById('syncStatus');
+    const syncResults = document.getElementById('syncResults');
+
+    if (result.success) {
+        let html = `<p style="font-size: 1.1rem; margin-bottom: 1rem;"><strong>${type}</strong> completed successfully! ✓</p>`;
+
+        // Handle full sync results
+        if (result.data) {
+            html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">';
+
+            if (result.data.contractors) {
+                const c = result.data.contractors.pull;
+                html += `
+                    <div style="background: rgba(255,255,255,0.25); padding: 1rem; border-radius: 8px; border-left: 4px solid #4CAF50;">
+                        <h4 style="margin-top: 0; color: white;"><i class="fas fa-users"></i> Contractors</h4>
+                        <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${c.inserted}</strong></p>
+                        <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${c.updated}</strong></p>
+                        <p style="margin: 0.5rem 0;">❌ Errors: <strong>${c.errors}</strong></p>
+                    </div>
+                `;
+            }
+
+            if (result.data.vehicles) {
+                const v = result.data.vehicles.pull;
+                html += `
+                    <div style="background: rgba(255,255,255,0.25); padding: 1rem; border-radius: 8px; border-left: 4px solid #2196F3;">
+                        <h4 style="margin-top: 0; color: white;"><i class="fas fa-car"></i> Vehicles</h4>
+                        <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${v.inserted}</strong></p>
+                        <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${v.updated}</strong></p>
+                        <p style="margin: 0.5rem 0;">❌ Errors: <strong>${v.errors}</strong></p>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+
+            if (result.data.duration) {
+                html += `<p style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.9;">⏱️ Duration: <strong>${result.data.duration}</strong></p>`;
+            }
+            if (result.data.timestamp) {
+                html += `<p style="font-size: 0.95rem; opacity: 0.9;">🕐 ${new Date(result.data.timestamp).toLocaleString()}</p>`;
+            }
+        }
+        // Handle single entity sync results
+        else if (result.stats) {
+            const s = result.stats;
+            html += `
+                <div style="background: rgba(255,255,255,0.25); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">✅ Inserted: <strong>${s.inserted}</strong></p>
+                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">🔄 Updated: <strong>${s.updated}</strong></p>
+                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">❌ Errors: <strong>${s.errors}</strong></p>
+                </div>
+            `;
+        }
+
+        syncResults.innerHTML = html;
+        syncStatus.style.display = 'block';
+    } else {
+        syncResults.innerHTML = `<p style="background: rgba(255,0,0,0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid #ff4444;"><strong>Error:</strong> ${result.message}</p>`;
+        syncStatus.style.display = 'block';
+    }
 }

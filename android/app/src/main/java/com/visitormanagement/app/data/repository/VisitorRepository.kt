@@ -133,7 +133,7 @@ class VisitorRepository {
                     403 -> "Forbidden"
                     404 -> "Not found"
                     409 -> "Conflict - Record already exists"
-                    500 -> "Server error - Please try again later"
+                    Constants.HTTP_SERVER_ERROR -> "Server error - Please try again later"
                     503 -> "Service unavailable"
                     else -> "Error: ${response.code()}"
                 }
