@@ -1,5 +1,25 @@
 // UI Utilities
 
+// HTML Escape function to prevent XSS attacks
+function escapeHtml(unsafe) {
+    if (unsafe === null || unsafe === undefined) return '';
+    return String(unsafe)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Whitelist of allowed status values (prevents class injection)
+const VALID_STATUSES = ['approved', 'pending', 'denied', 'available', 'in_use', 'maintenance', 'signed_in', 'signed_out', 'visitor', 'contractor'];
+
+function sanitizeStatus(status) {
+    if (!status) return '';
+    const lower = String(status).toLowerCase();
+    return VALID_STATUSES.includes(lower) ? lower : '';
+}
+
 // Show alert message
 function showAlert(message, type = 'success', duration = 3000) {
     const alertEl = document.getElementById('alert');
@@ -62,13 +82,35 @@ function resetForm(formId) {
     }
 }
 
-// Table rendering helpers
+// Helper to create a table cell with safe text content
+function createCell(text) {
+    const td = document.createElement('td');
+    td.textContent = text || '-';
+    return td;
+}
+
+// Helper to create a status badge safely
+function createStatusBadge(status) {
+    const span = document.createElement('span');
+    span.className = `status-badge ${sanitizeStatus(status)}`;
+    span.textContent = status || '';
+    return span;
+}
+
+// Table rendering helpers - XSS-safe implementations
 function renderContractorsTable(contractors = []) {
     const tbody = document.getElementById('contractorsList');
     tbody.innerHTML = '';
 
     if (contractors.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px;">No contractors found</td></tr>';
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 7;
+        cell.style.textAlign = 'center';
+        cell.style.padding = '20px';
+        cell.textContent = 'No contractors found';
+        row.appendChild(cell);
+        tbody.appendChild(row);
         return;
     }
 
@@ -78,32 +120,61 @@ function renderContractorsTable(contractors = []) {
             ? new Date(contractor.approval_date).toLocaleDateString()
             : '-';
 
-        row.innerHTML = `
-            <td>${contractor.company_name}</td>
-            <td>${contractor.contractor_name || '-'}</td>
-            <td>${contractor.email || '-'}</td>
-            <td>${contractor.phone_number || '-'}</td>
-            <td><span class="status-badge ${contractor.status}">${contractor.status}</span></td>
-            <td>${approvalDate}</td>
-            <td>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <button class="btn btn-success" onclick="editContractor(${contractor.id})">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    ${contractor.status === 'pending' ? `
-                        <button class="btn btn-success" onclick="approveContractor(${contractor.id})">
-                            <i class="fas fa-check"></i> Approve
-                        </button>
-                        <button class="btn btn-danger" onclick="denyContractor(${contractor.id})">
-                            <i class="fas fa-times"></i> Deny
-                        </button>
-                    ` : ''}
-                    <button class="btn btn-danger" onclick="deleteContractor(${contractor.id})">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
-            </td>
-        `;
+        // Create cells safely using textContent
+        row.appendChild(createCell(contractor.company_name));
+        row.appendChild(createCell(contractor.contractor_name));
+        row.appendChild(createCell(contractor.email));
+        row.appendChild(createCell(contractor.phone_number));
+
+        // Status badge
+        const statusCell = document.createElement('td');
+        statusCell.appendChild(createStatusBadge(contractor.status));
+        row.appendChild(statusCell);
+
+        row.appendChild(createCell(approvalDate));
+
+        // Actions cell - IDs are validated as integers
+        const actionsCell = document.createElement('td');
+        const actionsDiv = document.createElement('div');
+        actionsDiv.style.display = 'flex';
+        actionsDiv.style.gap = '8px';
+        actionsDiv.style.flexWrap = 'wrap';
+
+        // Validate ID is a safe integer
+        const contractorId = parseInt(contractor.id, 10);
+        if (!isNaN(contractorId) && contractorId > 0) {
+            // Edit button
+            const editBtn = document.createElement('button');
+            editBtn.className = 'btn btn-success';
+            editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+            editBtn.onclick = () => editContractor(contractorId);
+            actionsDiv.appendChild(editBtn);
+
+            // Approve/Deny buttons for pending status
+            if (contractor.status === 'pending') {
+                const approveBtn = document.createElement('button');
+                approveBtn.className = 'btn btn-success';
+                approveBtn.innerHTML = '<i class="fas fa-check"></i> Approve';
+                approveBtn.onclick = () => approveContractor(contractorId);
+                actionsDiv.appendChild(approveBtn);
+
+                const denyBtn = document.createElement('button');
+                denyBtn.className = 'btn btn-danger';
+                denyBtn.innerHTML = '<i class="fas fa-times"></i> Deny';
+                denyBtn.onclick = () => denyContractor(contractorId);
+                actionsDiv.appendChild(denyBtn);
+            }
+
+            // Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn-danger';
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+            deleteBtn.onclick = () => deleteContractor(contractorId);
+            actionsDiv.appendChild(deleteBtn);
+        }
+
+        actionsCell.appendChild(actionsDiv);
+        row.appendChild(actionsCell);
         tbody.appendChild(row);
     });
 }
@@ -113,7 +184,14 @@ function renderVehiclesTable(vehicles = []) {
     tbody.innerHTML = '';
 
     if (vehicles.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No vehicles found</td></tr>';
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 6;
+        cell.style.textAlign = 'center';
+        cell.style.padding = '20px';
+        cell.textContent = 'No vehicles found';
+        row.appendChild(cell);
+        tbody.appendChild(row);
         return;
     }
 
@@ -121,23 +199,61 @@ function renderVehiclesTable(vehicles = []) {
         const row = document.createElement('tr');
         const createdDate = new Date(vehicle.created_at).toLocaleDateString();
 
-        row.innerHTML = `
-            <td><strong>${vehicle.registration}</strong></td>
-            <td><span class="status-badge ${vehicle.status}">${vehicle.status}</span></td>
-            <td>${vehicle.current_mileage?.toLocaleString() || '0'} mi</td>
-            <td>${vehicle.last_checkout_id ? `#${vehicle.last_checkout_id}` : '-'}</td>
-            <td>${createdDate}</td>
-            <td>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-success" onclick="editVehicle(${vehicle.id})">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-danger" onclick="deleteVehicle(${vehicle.id})">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
-            </td>
-        `;
+        // Registration (bold)
+        const regCell = document.createElement('td');
+        const strong = document.createElement('strong');
+        strong.textContent = vehicle.registration || '-';
+        regCell.appendChild(strong);
+        row.appendChild(regCell);
+
+        // Status badge
+        const statusCell = document.createElement('td');
+        statusCell.appendChild(createStatusBadge(vehicle.status));
+        row.appendChild(statusCell);
+
+        // Mileage
+        const mileageCell = document.createElement('td');
+        mileageCell.textContent = vehicle.current_mileage
+            ? vehicle.current_mileage.toLocaleString() + ' mi'
+            : '0 mi';
+        row.appendChild(mileageCell);
+
+        // Last checkout
+        const checkoutCell = document.createElement('td');
+        checkoutCell.textContent = vehicle.last_checkout_id
+            ? `#${vehicle.last_checkout_id}`
+            : '-';
+        row.appendChild(checkoutCell);
+
+        // Created date
+        row.appendChild(createCell(createdDate));
+
+        // Actions cell
+        const actionsCell = document.createElement('td');
+        const actionsDiv = document.createElement('div');
+        actionsDiv.style.display = 'flex';
+        actionsDiv.style.gap = '8px';
+
+        // Validate ID is a safe integer
+        const vehicleId = parseInt(vehicle.id, 10);
+        if (!isNaN(vehicleId) && vehicleId > 0) {
+            // Edit button
+            const editBtn = document.createElement('button');
+            editBtn.className = 'btn btn-success';
+            editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+            editBtn.onclick = () => editVehicle(vehicleId);
+            actionsDiv.appendChild(editBtn);
+
+            // Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn-danger';
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+            deleteBtn.onclick = () => deleteVehicle(vehicleId);
+            actionsDiv.appendChild(deleteBtn);
+        }
+
+        actionsCell.appendChild(actionsDiv);
+        row.appendChild(actionsCell);
         tbody.appendChild(row);
     });
 }
@@ -147,7 +263,14 @@ function renderVisitorsTable(visitors = []) {
     tbody.innerHTML = '';
 
     if (visitors.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No visitors found</td></tr>';
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 6;
+        cell.style.textAlign = 'center';
+        cell.style.padding = '20px';
+        cell.textContent = 'No visitors found';
+        row.appendChild(cell);
+        tbody.appendChild(row);
         return;
     }
 
@@ -158,14 +281,28 @@ function renderVisitorsTable(visitors = []) {
             ? new Date(visitor.sign_out_time).toLocaleString()
             : '-';
 
-        row.innerHTML = `
-            <td>${visitor.full_name}</td>
-            <td><span class="status-badge ${visitor.visitor_type}">${visitor.visitor_type}</span></td>
-            <td>${visitor.company_name || '-'}</td>
-            <td>${signInTime}</td>
-            <td>${signOutTime}</td>
-            <td><span class="status-badge ${visitor.status}">${visitor.status}</span></td>
-        `;
+        // Name
+        row.appendChild(createCell(visitor.full_name));
+
+        // Visitor type badge
+        const typeCell = document.createElement('td');
+        typeCell.appendChild(createStatusBadge(visitor.visitor_type));
+        row.appendChild(typeCell);
+
+        // Company
+        row.appendChild(createCell(visitor.company_name));
+
+        // Sign-in time
+        row.appendChild(createCell(signInTime));
+
+        // Sign-out time
+        row.appendChild(createCell(signOutTime));
+
+        // Status badge
+        const statusCell = document.createElement('td');
+        statusCell.appendChild(createStatusBadge(visitor.status));
+        row.appendChild(statusCell);
+
         tbody.appendChild(row);
     });
 }

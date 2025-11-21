@@ -493,65 +493,129 @@ function displaySyncResults(type, result) {
     const syncStatus = document.getElementById('syncStatus');
     const syncResults = document.getElementById('syncResults');
 
+    // Clear previous results
+    syncResults.innerHTML = '';
+
+    // Validate type is a safe string
+    const safeTypes = ['Contractors', 'Vehicles', 'Full Sync'];
+    const safeType = safeTypes.includes(type) ? type : 'Sync';
+
     if (result.success) {
-        let html = `<p style="font-size: 1.1rem; margin-bottom: 1rem;"><strong>${type}</strong> completed successfully! ✓</p>`;
+        // Header paragraph
+        const header = document.createElement('p');
+        header.style.cssText = 'font-size: 1.1rem; margin-bottom: 1rem;';
+        const strong = document.createElement('strong');
+        strong.textContent = safeType;
+        header.appendChild(strong);
+        header.appendChild(document.createTextNode(' completed successfully! ✓'));
+        syncResults.appendChild(header);
 
         // Handle full sync results
         if (result.data) {
-            html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">';
+            const grid = document.createElement('div');
+            grid.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;';
 
             if (result.data.contractors) {
-                const c = result.data.contractors.pull;
-                html += `
-                    <div style="background: rgba(255,255,255,0.25); padding: 1rem; border-radius: 8px; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin-top: 0; color: white;"><i class="fas fa-users"></i> Contractors</h4>
-                        <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${c.inserted}</strong></p>
-                        <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${c.updated}</strong></p>
-                        <p style="margin: 0.5rem 0;">🗑️ Deleted: <strong>${c.deleted || 0}</strong></p>
-                        <p style="margin: 0.5rem 0;">❌ Errors: <strong>${c.errors}</strong></p>
-                    </div>
-                `;
+                const c = result.data.contractors.pull || {};
+                grid.appendChild(createStatsCard('Contractors', 'fa-users', '#4CAF50', c));
             }
 
             if (result.data.vehicles) {
-                const v = result.data.vehicles.pull;
-                html += `
-                    <div style="background: rgba(255,255,255,0.25); padding: 1rem; border-radius: 8px; border-left: 4px solid #2196F3;">
-                        <h4 style="margin-top: 0; color: white;"><i class="fas fa-car"></i> Vehicles</h4>
-                        <p style="margin: 0.5rem 0;">✅ Inserted: <strong>${v.inserted}</strong></p>
-                        <p style="margin: 0.5rem 0;">🔄 Updated: <strong>${v.updated}</strong></p>
-                        <p style="margin: 0.5rem 0;">🗑️ Deleted: <strong>${v.deleted || 0}</strong></p>
-                        <p style="margin: 0.5rem 0;">❌ Errors: <strong>${v.errors}</strong></p>
-                    </div>
-                `;
+                const v = result.data.vehicles.pull || {};
+                grid.appendChild(createStatsCard('Vehicles', 'fa-car', '#2196F3', v));
             }
 
-            html += '</div>';
+            syncResults.appendChild(grid);
 
             if (result.data.duration) {
-                html += `<p style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.9;">⏱️ Duration: <strong>${result.data.duration}</strong></p>`;
+                const durationP = document.createElement('p');
+                durationP.style.cssText = 'margin-top: 1rem; font-size: 0.95rem; opacity: 0.9;';
+                durationP.textContent = '⏱️ Duration: ' + String(result.data.duration);
+                syncResults.appendChild(durationP);
             }
             if (result.data.timestamp) {
-                html += `<p style="font-size: 0.95rem; opacity: 0.9;">🕐 ${new Date(result.data.timestamp).toLocaleString()}</p>`;
+                const timestampP = document.createElement('p');
+                timestampP.style.cssText = 'font-size: 0.95rem; opacity: 0.9;';
+                try {
+                    timestampP.textContent = '🕐 ' + new Date(result.data.timestamp).toLocaleString();
+                } catch (e) {
+                    timestampP.textContent = '🕐 ' + String(result.data.timestamp);
+                }
+                syncResults.appendChild(timestampP);
             }
         }
         // Handle single entity sync results
         else if (result.stats) {
-            const s = result.stats;
-            html += `
-                <div style="background: rgba(255,255,255,0.25); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
-                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">✅ Inserted: <strong>${s.inserted}</strong></p>
-                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">🔄 Updated: <strong>${s.updated}</strong></p>
-                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">🗑️ Deleted: <strong>${s.deleted || 0}</strong></p>
-                    <p style="margin: 0.5rem 0; font-size: 1.1rem;">❌ Errors: <strong>${s.errors}</strong></p>
-                </div>
-            `;
+            syncResults.appendChild(createSingleStatsCard(result.stats));
         }
 
-        syncResults.innerHTML = html;
         syncStatus.style.display = 'block';
     } else {
-        syncResults.innerHTML = `<p style="background: rgba(255,0,0,0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid #ff4444;"><strong>Error:</strong> ${result.message}</p>`;
+        // Error display
+        const errorP = document.createElement('p');
+        errorP.style.cssText = 'background: rgba(255,0,0,0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid #ff4444;';
+        const errorStrong = document.createElement('strong');
+        errorStrong.textContent = 'Error: ';
+        errorP.appendChild(errorStrong);
+        errorP.appendChild(document.createTextNode(result.message || 'Unknown error'));
+        syncResults.appendChild(errorP);
         syncStatus.style.display = 'block';
     }
+}
+
+// Helper function to create stats card safely
+function createStatsCard(title, icon, color, stats) {
+    const card = document.createElement('div');
+    card.style.cssText = `background: rgba(255,255,255,0.25); padding: 1rem; border-radius: 8px; border-left: 4px solid ${color};`;
+
+    const h4 = document.createElement('h4');
+    h4.style.cssText = 'margin-top: 0; color: white;';
+    h4.innerHTML = `<i class="fas ${icon}"></i> `;
+    h4.appendChild(document.createTextNode(title));
+    card.appendChild(h4);
+
+    // Safely display numeric stats
+    const statItems = [
+        { label: '✅ Inserted', value: parseInt(stats.inserted, 10) || 0 },
+        { label: '🔄 Updated', value: parseInt(stats.updated, 10) || 0 },
+        { label: '🗑️ Deleted', value: parseInt(stats.deleted, 10) || 0 },
+        { label: '❌ Errors', value: parseInt(stats.errors, 10) || 0 }
+    ];
+
+    statItems.forEach(item => {
+        const p = document.createElement('p');
+        p.style.cssText = 'margin: 0.5rem 0;';
+        p.textContent = `${item.label}: `;
+        const strong = document.createElement('strong');
+        strong.textContent = item.value;
+        p.appendChild(strong);
+        card.appendChild(p);
+    });
+
+    return card;
+}
+
+// Helper function for single entity stats
+function createSingleStatsCard(stats) {
+    const card = document.createElement('div');
+    card.style.cssText = 'background: rgba(255,255,255,0.25); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;';
+
+    const statItems = [
+        { label: '✅ Inserted', value: parseInt(stats.inserted, 10) || 0 },
+        { label: '🔄 Updated', value: parseInt(stats.updated, 10) || 0 },
+        { label: '🗑️ Deleted', value: parseInt(stats.deleted, 10) || 0 },
+        { label: '❌ Errors', value: parseInt(stats.errors, 10) || 0 }
+    ];
+
+    statItems.forEach(item => {
+        const p = document.createElement('p');
+        p.style.cssText = 'margin: 0.5rem 0; font-size: 1.1rem;';
+        p.textContent = `${item.label}: `;
+        const strong = document.createElement('strong');
+        strong.textContent = item.value;
+        p.appendChild(strong);
+        card.appendChild(p);
+    });
+
+    return card;
 }
